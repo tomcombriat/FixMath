@@ -100,7 +100,7 @@
 #include "IntegerType.h"
  
 
-namespace MozziPrivate {
+namespace FixMathPrivate {
   template<typename T> constexpr T shiftR(T x, int8_t bits) {return (bits > 0 ? (x >> (bits)) : (x << (-bits)));} // shift right with positive values, left with negative
   constexpr int8_t sBitsToBytes(int8_t N) { return (((N)>>3)+1);}  // conversion between Bits and Bytes for signed
   constexpr int8_t uBitsToBytes(int8_t N) { return (((N-1)>>3)+1);}
