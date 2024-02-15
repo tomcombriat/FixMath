@@ -17,7 +17,7 @@
     A fixed point number has its range defined by the number of bits encoding the integer part (NI 
     in the following) and its precision by the number of bits encoding the fractional part (NF). For UFix types, the integral part can hold values in [0,2^NI-1], for SFix types, the integral part can hold values in [-2^NI,2^NI-1]. The number of bits encoding the fractional can be considered as the precision of the number: given NF, the number of possible values in the  [0,1[ range will 2^NF. Hence, given NF, the resolution will be 1/(2^NF).
 
-    Under the hood, these types will keep track of the maximum possible value they might hold (this is the RANGE template parameter), and, if only *SAFE* operations (see below) are used, will automatically adjust there NI and NF to accomodate the result of a operation. It will also try not to promote there internal type when possible, assuming that you use the complete range of a given type.
+    Under the hood, these types will keep track of the maximum possible value they might hold (this is the RANGE template parameter), and, if only *SAFE* operations (see below) are used, will automatically adjust there NI and NF to accomodate the result of a operation. It will also try not to promote there internal type when possible, assuFM_ming that you use the complete range of a given type.
 
     The operations possible with these types can be divided into two categories:
     - the operations between FixMath types are all safe (aka won't overflow) and are the only one included by default
@@ -100,13 +100,18 @@
 #include "IntegerType.h"
  
 
+
+
+/**  constexpr functions used internally.
+*/
+
 namespace FixMathPrivate {
   template<typename T> constexpr T shiftR(T x, int8_t bits) {return (bits > 0 ? (x >> (bits)) : (x << (-bits)));} // shift right with positive values, left with negative
   constexpr int8_t sBitsToBytes(int8_t N) { return (((N)>>3)+1);}  // conversion between Bits and Bytes for signed
   constexpr int8_t uBitsToBytes(int8_t N) { return (((N-1)>>3)+1);}
-  template<typename T>  constexpr T max(T N1, T N2) { return (N1) > (N2) ? (N1) : (N2);}
-  template<typename T>  constexpr T min(T N1, T N2) { return (N1) > (N2) ? (N2) : (N1);}
-  constexpr uint64_t sFullRange(int8_t N) { return uint64_t(1)<<N;} // maximum absolute value that can be hold in a signed of size N
+  template<typename T>  constexpr T FM_max(T N1, T N2) { return (N1) > (N2) ? (N1) : (N2);}
+  template<typename T>  constexpr T FM_min(T N1, T N2) { return (N1) > (N2) ? (N2) : (N1);}
+  constexpr uint64_t sFullRange(int8_t N) { return uint64_t(1)<<N;} // FM_maximum absolute value that can be hold in a signed of size N
   constexpr uint64_t uFullRange(int8_t N) { return ((uint64_t(1)<<(N-1))-1) + (uint64_t(1)<<(N-1));}
   constexpr uint64_t rangeAdd(byte NF, byte _NF, uint64_t RANGE, uint64_t _RANGE) { return ((NF > _NF) ? (RANGE + (_RANGE<<(NF-_NF))) : (_RANGE + (RANGE<<(_NF-NF))));}  // returns the RANGE following an addition
   constexpr int8_t neededNIExtra(int8_t NI, int8_t NF, uint64_t RANGE) { return (RANGE > (uFullRange(NI+NF)) ? (NI+1) : (RANGE > (uFullRange(NI+NF-1)) ? (NI) : (NI-1)));} // check if RANGE can be hold in the unsigned type defined by NI and NF
@@ -182,7 +187,7 @@ public:
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
   UFix(const UFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
+    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
   }
 
 
@@ -193,7 +198,7 @@ public:
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
   UFix(const SFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
+    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
   }
 
 
@@ -204,11 +209,11 @@ public:
       @return The result of the addition as a UFix.
   */
    template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   UFix<FixMathPrivate::neededNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const UFix<_NI,_NF,_RANGE>& op) const
+   UFix<FixMathPrivate::neededNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const UFix<_NI,_NF,_RANGE>& op) const
   {
     constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::neededNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     typedef typename IntegerType<FixMathPrivate::uBitsToBytes(new_NI+new_NF)>::unsigned_type return_type;
     UFix<new_NI,new_NF> left(*this);
     UFix<new_NI,new_NF> right(op);
@@ -222,11 +227,11 @@ public:
       @return The result of the addition as a SFix.
   */
    template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<_NI,_NF,_RANGE>& op) const
+   SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<_NI,_NF,_RANGE>& op) const
   {
     constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     typedef typename IntegerType<FixMathPrivate::uBitsToBytes(new_NI+new_NF)>::signed_type return_type;
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
@@ -254,17 +259,17 @@ public:
       @param op The UFix to be subtracted.
       @return The result of the subtraction as a SFix.
   */
-  template<int8_t _NI, int8_t _NF, uint64_t _RANGE> // We do not have the +1 after FixMathPrivate::max(NI, _NI) because the substraction between two UFix should fit in the biggest of the two.
-  SFix<FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF), FixMathPrivate::max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::max(NF,_NF)-_NF))> operator- (const UFix<_NI,_NF, _RANGE>& op) const
+  template<int8_t _NI, int8_t _NF, uint64_t _RANGE> // We do not have the +1 after FixMathPrivate::FM_max(NI, _NI) because the substraction between two UFix should fit in the biggest of the two.
+  SFix<FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::FM_max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::FM_max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::FM_max(NF,_NF)-_NF))> operator- (const UFix<_NI,_NF, _RANGE>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     typedef typename IntegerType<FixMathPrivate::sBitsToBytes(new_NI+new_NF)>::signed_type return_type;
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
 
     return_type tt = return_type(left.asRaw()) - right.asRaw();
-    return SFix<new_NI,new_NF,FixMathPrivate::max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::max(NF,_NF)-_NF))>(tt,true);
+    return SFix<new_NI,new_NF,FixMathPrivate::FM_max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::FM_max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::FM_max(NF,_NF)-_NF))>(tt,true);
   }
 
   #ifdef FIXMATH_UNSAFE
@@ -361,7 +366,7 @@ public:
       This is still slower than a multiplication, hence the suggested workflow is to compute the inverse when time is not critical, for instance in updateControl(), and multiply it afterward, for instance in updateAudio(), if you need a division.
       @return The inverse of the number.
   */
-  UFix<NF,FixMathPrivate::min(NI*2+NF,63-NF)> invAccurate() const // The FixMathPrivate::min is just to remove compiler error when a big FixMath is instanciated but no accurate inverse is actually computed (this would be catch by the static_assert)
+  UFix<NF,FixMathPrivate::FM_min(NI*2+NF,63-NF)> invAccurate() const // The FixMathPrivate::FM_min is just to remove compiler error when a big FixMath is instanciated but no accurate inverse is actually computed (this would be catch by the static_assert)
   {
     static_assert(2*NI+2*NF<=63, "The accurate inverse cannot be computed for when 2*NI+2*NF>63. Reduce the number of bits.");
     return inv<NI*2+NF>();
@@ -403,9 +408,9 @@ public:
       @return The result of the shift as a UFix of smaller size.
   */
   template<int8_t op>
-  UFix<FixMathPrivate::max(NI-op,0),NF+op, FixMathPrivate::rangeShift(NI,op,RANGE)> sR()
+  UFix<FixMathPrivate::FM_max(NI-op,0),NF+op, FixMathPrivate::rangeShift(NI,op,RANGE)> sR()
   {
-    return UFix<FixMathPrivate::max(NI-op,0),NF+op,FixMathPrivate::rangeShift(NI,op,RANGE)>(internal_value,true);
+    return UFix<FixMathPrivate::FM_max(NI-op,0),NF+op,FixMathPrivate::rangeShift(NI,op,RANGE)>(internal_value,true);
   }
 
   /** Safe and optimal left shift. The returned type will be adjusted accordingly
@@ -413,9 +418,9 @@ public:
       @return The result of the shift as a UFix of bigger size.
   */
   template<int8_t op>
-  UFix<NI+op,FixMathPrivate::max(NF-op,0),FixMathPrivate::rangeShift(NF,op,RANGE)> sL()
+  UFix<NI+op,FixMathPrivate::FM_max(NF-op,0),FixMathPrivate::rangeShift(NF,op,RANGE)> sL()
   {
-    return UFix<NI+op,FixMathPrivate::max(NF-op,0)>(internal_value,true);
+    return UFix<NI+op,FixMathPrivate::FM_max(NF-op,0)>(internal_value,true);
   }
 
   
@@ -427,8 +432,8 @@ public:
   template<int8_t _NI, int8_t _NF>
   bool operator> (const UFix<_NI,_NF>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     UFix<new_NI,new_NF> left(*this);
     UFix<new_NI,new_NF> right(op);
     return left.asRaw()>right.asRaw();
@@ -452,8 +457,8 @@ public:
   template<int8_t _NI, int8_t _NF>
   bool operator== (const UFix<_NI,_NF>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     UFix<new_NI,new_NF> left(*this);
     UFix<new_NI,new_NF> right(op);
     return left.asRaw()==right.asRaw();
@@ -466,8 +471,8 @@ public:
   template<int8_t _NI, int8_t _NF>
   bool operator!= (const UFix<_NI,_NF>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     UFix<new_NI,new_NF> left(*this);
     UFix<new_NI,new_NF> right(op);
     return left.asRaw()!=right.asRaw();
@@ -695,7 +700,7 @@ public:
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
   SFix(const SFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::sBitsToBytes(FixMathPrivate::max(NI+NF,_NI+_NF))>::signed_type) uf.asRaw(),(_NF-NF));
+    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::sBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::signed_type) uf.asRaw(),(_NF-NF));
     
   }
 
@@ -705,7 +710,7 @@ public:
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
   SFix(const UFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
+    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
   }
 
   //////// ADDITION OVERLOADS
@@ -715,11 +720,11 @@ public:
       @return The result of the addition as a SFix.
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<_NI,_NF,_RANGE>& op) const
+  SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<_NI,_NF,_RANGE>& op) const
   {
     constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     typedef typename IntegerType<FixMathPrivate::sBitsToBytes(new_NI+new_NF)>::signed_type return_type;
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
@@ -748,11 +753,11 @@ public:
       @return The result of the subtraction as a SFix.
   */ 
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator- (const SFix<_NI,_NF, _RANGE>& op) const
+  SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator- (const SFix<_NI,_NF, _RANGE>& op) const
   {
     constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     typedef typename IntegerType<FixMathPrivate::sBitsToBytes(new_NI+new_NF)>::signed_type return_type;
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
@@ -765,11 +770,11 @@ public:
       @return The result of the subtraction as a SFix.
   */ 
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator- (const UFix<_NI,_NF, _RANGE>& op) const
+  SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator- (const UFix<_NI,_NF, _RANGE>& op) const
   {
     constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     typedef typename IntegerType<FixMathPrivate::sBitsToBytes(new_NI+new_NF)>::signed_type return_type;
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
@@ -857,7 +862,7 @@ public:
       This is still slower than a multiplication, hence the suggested workflow is to compute the inverse when time is not critical, for instance in updateControl(), and multiply it afterward, for instance in updateAudio(), if you need a division.
       @return The inverse of the number.
   */
-  SFix<NF,FixMathPrivate::min(NI*2+NF,62-NF)> invAccurate() const
+  SFix<NF,FixMathPrivate::FM_min(NI*2+NF,62-NF)> invAccurate() const
   {
     return inv<NI*2+NF>();
     }
@@ -893,9 +898,9 @@ public:
       @return The result of the shift as a UFix of smaller size.
   */
   template<int8_t op>
-  SFix<FixMathPrivate::max(NI-op,0), NF+op, FixMathPrivate::rangeShift(NI,op,RANGE)> sR()
+  SFix<FixMathPrivate::FM_max(NI-op,0), NF+op, FixMathPrivate::rangeShift(NI,op,RANGE)> sR()
   {
-    return SFix<FixMathPrivate::max(NI-op,0),NF+op,FixMathPrivate::rangeShift(NI,op,RANGE)>(internal_value,true);
+    return SFix<FixMathPrivate::FM_max(NI-op,0),NF+op,FixMathPrivate::rangeShift(NI,op,RANGE)>(internal_value,true);
   }
 
   /** Safe and optimal left shift. The returned type will be adjusted accordingly
@@ -903,9 +908,9 @@ public:
       @return The result of the shift as a UFix of bigger size.
   */
 template<int8_t op>
-  SFix<NI+op,FixMathPrivate::max(NF-op,0),FixMathPrivate::rangeShift(NF,op,RANGE)> sL()
+  SFix<NI+op,FixMathPrivate::FM_max(NF-op,0),FixMathPrivate::rangeShift(NF,op,RANGE)> sL()
   {
-    return SFix<NI+op,FixMathPrivate::max(NF-op,0)>(internal_value,true);
+    return SFix<NI+op,FixMathPrivate::FM_max(NF-op,0)>(internal_value,true);
   }
 
 
@@ -918,8 +923,8 @@ template<int8_t op>
   template<int8_t _NI, int8_t _NF>
   bool operator> (const SFix<_NI,_NF>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
     return left.asRaw()>right.asRaw();
@@ -943,8 +948,8 @@ template<int8_t op>
   template<int8_t _NI, int8_t _NF>
   bool operator== (const SFix<_NI,_NF>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
     return left.asRaw()==right.asRaw();
@@ -957,8 +962,8 @@ template<int8_t op>
   template<int8_t _NI, int8_t _NF>
   bool operator!= (const SFix<_NI,_NF>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);
+    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
     SFix<new_NI,new_NF> left(*this);
     SFix<new_NI,new_NF> right(op);
     return left.asRaw()!=right.asRaw();
@@ -1110,7 +1115,7 @@ inline SFix<NI, NF> operator-(double op, const SFix<NI, NF>& uf) {return (-uf)+o
     @return The result of the addition of op1 and op2. As a SFix
 */
 template<int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE>
-inline SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<NI,NF,RANGE>& op1, const UFix<_NI,_NF,_RANGE>& op2 )
+inline SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<NI,NF,RANGE>& op1, const UFix<_NI,_NF,_RANGE>& op2 )
 {
   return op2+op1;
   }
@@ -1122,7 +1127,7 @@ inline SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPr
     @return The result of the subtraction of op1 by op2. As a SFix
 */
 template<int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE>
-inline SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::max(NI,_NI),FixMathPrivate::max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator- (const UFix<NI,NF, RANGE>& op1, const SFix<_NI,_NF, _RANGE>& op2)
+inline SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator- (const UFix<NI,NF, RANGE>& op1, const SFix<_NI,_NF, _RANGE>& op2)
 {
   return -op2+op1;
   }
@@ -1149,8 +1154,8 @@ inline SFix<FixMathPrivate::neededSNIExtra(NI+_NI, NF+_NF, RANGE*_RANGE),NF+_NF,
 template<int8_t NI, int8_t NF, int8_t _NI, int8_t _NF>
 inline bool operator> (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
 {
-  constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-  constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);    
+  constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+  constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);    
   SFix<new_NI,new_NF> left(op1);
   SFix<new_NI,new_NF> right(op2);
   return left.asRaw() > right.asRaw();
@@ -1164,8 +1169,8 @@ inline bool operator> (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
 template<int8_t NI, int8_t NF, int8_t _NI, int8_t _NF>
 inline bool operator> (const UFix<NI,NF>& op1, const SFix<_NI,_NF>& op2 )
 {
-  constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-  constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);    
+  constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+  constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);    
   SFix<new_NI,new_NF> left(op1);
   SFix<new_NI,new_NF> right(op2);
   return left.asRaw() > right.asRaw();
@@ -1203,8 +1208,8 @@ inline bool operator< (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
 template<int8_t NI, int8_t NF, int8_t _NI, int8_t _NF>
 inline bool operator== (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
 {
-  constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-  constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);    
+  constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+  constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);    
   SFix<new_NI,new_NF> left(op1);
   SFix<new_NI,new_NF> right(op2);
   return left.asRaw() == right.asRaw();
@@ -1230,8 +1235,8 @@ inline bool operator== (const UFix<NI,NF>& op1, const SFix<_NI,_NF>& op2 )
 template<int8_t NI, int8_t NF, int8_t _NI, int8_t _NF>
 inline bool operator!= (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
 {
-  constexpr int8_t new_NI = FixMathPrivate::max(NI, _NI);
-  constexpr int8_t new_NF = FixMathPrivate::max(NF, _NF);    
+  constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
+  constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);    
   SFix<new_NI,new_NF> left(op1);
   SFix<new_NI,new_NF> right(op2);
   return left.asRaw() != right.asRaw();
