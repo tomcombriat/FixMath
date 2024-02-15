@@ -185,7 +185,7 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>rangeSh
 <p>Note on division: The division is not implemented. This is a deliberate choice made for two reasons:</p><ul>
 <li>in contrast with all the other fundamental operations, it is not possible to guarantee that precision will be kept (other operations returns <em>exact</em> results whenever the operands were also exactly represented. Note that this is actually not the case when using normal floating point numbers. The inverse functions can be used to fake a division, by multiplying by the inverse of a number.</li>
 </ul>
-<p>division are usually very slow operations on MCU, hence there usage is discouraged. The ideal way of doing it is to compute the inverse whenever needed and only when needed. In the context of Mozzi for instance, a good way to do it would be to compute needed inverses in updateControl(), and use them in updateAudio(). </p>
+<p>division are usually very slow operations on MCU, hence there usage is discouraged. The ideal way of doing it is to compute the inverse whenever needed and only when needed. In the context of Mozzi for instance, a good way to do it would be to compute needed inverses in updateControl(), and use them in updateAudio(). constexpr functions used internally. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
