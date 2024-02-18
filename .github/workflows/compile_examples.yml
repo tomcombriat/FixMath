@@ -1,0 +1,107 @@
+name: Compile Examples
+
+# See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+      - "examples/**"
+      - "**.cpp"
+      - "**.h"
+      - "**.hpp"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "examples/**"
+      - "**.cpp"
+      - "**.h"
+      - "**.hpp"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  # debounce job to reduce duplicate compilations, taken from https://stackoverflow.com/questions/75714742/do-not-trigger-github-action-workflow-on-push-if-a-pr-is-open-on-the-branch
+  debounce:
+      runs-on: ubuntu-latest
+      env:
+        GH_TOKEN: ${{ github.token }}
+      outputs:
+        abort: ${{ steps.debounce.outputs.abort }}
+      steps:
+        - name: Debounce
+          if: github.event_name == 'push'
+          id: debounce
+          run: |
+            pr_branches=$(gh pr list --repo $GITHUB_REPOSITORY -q '.[] | select(.isCrossRepository == false)' --json isCrossRepository --json headRefName)
+            this_branch=$(echo $GITHUB_REF | sed -e 's/refs\/heads\///')
+            if [[ $(echo "$pr_branches" | grep "$this_branch") ]]; then
+              echo "This push is associated with a pull request. Skipping the job."
+              echo "abort=true" >> "$GITHUB_OUTPUT"
+            fi
+
+  build:
+    name: ${{ matrix.board.fqbn }}
+    runs-on: ubuntu-latest
+    needs: debounce
+    if: needs.debounce.outputs.abort != 'true'
+
+    env:
+      SKETCHES_REPORTS_PATH: sketches-reports
+
+    strategy:
+      fail-fast: false
+
+# Not sure, how may different arches we'll want to build here, but I guess having at least two different compilers working on all the templates may be a good idea.
+      matrix:
+        board:
+          - fqbn: arduino:avr:uno
+            platforms: |
+              - name: arduino:avr
+            internalid: arduino_uno  # This is just some unique id string we assign for use in the artifact name (fqbn does not qualify due to containing colons)
+          - fqbn: STMicroelectronics:stm32:GenF1:pnum=BLUEPILL_F103C8
+            platforms: |
+              - name: STMicroelectronics:stm32
+                source-url: https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
+            internalid: stm32_official
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile examples
+        uses: arduino/compile-sketches@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          fqbn: ${{ matrix.board.fqbn }}
+          platforms: ${{ matrix.board.platforms }}
+          sketch-paths: |
+            - examples
+          enable-deltas-report: true
+          sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
+          enable-warnings-report: true
+
+      - name: Save sketches report as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          if-no-files-found: error
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: sketches-reports-artifact-${{ matrix.board.internalid }}
+
+  # When using a matrix to compile for multiple boards, it's necessary to use a separate job for the deltas report
+  report:
+    needs: build # Wait for the compile job to finish to get the data for the report
+    if: github.event_name == 'pull_request' # Only run the job when the workflow is triggered by a pull request
+    continue-on-error: true # Not the programmer's fault, if reporting fails
+    runs-on: ubuntu-latest
+    steps:
+      # This step is needed to get the size data produced by the compile jobs
+      - name: Download sketches reports artifact
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sketches-reports-artifact-*
+          merge-multiple: true
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+
+      - uses: arduino/report-size-deltas@v1
+        with:
+          sketches-reports-source: ${{ env.SKETCHES_REPORTS_PATH }}
