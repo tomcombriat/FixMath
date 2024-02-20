@@ -33,6 +33,10 @@ Like standard C(++) types, the fixed point numbers defined here are following so
   - same for `SFix`
   - `UFix<NI,NF>::fromRaw(T value)` will set the *internal* value of the `UFix`. For example `UFix<7,1>::fromRaw(16);` is actually 8
   - same for `SFix`
+  - `UFix<NI,NF>.toFloat()` returns the value as a `float`
+  - same for `SFix`
+  - `UFix<NI,NF>.asRaw()` returns the internal value
+  - same for `SFix`
 - all operations between fixed point number is safe (it won't overflow) and preserve the precision. In particular:
   - only addition, subtraction and multiplication are implemented (this is a design choice, see below)
   - any operation between a signed and an unsigned leads to a signed number
