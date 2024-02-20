@@ -14,7 +14,7 @@ This library was original made for [Mozzi](https://sensorium.github.io/Mozzi/).
 
 ## Documentation
 
-A Doxygen documentation is available [here](https://tomcombriat.github.io/FixMath/docs/html/) and an overview of the library is given below.
+A Doxygen documentation is available [here](https://tomcombriat.github.io/FixMath/docs/html/FixMath_8h.html) and an overview of the library is given below.
 
 A fixed point number has its range defined by the number of bits encoding the integer part (NI 
 in the following) and its precision by the number of bits encoding the fractional part (NF). For UFix types, the integral part can hold values in [0,2^NI-1], for SFix types, the integral part can hold values in [-2^NI,2^NI-1]. The number of bits encoding the fractional can be considered as the precision of the number: given NF, the number of possible values in the  [0,1[ range will 2^NF. Hence, given NF, the resolution will be 1/(2^NF).
