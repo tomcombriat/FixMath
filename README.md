@@ -28,7 +28,11 @@ The operations possible with these types can be divided into two categories:
 
 Like standard C(++) types, the fixed point numbers defined here are following some rules:
 - any fixed type can be converted to another *as long as the value can be represented in the destination type*. Casting to a bigger type in term of NI and NF is safe, but reducing NI can lead to an overflow if the new type cannot hold the integer value and reducing NF leads to a loss of precision.
-- Fixed types can be constructed from and converted to standard C types.
+- Fixed types can be constructed from and converted to standard C types:
+  - `UFix<NI,NF>(T value)` will convert the `value` to a `UFix`. If T is an integer type the final number will have a fractional part equal to zero. This can be used as a standard type, for example: `UFix<8,8> a = 15;` or `UFix<8,8> b = 200.25;`
+  - same for `SFix`
+  - `UFix<NI,NF>::fromRaw(T value)` will set the *internal* value of the `UFix`. For example `UFix<7,1>::fromRaw(16);` is actually 8
+  - same for `SFix`
 - all operations between fixed point number is safe (it won't overflow) and preserve the precision. In particular:
   - only addition, subtraction and multiplication are implemented (this is a design choice, see below)
   - any operation between a signed and an unsigned leads to a signed number
