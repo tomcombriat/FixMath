@@ -30,11 +30,11 @@ Like standard C(++) types, the fixed point numbers defined here are following so
 - any fixed type can be converted to another *as long as the value can be represented in the destination type*. Casting to a bigger type in term of NI and NF is safe, but reducing NI can lead to an overflow if the new type cannot hold the integer value and reducing NF leads to a loss of precision.
 - Fixed types can be constructed from and converted to standard C types.
 - all operations between fixed point number is safe (it won't overflow) and preserve the precision. In particular:
-- only addition, subtraction and multiplication are implemented (this is a design choice, see below)
-- any operation between a signed and an unsigned leads to a signed number
-- resulting numbers will be casted to a type big enough to store the expected values. It follows that it is worth starting with types that are as small as possible to hold the initial value.
-- all operations between a fixed point number and a native type (int, float, uint) are *not* safe. If the resulting value cannot be represented in the fixed point type it will overflow. Only addition, subtraction, multiplication and right/left shift are implemented. These are only accessible activating the `FIXMATH_UNSAFE` set.
-- safe right/left shifts, which return the correct value in the correct type are implemented as .sR<shift>() and .sL<shift>() respectively, shift being the shifting amount.
+  - only addition, subtraction and multiplication are implemented (this is a design choice, see below)
+  - any operation between a signed and an unsigned leads to a signed number
+  - resulting numbers will be casted to a type big enough to store the expected values. It follows that it is worth starting with types that are as small as possible to hold the initial value.
+  - all operations between a fixed point number and a native type (int, float, uint) are *not* safe. If the resulting value cannot be represented in the fixed point type it will overflow. Only addition, subtraction, multiplication and right/left shift are implemented. These are only accessible activating the `FIXMATH_UNSAFE` set.
+  - safe right/left shifts, which return the correct value in the correct type are implemented as .sR<shift>() and .sL<shift>() respectively, shift being the shifting amount.
 
 More specifically on the returned types of the operations between fixed point math types:
  - Additions:
