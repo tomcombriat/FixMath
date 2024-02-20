@@ -4,8 +4,7 @@ var indexSectionsWithContent =
   1: "isu",
   2: "f",
   3: "f",
-  4: "afgiostu",
-  5: "f"
+  4: "afgiostu"
 };
 
 var indexSectionNames =
@@ -14,8 +13,7 @@ var indexSectionNames =
   1: "classes",
   2: "namespaces",
   3: "files",
-  4: "functions",
-  5: "pages"
+  4: "functions"
 };
 
 var indexSectionLabels =
@@ -24,7 +22,6 @@ var indexSectionLabels =
   1: "Classes",
   2: "Namespaces",
   3: "Files",
-  4: "Functions",
-  5: "Pages"
+  4: "Functions"
 };
 
