@@ -65,7 +65,97 @@ $(function() {
 <div class="title">FixMath </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>FixMath is a library to perform <a href="https://en.wikipedia.org/wiki/Fixed-point_arithmetic">fixed point arithmetics</a>. It uses integer types internally to provide fast computations of decimal numbers. As most micro-controllers do not have a floating point unit (FPU), this library allows fast computation of fractionnal numbers without resorting to floats. </p>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md1"></a>
+Overview</h1>
+<p>FixMath is a library to perform <a href="https://en.wikipedia.org/wiki/Fixed-point_arithmetic">fixed point arithmetics</a>. It uses integer types internally to provide fast computations of decimal numbers. As most micro-controllers do not have a floating point unit (FPU), this library allows fast computation of fractionnal numbers without resorting to floats.</p>
+<p>This implements two fixed point types: <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> and <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code> which are unsigned and signed respectively. The templates parameters <code>NI</code> and <code>NF</code> are the number of bits representing the integral and the fractionnal part, respectively.</p>
+<p>The number of bits needed under the hood for the types implemented in this library, is statically determined by the compiler, for performance reasons, and all operations between fixed point types is safe (ie. it cannot overflow) as long as the number of underlying bits do not exceed 64 bits. On this aspect, they behave much like <code>float</code>.</p>
+<p>This library was original made for <a href="https://sensorium.github.io/Mozzi/">Mozzi</a>.</p>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Documentation</h1>
+<p>A Doxygen documentation is available <a href="https://tomcombriat.github.io/FixMath/docs/html/">here</a> and an overview of the library is given below.</p>
+<p>A fixed point number has its range defined by the number of bits encoding the integer part (NI in the following) and its precision by the number of bits encoding the fractional part (NF). For <a class="el" href="classUFix.html">UFix</a> types, the integral part can hold values in [0,2^NI-1], for <a class="el" href="classSFix.html">SFix</a> types, the integral part can hold values in [-2^NI,2^NI-1]. The number of bits encoding the fractional can be considered as the precision of the number: given NF, the number of possible values in the [0,1[ range will 2^NF. Hence, given NF, the resolution will be 1/(2^NF).</p>
+<p>Under the hood, these types will keep track of the maximum possible value they might hold (this is the RANGE template parameter), and, if only <em>SAFE</em> operations (see below) are used, will automatically adjust there NI and NF to accomodate the result of a operation. It will also try not to promote there internal type when possible, assuFM_ming that you use the complete range of a given type.</p>
+<p>The operations possible with these types can be divided into two categories:</p><ul>
+<li>the operations between FixMath types are all safe (aka won't overflow) and are the only one included by default</li>
+<li>the operations between a FixMath and a native C type (int, float) are NOT safe and are not included by default. In order to activate them, you need to <code>#define FIXMATH_UNSAFE</code> before including <a class="el" href="FixMath_8h.html">FixMath.h</a>.</li>
+</ul>
+<p>Like standard C(++) types, the fixed point numbers defined here are following some rules:</p><ul>
+<li>any fixed type can be converted to another <em>as long as the value can be represented in the destination type</em>. Casting to a bigger type in term of NI and NF is safe, but reducing NI can lead to an overflow if the new type cannot hold the integer value and reducing NF leads to a loss of precision.</li>
+<li>Fixed types can be constructed from and converted to standard C types.</li>
+<li>all operations between fixed point number is safe (it won't overflow) and preserve the precision. In particular:<ul>
+<li>only addition, subtraction and multiplication are implemented (this is a design choice, see below)</li>
+<li>any operation between a signed and an unsigned leads to a signed number</li>
+<li>resulting numbers will be casted to a type big enough to store the expected values. It follows that it is worth starting with types that are as small as possible to hold the initial value.</li>
+<li>all operations between a fixed point number and a native type (int, float, uint) are <em>not</em> safe. If the resulting value cannot be represented in the fixed point type it will overflow. Only addition, subtraction, multiplication and right/left shift are implemented. These are only accessible activating the <code>FIXMATH_UNSAFE</code> set.</li>
+<li>safe right/left shifts, which return the correct value in the correct type are implemented as .sR&lt;shift&gt;() and .sL&lt;shift&gt;() respectively, shift being the shifting amount.</li>
+</ul>
+</li>
+</ul>
+<p>More specifically on the returned types of the operations between fixed point math types:</p><ul>
+<li>Additions:<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; + <a class="el" href="classUFix.html">UFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt;</code> at worse</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; + <a class="el" href="classSFix.html">SFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt;</code> at worse</li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; + <a class="el" href="classSFix.html">SFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt;</code> at worse</li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; + anything_else</code> (signed or not) returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; + anything_else</code> (signed or not) returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+</ul>
+</li>
+<li>Subtractions:<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; - <a class="el" href="classUFix.html">UFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI),MAX(NF,_NF)&gt;</code> at worse</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; - <a class="el" href="classSFix.html">SFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt;</code> at worse</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; - <a class="el" href="classUFix.html">UFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt;</code> at worse</li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; - anything_else</code> (signed or not) returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; - anything_else</code> (signed or not) returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+<li><code>(-)<a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code> return <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code></li>
+<li><code>(-)<a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> return <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code></li>
+</ul>
+</li>
+<li>Multiplications:<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; * <a class="el" href="classUFix.html">UFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI+_NI,NF+_NF&gt;</code> at worse</li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; * <a class="el" href="classSFix.html">SFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI+_NI,NF+_NF&gt;</code> at worse</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; * <a class="el" href="classSFix.html">SFix</a>&lt;_NI,_NF&gt;</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI+_NI,NF+_NF&gt;</code> at worse</li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; * anything_else</code> (signed or not) returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt; * anything_else</code> (signed or not) returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+</ul>
+</li>
+<li>Shifts:<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; .sR&lt;NS&gt;</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI-NS,NF+NS&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; .sL&lt;NS&gt;</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI+NS,NF-NS&gt;</code></li>
+<li>same for <code><a class="el" href="classSFix.html">SFix</a></code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; &gt;&gt; N</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt; &lt;&lt; N</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code> (only available with <code>FIXMATH_UNSAFE</code>)</li>
+<li>same for <code><a class="el" href="classSFix.html">SFix</a></code></li>
+</ul>
+</li>
+<li>Inverse:<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invFast()</code> returns the inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,NI&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invFast()</code> returns the inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,NI&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invAccurate()</code> returns the inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,2*NI+NF&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invAccurate()</code> returns the inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,2*NI+NF&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.inv&lt;_NF&gt;()</code> returns the inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,_NF&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.inv&lt;_NF&gt;()</code> returns the inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,_NF&gt;</code></li>
+</ul>
+</li>
+<li>Conversion (should be preferred over casting, when possible):<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.asSFix()</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.asUFix()</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.asFloat()</code> returns the value as a <code>float</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.asFloat()</code> returns the value as a <code>float</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.asRaw()</code> returns the internal value</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.asRaw()</code> returns the internal value</li>
+<li><code>T.toUFraction()</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;0,NF&gt;</code> with <code>NF</code> the number of bits of <code>T</code> (<code>uint8_t</code> leads to <code>NF=8</code>bits).</li>
+<li><code>T.toSFraction()</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;0,NF&gt;</code> with <code>NF</code> the number of bits of <code>T</code> (<code>int8_t</code> leads to <code>NF=7</code>bits).</li>
+<li><code>T.toUInt()</code> returns <code><a class="el" href="classUFix.html">UFix</a>&lt;NI,0&gt;</code> with <code>NI</code> the number of bits of <code>T</code> (<code>uint8_t</code> leads to <code>NI=8</code>bits).</li>
+<li><code>T.toSInt()</code> returns <code><a class="el" href="classSFix.html">SFix</a>&lt;NI,&gt;</code> with <code>NI</code> the number of bits of <code>T</code> (<code>int8_t</code> leads to <code>NI=7</code>bits). <br  />
+</li>
+</ul>
+</li>
+</ul>
+<p>Note on division: The division is not implemented. This is a deliberate choice made for two reasons:</p><ul>
+<li>in contrast with all the other fundamental operations, it is not possible to guarantee that precision will be kept (other operations returns <em>exact</em> results whenever the operands were also exactly represented. Note that this is actually not the case when using normal floating point numbers. The inverse functions can be used to fake a division, by multiplying by the inverse of a number.</li>
+<li>division are usually very slow operations on MCU, hence there usage is discouraged. The ideal way of doing it is to compute the inverse whenever needed and only when needed. In the context of Mozzi for instance, a good way to do it would be to compute needed inverses in <code>updateControl()</code>, and use them in <code>updateAudio()</code>. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

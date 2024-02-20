@@ -80,14 +80,14 @@ constexpr int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>sBitsToBy
 <tr class="memitem:a9a4b39694991fa2271411af05f726266"><td class="memItemLeft" align="right" valign="top"><a id="a9a4b39694991fa2271411af05f726266"></a>
 constexpr int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>uBitsToBytes</b> (int8_t N)</td></tr>
 <tr class="separator:a9a4b39694991fa2271411af05f726266"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a318b0585fd3ce7505e384f406c0f2f22"><td class="memTemplParams" colspan="2"><a id="a318b0585fd3ce7505e384f406c0f2f22"></a>
+<tr class="memitem:aee8bcab7935ec3c6cfabc62507cda1ae"><td class="memTemplParams" colspan="2"><a id="aee8bcab7935ec3c6cfabc62507cda1ae"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a318b0585fd3ce7505e384f406c0f2f22"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>max</b> (T N1, T N2)</td></tr>
-<tr class="separator:a318b0585fd3ce7505e384f406c0f2f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3d41a8092b44335bae3afefdc853ddd"><td class="memTemplParams" colspan="2"><a id="af3d41a8092b44335bae3afefdc853ddd"></a>
+<tr class="memitem:aee8bcab7935ec3c6cfabc62507cda1ae"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>FM_max</b> (T N1, T N2)</td></tr>
+<tr class="separator:aee8bcab7935ec3c6cfabc62507cda1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ee7285a1ca23cb62506d2d62a02c1a"><td class="memTemplParams" colspan="2"><a id="ac7ee7285a1ca23cb62506d2d62a02c1a"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:af3d41a8092b44335bae3afefdc853ddd"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>min</b> (T N1, T N2)</td></tr>
-<tr class="separator:af3d41a8092b44335bae3afefdc853ddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ee7285a1ca23cb62506d2d62a02c1a"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>FM_min</b> (T N1, T N2)</td></tr>
+<tr class="separator:ac7ee7285a1ca23cb62506d2d62a02c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e68970fe1292706c8111c4633bf05e4"><td class="memItemLeft" align="right" valign="top"><a id="a0e68970fe1292706c8111c4633bf05e4"></a>
 constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>sFullRange</b> (int8_t N)</td></tr>
 <tr class="separator:a0e68970fe1292706c8111c4633bf05e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,84 +108,7 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>rangeSh
 <tr class="separator:a96afba7d43238189112a0d0a72c0675a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file implements two fixed point number classes. These numbers can have a fractional part but are actually standard integers under the hood which makes calculations with them efficient on platforms which do not have a FPU like most micro-controllers. These numbers can be signed (<a class="el" href="classSFix.html">SFix</a>) or unsigned (<a class="el" href="classUFix.html">UFix</a>).</p>
-<p>A fixed point number has its range defined by the number of bits encoding the integer part (NI in the following) and its precision by the number of bits encoding the fractional part (NF). For <a class="el" href="classUFix.html">UFix</a> types, the integral part can hold values in [0,2^NI-1], for <a class="el" href="classSFix.html">SFix</a> types, the integral part can hold values in [-2^NI,2^NI-1]. The number of bits encoding the fractional can be considered as the precision of the number: given NF, the number of possible values in the [0,1[ range will 2^NF. Hence, given NF, the resolution will be 1/(2^NF).</p>
-<p>Under the hood, these types will keep track of the maximum possible value they might hold (this is the RANGE template parameter), and, if only <em>SAFE</em> operations (see below) are used, will automatically adjust there NI and NF to accomodate the result of a operation. It will also try not to promote there internal type when possible, assuming that you use the complete range of a given type.</p>
-<p>The operations possible with these types can be divided into two categories:</p><ul>
-<li>the operations between FixMath types are all safe (aka won't overflow) and are the only one included by default</li>
-<li>the operations between a FixMath and a native C type (int, float) are NOT safe and are not included by default. In order to activate them, you need to <code>#define FIXMATH_UNSAFE</code> before including <a class="el" href="FixMath_8h_source.html">FixMath.h</a>.</li>
-</ul>
-<p>Like standard C(++) types, the fixed point numbers defined here are following some rules:</p><ul>
-<li>any fixed type can be converted to another <em>as long as the value can be represented in the destination type</em>. Casting to a bigger type in term of NI and NF is safe, but reducing NI can lead to an overflow if the new type cannot hold the integer value and reducing NF leads to a loss of precision.</li>
-<li>Fixed types can be constructed from and converted to standard C types.</li>
-<li>all operations between fixed point number is safe (it won't overflow) and preserve the precision. In particular:</li>
-<li>only addition, subtraction and multiplication are implemented (this is a design choice, see below)</li>
-<li>any operation between a signed and an unsigned leads to a signed number</li>
-<li>resulting numbers will be casted to a type big enough to store the expected values. It follows that it is worth starting with types that are as small as possible to hold the initial value.</li>
-<li>all operations between a fixed point number and a native type (int, float, uint) are <em>not</em> safe. If the resulting value cannot be represented in the fixed point type it will overflow. Only addition, subtraction, multiplication and right/left shift are implemented. These are only accessible activating the <code>FIXMATH_UNSAFE</code> set.</li>
-<li>safe right/left shifts, which return the correct value in the correct type are implemented as .sR&lt;shift&gt;() and .sL&lt;shift&gt;() respectively, shift being the shifting amount.</li>
-</ul>
-<p>More specifically on the returned types of the operations between fixed point math types:</p><ul>
-<li>Additions:<ul>
-<li>UFix&lt;NI,NF&gt; + UFix&lt;_NI,_NF&gt; returns <a class="el" href="classUFix.html">UFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt; at worse</li>
-<li>SFix&lt;NI,NF&gt; + SFix&lt;_NI,_NF&gt; returns <a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt; at worse</li>
-<li>UFix&lt;NI,NF&gt; + SFix&lt;_NI,_NF&gt; returns <a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt; at worse</li>
-<li>UFix&lt;NI,NF&gt; + anything_else (signed or not) returns UFix&lt;NI,NF&gt; (only available with <code>FIXMATH_UNSAFE</code>)</li>
-<li>SFix&lt;NI,NF&gt; + anything_else (signed or not) returns SFix&lt;NI,NF&gt; (only available with <code>FIXMATH_UNSAFE</code>)</li>
-</ul>
-</li>
-<li>Subtractions:<ul>
-<li>UFix&lt;NI,NF&gt; - UFix&lt;_NI,_NF&gt; returns SFix&lt;MAX(NI,_NI),MAX(NF,_NF)&gt; at worse</li>
-<li>SFix&lt;NI,NF&gt; - SFix&lt;_NI,_NF&gt; returns <a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt; at worse</li>
-<li>SFix&lt;NI,NF&gt; - UFix&lt;_NI,_NF&gt; returns <a class="el" href="classSFix.html">SFix</a>&lt;MAX(NI,_NI)+1,MAX(NF,_NF)&gt; at worse</li>
-<li>UFix&lt;NI,NF&gt; - anything_else (signed or not) returns UFix&lt;NI,NF&gt; (only available with <code>FIXMATH_UNSAFE</code>)</li>
-<li>SFix&lt;NI,NF&gt; - anything_else (signed or not) returns SFix&lt;NI,NF&gt; (only available with <code>FIXMATH_UNSAFE</code>)</li>
-<li>(-)SFix&lt;NI,NF&gt; return SFix&lt;NI,NF&gt;</li>
-<li>(-)UFix&lt;NI,NF&gt; return SFix&lt;NI,NF&gt;</li>
-</ul>
-</li>
-<li>Multiplications:<ul>
-<li>UFix&lt;NI,NF&gt; * UFix&lt;_NI,_NF&gt; returns <a class="el" href="classUFix.html">UFix</a>&lt;NI+_NI,NF+_NF&gt; at worse</li>
-<li>UFix&lt;NI,NF&gt; * SFix&lt;_NI,_NF&gt; returns <a class="el" href="classSFix.html">SFix</a>&lt;NI+_NI,NF+_NF&gt; at worse</li>
-<li>SFix&lt;NI,NF&gt; * SFix&lt;_NI,_NF&gt; returns <a class="el" href="classSFix.html">SFix</a>&lt;NI+_NI,NF+_NF&gt; at worse</li>
-<li>UFix&lt;NI,NF&gt; * anything_else (signed or not) returns UFix&lt;NI,NF&gt; (only available with <code>FIXMATH_UNSAFE</code>)</li>
-<li>SFix&lt;NI,NF&gt; * anything_else (signed or not) returns SFix&lt;NI,NF&gt; (only available with <code>FIXMATH_UNSAFE</code>)</li>
-</ul>
-</li>
-<li>Shifts:<ul>
-<li>UFix&lt;NI,NF&gt; .sR&lt;NS&gt; returns <a class="el" href="classUFix.html">UFix</a>&lt;NI-NS,NF+NS&gt;</li>
-<li>UFix&lt;NI,NF&gt; .sL&lt;NS&gt; returns <a class="el" href="classUFix.html">UFix</a>&lt;NI+NS,NF-NS&gt;</li>
-<li>same for <a class="el" href="classSFix.html">SFix</a>.</li>
-</ul>
-</li>
-<li>Inverse:<ul>
-<li><a class="el" href="classUFix.html#a76fc6029f1bfa28cf2a988b82bcd8121">UFix&lt;NI,NF&gt;.invFast()</a> returns the inverse of the number as UFix&lt;NF,NI&gt;</li>
-<li><a class="el" href="classSFix.html#a8605a7c8def7d980412bdf74a717c46d">SFix&lt;NI,NF&gt;.invFast()</a> returns the inverse of the number as SFix&lt;NF,NI&gt;</li>
-<li><a class="el" href="classUFix.html#af3eac5629cdfa39cc1174f7cfcb032e8">UFix&lt;NI,NF&gt;.invAccurate()</a> returns the inverse of the number as <a class="el" href="classUFix.html">UFix</a>&lt;NF,2*NI+NF&gt;</li>
-<li><a class="el" href="classSFix.html#a13b8aa6fe63e4a4c537eec220cc961d9">SFix&lt;NI,NF&gt;.invAccurate()</a> returns the inverse of the number as <a class="el" href="classSFix.html">SFix</a>&lt;NF,2*NI+NF&gt;</li>
-<li>UFix&lt;NI,NF&gt;.inv&lt;_NF&gt;() returns the inverse of the number as UFix&lt;NF,_NF&gt;</li>
-<li>SFix&lt;NI,NF&gt;.inv&lt;_NF&gt;() returns the inverse of the number as SFix&lt;NF,_NF&gt;</li>
-</ul>
-</li>
-<li>Conversion (should be preferred over casting, when possible):<ul>
-<li><a class="el" href="classUFix.html#a221fe9e3a32788353b33c9fc90ea8e81">UFix&lt;NI,NF&gt;.asSFix()</a> returns SFix&lt;NI,NF&gt;</li>
-<li><a class="el" href="classSFix.html#ad457652cb9728830760ff12b83e86f05">SFix&lt;NI,NF&gt;.asUFix()</a> returns UFix&lt;NI,NF&gt;</li>
-<li><a class="el" href="classUFix.html#a3f54ff6dbaa760abc1bee57b1a762f53">UFix&lt;NI,NF&gt;.asFloat()</a> returns the value as a float.</li>
-<li><a class="el" href="classSFix.html#a47b542699b2d040eddacfaac501b762b">SFix&lt;NI,NF&gt;.asFloat()</a> returns the value as a float.</li>
-<li><a class="el" href="classUFix.html#adbc319d2451f6fbc58a16004bcf6479c">UFix&lt;NI,NF&gt;.asRaw()</a> returns the internal value.</li>
-<li><a class="el" href="classSFix.html#a22d106646035967e9fccf4ef74b22224">SFix&lt;NI,NF&gt;.asRaw()</a> returns the internal value.</li>
-<li>T.toUFraction() returns UFix&lt;0,NF&gt; with NF the number of bits of T (uint8_t leads to NF=8bits).</li>
-<li>T.toSFraction() returns SFix&lt;0,NF&gt; with NF the number of bits of T (int8_t leads to NF=7bits).</li>
-<li>T.toUInt() returns UFix&lt;NI,0&gt; with NI the number of bits of T (uint8_t leads to NI=8bits).</li>
-<li>T.toSInt() returns SFix&lt;NI,&gt; with NI the number of bits of T (int8_t leads to NI=7bits). <br  />
-</li>
-</ul>
-</li>
-</ul>
-<p>Note on division: The division is not implemented. This is a deliberate choice made for two reasons:</p><ul>
-<li>in contrast with all the other fundamental operations, it is not possible to guarantee that precision will be kept (other operations returns <em>exact</em> results whenever the operands were also exactly represented. Note that this is actually not the case when using normal floating point numbers. The inverse functions can be used to fake a division, by multiplying by the inverse of a number.</li>
-</ul>
-<p>division are usually very slow operations on MCU, hence there usage is discouraged. The ideal way of doing it is to compute the inverse whenever needed and only when needed. In the context of Mozzi for instance, a good way to do it would be to compute needed inverses in updateControl(), and use them in updateAudio(). constexpr functions used internally. </p>
+<div class="textblock"><p>constexpr functions used internally. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

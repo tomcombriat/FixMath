@@ -1,0 +1,101 @@
+\hypertarget{md__home_tom_Arduino_sketchbook_libraries_FixMath_README_autotoc_md1}{}\doxysection{Overview}\label{md__home_tom_Arduino_sketchbook_libraries_FixMath_README_autotoc_md1}
+Fix\+Math is a library to perform \href{https://en.wikipedia.org/wiki/Fixed-point_arithmetic}{\texttt{ fixed point arithmetics}}. It uses integer types internally to provide fast computations of decimal numbers. As most micro-\/controllers do not have a floating point unit (FPU), this library allows fast computation of fractionnal numbers without resorting to floats.
+
+This implements two fixed point types\+: {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} and {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$} which are unsigned and signed respectively. The templates parameters {\ttfamily NI} and {\ttfamily NF} are the number of bits representing the integral and the fractionnal part, respectively.
+
+The number of bits needed under the hood for the types implemented in this library, is statically determined by the compiler, for performance reasons, and all operations between fixed point types is safe (ie. it cannot overflow) as long as the number of underlying bits do not exceed 64 bits. On this aspect, they behave much like {\ttfamily float}.
+
+This library was original made for \href{https://sensorium.github.io/Mozzi/}{\texttt{ Mozzi}}.\hypertarget{md__home_tom_Arduino_sketchbook_libraries_FixMath_README_autotoc_md2}{}\doxysection{Documentation}\label{md__home_tom_Arduino_sketchbook_libraries_FixMath_README_autotoc_md2}
+A Doxygen documentation is available \href{https://tomcombriat.github.io/FixMath/docs/html/}{\texttt{ here}} and an overview of the library is given below.
+
+A fixed point number has its range defined by the number of bits encoding the integer part (NI in the following) and its precision by the number of bits encoding the fractional part (NF). For \mbox{\hyperlink{classUFix}{UFix}} types, the integral part can hold values in \mbox{[}0,2$^\wedge$\+NI-\/1\mbox{]}, for \mbox{\hyperlink{classSFix}{SFix}} types, the integral part can hold values in \mbox{[}-\/2$^\wedge$\+NI,2$^\wedge$\+NI-\/1\mbox{]}. The number of bits encoding the fractional can be considered as the precision of the number\+: given NF, the number of possible values in the \mbox{[}0,1\mbox{[} range will 2$^\wedge$\+NF. Hence, given NF, the resolution will be 1/(2$^\wedge$\+NF).
+
+Under the hood, these types will keep track of the maximum possible value they might hold (this is the RANGE template parameter), and, if only {\itshape SAFE} operations (see below) are used, will automatically adjust there NI and NF to accomodate the result of a operation. It will also try not to promote there internal type when possible, assu\+FM\+\_\+ming that you use the complete range of a given type.
+
+The operations possible with these types can be divided into two categories\+:
+\begin{DoxyItemize}
+\item the operations between Fix\+Math types are all safe (aka won\textquotesingle{}t overflow) and are the only one included by default
+\item the operations between a Fix\+Math and a native C type (int, float) are NOT safe and are not included by default. In order to activate them, you need to {\ttfamily \#define FIXMATH\+\_\+\+UNSAFE} before including \mbox{\hyperlink{FixMath_8h}{Fix\+Math.\+h}}.
+\end{DoxyItemize}
+
+Like standard C(++) types, the fixed point numbers defined here are following some rules\+:
+\begin{DoxyItemize}
+\item any fixed type can be converted to another {\itshape as long as the value can be represented in the destination type}. Casting to a bigger type in term of NI and NF is safe, but reducing NI can lead to an overflow if the new type cannot hold the integer value and reducing NF leads to a loss of precision.
+\item Fixed types can be constructed from and converted to standard C types.
+\item all operations between fixed point number is safe (it won\textquotesingle{}t overflow) and preserve the precision. In particular\+:
+\begin{DoxyItemize}
+\item only addition, subtraction and multiplication are implemented (this is a design choice, see below)
+\item any operation between a signed and an unsigned leads to a signed number
+\item resulting numbers will be casted to a type big enough to store the expected values. It follows that it is worth starting with types that are as small as possible to hold the initial value.
+\item all operations between a fixed point number and a native type (int, float, uint) are {\itshape not} safe. If the resulting value cannot be represented in the fixed point type it will overflow. Only addition, subtraction, multiplication and right/left shift are implemented. These are only accessible activating the {\ttfamily FIXMATH\+\_\+\+UNSAFE} set.
+\item safe right/left shifts, which return the correct value in the correct type are implemented as .s\+R$<$shift$>$() and .s\+L$<$shift$>$() respectively, shift being the shifting amount.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+More specifically on the returned types of the operations between fixed point math types\+:
+\begin{DoxyItemize}
+\item Additions\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ + \mbox{\hyperlink{classUFix}{UFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$MAX(\+NI,\+\_\+\+NI)+1,MAX(\+NF,\+\_\+\+NF)$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ + \mbox{\hyperlink{classSFix}{SFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$MAX(\+NI,\+\_\+\+NI)+1,MAX(\+NF,\+\_\+\+NF)$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ + \mbox{\hyperlink{classSFix}{SFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$MAX(\+NI,\+\_\+\+NI)+1,MAX(\+NF,\+\_\+\+NF)$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ + anything\+\_\+else} (signed or not) returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ + anything\+\_\+else} (signed or not) returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\end{DoxyItemize}
+\item Subtractions\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ -\/ \mbox{\hyperlink{classUFix}{UFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$MAX(\+NI,\+\_\+\+NI),MAX(\+NF,\+\_\+\+NF)$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ -\/ \mbox{\hyperlink{classSFix}{SFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$MAX(\+NI,\+\_\+\+NI)+1,MAX(\+NF,\+\_\+\+NF)$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ -\/ \mbox{\hyperlink{classUFix}{UFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$MAX(\+NI,\+\_\+\+NI)+1,MAX(\+NF,\+\_\+\+NF)$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ -\/ anything\+\_\+else} (signed or not) returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ -\/ anything\+\_\+else} (signed or not) returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\item {\ttfamily (-\/)\mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$} return {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$}
+\item {\ttfamily (-\/)\mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} return {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$}
+\end{DoxyItemize}
+\item Multiplications\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ $\ast$ \mbox{\hyperlink{classUFix}{UFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI+\+\_\+\+NI,NF+\+\_\+\+NF$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ $\ast$ \mbox{\hyperlink{classSFix}{SFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI+\+\_\+\+NI,NF+\+\_\+\+NF$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ $\ast$ \mbox{\hyperlink{classSFix}{SFix}}$<$\+\_\+\+NI,\+\_\+\+NF$>$} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI+\+\_\+\+NI,NF+\+\_\+\+NF$>$} at worse
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ $\ast$ anything\+\_\+else} (signed or not) returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$ $\ast$ anything\+\_\+else} (signed or not) returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\end{DoxyItemize}
+\item Shifts\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ .sR$<$NS$>$} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI-\/\+NS,NF+\+NS$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ .sL$<$NS$>$} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI+\+NS,NF-\/\+NS$>$}
+\item same for {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ $>$$>$ N} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$ $<$$<$ N} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$} (only available with {\ttfamily FIXMATH\+\_\+\+UNSAFE})
+\item same for {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}}
+\end{DoxyItemize}
+\item Inverse\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Fast()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,NI$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Fast()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,NI$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Accurate()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,2$\ast$\+NI+\+NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Accurate()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,2$\ast$\+NI+\+NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv$<$\+\_\+\+NF$>$()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,\+\_\+\+NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv$<$\+\_\+\+NF$>$()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,\+\_\+\+NF$>$}
+\end{DoxyItemize}
+\item Conversion (should be preferred over casting, when possible)\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.as\+SFix()} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.as\+UFix()} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.as\+Float()} returns the value as a {\ttfamily float}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.as\+Float()} returns the value as a {\ttfamily float}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.as\+Raw()} returns the internal value
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.as\+Raw()} returns the internal value
+\item {\ttfamily T.\+to\+UFraction()} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$0,NF$>$} with {\ttfamily NF} the number of bits of {\ttfamily T} ({\ttfamily uint8\+\_\+t} leads to {\ttfamily NF=8}bits).
+\item {\ttfamily T.\+to\+SFraction()} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$0,NF$>$} with {\ttfamily NF} the number of bits of {\ttfamily T} ({\ttfamily int8\+\_\+t} leads to {\ttfamily NF=7}bits).
+\item {\ttfamily T.\+to\+UInt()} returns {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,0$>$} with {\ttfamily NI} the number of bits of {\ttfamily T} ({\ttfamily uint8\+\_\+t} leads to {\ttfamily NI=8}bits).
+\item {\ttfamily T.\+to\+SInt()} returns {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,$>$} with {\ttfamily NI} the number of bits of {\ttfamily T} ({\ttfamily int8\+\_\+t} leads to {\ttfamily NI=7}bits). ~\newline
+
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Note on division\+: The division is not implemented. This is a deliberate choice made for two reasons\+:
+\begin{DoxyItemize}
+\item in contrast with all the other fundamental operations, it is not possible to guarantee that precision will be kept (other operations returns {\itshape exact} results whenever the operands were also exactly represented. Note that this is actually not the case when using normal floating point numbers. The inverse functions can be used to fake a division, by multiplying by the inverse of a number.
+\item division are usually very slow operations on MCU, hence there usage is discouraged. The ideal way of doing it is to compute the inverse whenever needed and only when needed. In the context of Mozzi for instance, a good way to do it would be to compute needed inverses in {\ttfamily update\+Control()}, and use them in {\ttfamily update\+Audio()}. 
+\end{DoxyItemize}
