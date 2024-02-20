@@ -9,7 +9,8 @@
  */
 
 
-/** This file implements two fixed point number classes. These numbers can have a fractional
+/** @file
+This file implements two fixed point number classes. These numbers can have a fractional
     part but are actually standard integers under the hood which makes calculations with them
     efficient on platforms which do not have a FPU like most micro-controllers. These numbers can be
     signed (SFix) or unsigned (UFix).
