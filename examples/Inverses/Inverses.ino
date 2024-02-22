@@ -36,7 +36,7 @@ have the same inverse). For a Fix<NI,NF> the invFast is of type Fix<NF,NI>
 
   /*
 invAccurate provides a better resolution but the output type is
-way bigger: Fix<NI,NF>.invAccurate() is a Fix<2*NF+NI,NI>.
+way bigger: Fix<NI,NF>.invAccurate() is a Fix<NF,2*NI+NF>.
 In most case, this provides different values for every 
 different number.
 Here, the resulting numbers are UFix<8,24>.
