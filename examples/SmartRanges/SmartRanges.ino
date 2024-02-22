@@ -31,10 +31,11 @@ Promotion is needed to be sure that the result
 does not overflow. The sum has the potential
 to fill completely a UFix<9,0>
 */
+  auto sum1 = aF + bF;
   Serial.print("aF+bF is of type: UFix<");
-  Serial.print((aF + bF).getNI());
+  Serial.print(sum1.getNI());
   Serial.print(",");
-  Serial.print((aF + bF).getNF());
+  Serial.print(sum1.getNF());
   Serial.println(">");
 
   /*
@@ -44,10 +45,12 @@ a UFix<10,0>. There is still room for a UFix<8,0>
 because 256*3=768 and the maximum a UFix<10,0> can
 hold is 1023.
 */
+
+  auto sum2 = aF + bF + cF;
   Serial.print("aF+bF+cF is of type: UFix<");
-  Serial.print((aF + bF + cF).getNI());
+  Serial.print(sum2.getNI());
   Serial.print(",");
-  Serial.print((aF + bF + cF).getNF());
+  Serial.print(sum2.getNF());
   Serial.println(">");
 
 
@@ -57,10 +60,11 @@ FixMath does not promote here and
 aF+bF+cF has the same type than
 aF+bF+cF+dF.
 */
+  auto sum3 = aF + bF + cF + dF;
   Serial.print("aF+bF+cF+dF is of type: UFix<");
-  Serial.print((aF + bF + cF + dF).getNI());
+  Serial.print(sum3.getNI());
   Serial.print(",");
-  Serial.print((aF + bF + cF + dF).getNF());
+  Serial.print(sum3.getNF());
   Serial.println(">");
 
   Serial.println();
