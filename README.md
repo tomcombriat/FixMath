@@ -6,7 +6,7 @@ FixMath is a library to perform [fixed point arithmetics](https://en.wikipedia.o
 
 This implements two fixed point types: `UFix<NI,NF>` and `SFix<NI,NF>` which are unsigned and signed respectively. The templates parameters `NI` and `NF` are the number of bits representing the integral and the fractionnal part, respectively.
 
-The number of bits needed under the hood for the types implemented in this library, is statically determined by the compiler, for performance reasons, and all operations between fixed point types is safe (ie. it cannot overflow) as long as the number of underlying bits do not exceed 64 bits. On this aspect, they behave much like `float`.
+The number of bits needed under the hood for the types implemented in this library, is statically determined by the compiler, for performance reasons, and all operations between fixed point types is safe (ie. it cannot overflow) as long as the number of underlying bits do not exceed 64 bits. On this aspect, they behave much like `float`. Note that `FixMath` will try to use the smallest number of bits possible, for performance reasons (which is why the templates look a bit barbaric). For this to work well, the smallest number of bits actually needed should be used when creating a fixed point math number with FixMath.
 
 This library was original made for [Mozzi](https://sensorium.github.io/Mozzi/).
 
