@@ -649,8 +649,8 @@ inline UFix<0, sizeof(T)*8> toUFraction(T val) {
     @return A UFix<NI,0> with NI chosen according to the input type
 */
 template<typename T>
-inline UFix<sizeof(T)*8-1,0> toUInt(T val) {
-  return UFix<sizeof(T)*8-1,0>::fromRaw(val); 
+inline UFix<sizeof(T)*8,0> toUInt(T val) {
+  return UFix<sizeof(T)*8,0>::fromRaw(val); 
 }
 
 
