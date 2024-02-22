@@ -2,8 +2,7 @@
 \label{FixMath_8h}\index{FixMath.h@{FixMath.h}}
 {\ttfamily \#include $<$Arduino.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}Integer\+Type.\+h\char`\"{}}\newline
-Include dependency graph for Fix\+Math.\+h\+:
-\nopagebreak
+Include dependency graph for Fix\+Math.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -60,7 +59,7 @@ constexpr uint64\+\_\+t {\bfseries Fix\+Math\+Private\+::range\+Shift} (int8\+\_
 \item 
 {\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classUFix}{UFix}}$<$ 0, sizeof(T) $\ast$8 $>$ \mbox{\hyperlink{FixMath_8h_aaaaa1dc404829e0ec37bc565d58f394f}{to\+UFraction}} (T val)
 \item 
-{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classUFix}{UFix}}$<$ sizeof(T) $\ast$8-\/1, 0 $>$ \mbox{\hyperlink{FixMath_8h_a5160f5ab224e5424f6dd9e608db0dc9d}{to\+UInt}} (T val)
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classUFix}{UFix}}$<$ sizeof(T) $\ast$8, 0 $>$ \mbox{\hyperlink{FixMath_8h_aa2666bae0f50341fb0db86af1af47ec9}{to\+UInt}} (T val)
 \item 
 {\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ }\\\mbox{\hyperlink{classSFix}{SFix}}$<$ Fix\+Math\+Private\+::needed\+SNIExtra(Fix\+Math\+Private\+::\+FM\+\_\+max(NI, \+\_\+\+NI), Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF, \+\_\+\+NF, RANGE, \+\_\+\+RANGE)), Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF, \+\_\+\+NF, RANGE, \+\_\+\+RANGE)$>$ \mbox{\hyperlink{FixMath_8h_a83bdc57433394da979b73216f504a531}{operator+}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&op2)
 \item 
@@ -428,12 +427,12 @@ Create a {\itshape pure} fractional unsigned fixed number (\mbox{\hyperlink{clas
 \begin{DoxyReturn}{Returns}
 A UFix$<$0,\+NF$>$ with NF chosen according to the input type 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a5160f5ab224e5424f6dd9e608db0dc9d}\label{FixMath_8h_a5160f5ab224e5424f6dd9e608db0dc9d}} 
+\mbox{\Hypertarget{FixMath_8h_aa2666bae0f50341fb0db86af1af47ec9}\label{FixMath_8h_aa2666bae0f50341fb0db86af1af47ec9}} 
 \index{FixMath.h@{FixMath.h}!toUInt@{toUInt}}
 \index{toUInt@{toUInt}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{toUInt()}{toUInt()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\mbox{\hyperlink{classUFix}{UFix}}$<$sizeof(T)$\ast$8-\/1,0$>$ to\+UInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{classUFix}{UFix}}$<$sizeof(T)$\ast$8,0$>$ to\+UInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Create a {\itshape pure} integer unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+UInt(255) and to\+UInt(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=16 -\/ which is overkill -\/ whereas the latter will lead to NI=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
 \begin{DoxyParams}{Parameters}

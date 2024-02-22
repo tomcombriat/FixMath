@@ -141,9 +141,9 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMath
 <tr class="memitem:aaaaa1dc404829e0ec37bc565d58f394f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aaaaa1dc404829e0ec37bc565d58f394f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUFix.html">UFix</a>&lt; 0, sizeof(T) *8 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#aaaaa1dc404829e0ec37bc565d58f394f">toUFraction</a> (T val)</td></tr>
 <tr class="separator:aaaaa1dc404829e0ec37bc565d58f394f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5160f5ab224e5424f6dd9e608db0dc9d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5160f5ab224e5424f6dd9e608db0dc9d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUFix.html">UFix</a>&lt; sizeof(T) *8-1, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a5160f5ab224e5424f6dd9e608db0dc9d">toUInt</a> (T val)</td></tr>
-<tr class="separator:a5160f5ab224e5424f6dd9e608db0dc9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2666bae0f50341fb0db86af1af47ec9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa2666bae0f50341fb0db86af1af47ec9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUFix.html">UFix</a>&lt; sizeof(T) *8, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#aa2666bae0f50341fb0db86af1af47ec9">toUInt</a> (T val)</td></tr>
+<tr class="separator:aa2666bae0f50341fb0db86af1af47ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83bdc57433394da979b73216f504a531"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </td></tr>
 <tr class="memitem:a83bdc57433394da979b73216f504a531"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classSFix.html">SFix</a>&lt; FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI, _NI), FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF, _NF, RANGE, _RANGE)), FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF, _NF, RANGE, _RANGE)&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a83bdc57433394da979b73216f504a531">operator+</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF, RANGE &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;op2)</td></tr>
 <tr class="separator:a83bdc57433394da979b73216f504a531"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -890,8 +890,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a5160f5ab224e5424f6dd9e608db0dc9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5160f5ab224e5424f6dd9e608db0dc9d">&#9670;&nbsp;</a></span>toUInt()</h2>
+<a id="aa2666bae0f50341fb0db86af1af47ec9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2666bae0f50341fb0db86af1af47ec9">&#9670;&nbsp;</a></span>toUInt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -902,7 +902,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUFix.html">UFix</a>&lt;sizeof(T)*8-1,0&gt; toUInt </td>
+          <td class="memname"><a class="el" href="classUFix.html">UFix</a>&lt;sizeof(T)*8,0&gt; toUInt </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
