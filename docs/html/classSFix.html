@@ -134,6 +134,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad457652cb9728830760ff12b83e86f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47b542699b2d040eddacfaac501b762b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSFix.html#a47b542699b2d040eddacfaac501b762b">asFloat</a> () const</td></tr>
 <tr class="separator:a47b542699b2d040eddacfaac501b762b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ac70d40c8860889273453f56fda97f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegerType.html">IntegerType</a>&lt; FixMathPrivate::sBitsToBytes(NI+1)&gt;::signed_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSFix.html#a4ac70d40c8860889273453f56fda97f1">asInt</a> () const</td></tr>
+<tr class="separator:a4ac70d40c8860889273453f56fda97f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22d106646035967e9fccf4ef74b22224"><td class="memItemLeft" align="right" valign="top">internal_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSFix.html#a22d106646035967e9fccf4ef74b22224">asRaw</a> () const</td></tr>
 <tr class="separator:a22d106646035967e9fccf4ef74b22224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0c24fdeef2426c9bc56cbc3f904635e"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSFix.html#aa0c24fdeef2426c9bc56cbc3f904635e">getNI</a> () const</td></tr>
@@ -407,6 +409,35 @@ template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Returns the value as floating point number. </p><dl class="section return"><dt>Returns</dt><dd>The floating point value. </dd></dl>
+
+</div>
+</div>
+<a id="a4ac70d40c8860889273453f56fda97f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ac70d40c8860889273453f56fda97f1">&#9670;&nbsp;</a></span>asInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIntegerType.html">IntegerType</a>&lt;FixMathPrivate::sBitsToBytes(NI+1)&gt;::signed_type <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF, RANGE &gt;::asInt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the integer part of the number, as a standard C type integer (int8_t, int16_t etc) depending on NI. </p><dl class="section note"><dt>Note</dt><dd>Because numbers are stored as two's complement, this returns the closest integer <em>towards</em> negative values </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The integer part, as a C integer type. </dd></dl>
 
 </div>
 </div>

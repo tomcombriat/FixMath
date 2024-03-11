@@ -137,6 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a221fe9e3a32788353b33c9fc90ea8e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f54ff6dbaa760abc1bee57b1a762f53"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUFix.html#a3f54ff6dbaa760abc1bee57b1a762f53">asFloat</a> () const</td></tr>
 <tr class="separator:a3f54ff6dbaa760abc1bee57b1a762f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad19493943907de03f671a3d0adadcd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structIntegerType.html">IntegerType</a>&lt; FixMathPrivate::uBitsToBytes(NI)&gt;::unsigned_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUFix.html#a4ad19493943907de03f671a3d0adadcd">asInt</a> () const</td></tr>
+<tr class="separator:a4ad19493943907de03f671a3d0adadcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbc319d2451f6fbc58a16004bcf6479c"><td class="memItemLeft" align="right" valign="top">internal_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUFix.html#adbc319d2451f6fbc58a16004bcf6479c">asRaw</a> () const</td></tr>
 <tr class="separator:adbc319d2451f6fbc58a16004bcf6479c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb055a1c325c11e80c75b2339128310f"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUFix.html#afb055a1c325c11e80c75b2339128310f">getNI</a> () const</td></tr>
@@ -409,6 +411,34 @@ template&lt;int8_t NI, int8_t NF, uint64_t RANGE = FixMathPrivate::uFullRange(NI
 </table>
 </div><div class="memdoc">
 <p>Returns the value as floating point number. </p><dl class="section return"><dt>Returns</dt><dd>The floating point value. </dd></dl>
+
+</div>
+</div>
+<a id="a4ad19493943907de03f671a3d0adadcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ad19493943907de03f671a3d0adadcd">&#9670;&nbsp;</a></span>asInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int8_t NI, int8_t NF, uint64_t RANGE = FixMathPrivate::uFullRange(NI+NF)&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structIntegerType.html">IntegerType</a>&lt;FixMathPrivate::uBitsToBytes(NI)&gt;::unsigned_type <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF, RANGE &gt;::asInt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the integer part of the number, as a standard C type integer (uint8_t, uint16_t etc) depending on NI. </p><dl class="section return"><dt>Returns</dt><dd>The integer part, as a C integer type. </dd></dl>
 
 </div>
 </div>
