@@ -521,12 +521,12 @@ public:
   /** The number of bits used to encode the integral part.
       @return The number of bits used to encode the integral part.
   */
-  int8_t getNI() const {return NI;}
+  static constexpr int8_t getNI() /*const*/ {return NI;}
 
   /** The number of bits used to encode the fractional part.
       @return The number of bits used to encode the fractional part.
   */
-  int8_t getNF() const {return NF;}
+  static constexpr int8_t getNF() /*const*/ {return NF;}
     
 private:
   internal_type internal_value;
@@ -1024,12 +1024,12 @@ template<int8_t op>
   /** The number of bits used to encode the integral part.
       @return The number of bits used to encode the integral part.
   */
-  int8_t getNI() const {return NI;}
+  static constexpr int8_t getNI() {return NI;}
 
   /** The number of bits used to encode the fractional part.
       @return The number of bits used to encode the fractional part.
   */
-  int8_t getNF() const {return NF;}
+  static constexpr int8_t getNF() {return NF;}
   
 
 private:
