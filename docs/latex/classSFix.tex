@@ -53,6 +53,8 @@
 \item 
 float \mbox{\hyperlink{classSFix_a47b542699b2d040eddacfaac501b762b}{as\+Float}} () const
 \item 
+\mbox{\hyperlink{structIntegerType}{Integer\+Type}}$<$ Fix\+Math\+Private\+::s\+Bits\+To\+Bytes(NI+1)$>$\+::signed\+\_\+type \mbox{\hyperlink{classSFix_a4ac70d40c8860889273453f56fda97f1}{as\+Int}} () const
+\item 
 internal\+\_\+type \mbox{\hyperlink{classSFix_a22d106646035967e9fccf4ef74b22224}{as\+Raw}} () const
 \item 
 int8\+\_\+t \mbox{\hyperlink{classSFix_aa0c24fdeef2426c9bc56cbc3f904635e}{get\+NI}} () const
@@ -184,6 +186,19 @@ float \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE $>$\+::as\+Float (\beg
 
 Returns the value as floating point number. \begin{DoxyReturn}{Returns}
 The floating point value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classSFix_a4ac70d40c8860889273453f56fda97f1}\label{classSFix_a4ac70d40c8860889273453f56fda97f1}} 
+\index{SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}!asInt@{asInt}}
+\index{asInt@{asInt}!SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}}
+\doxysubsubsection{\texorpdfstring{asInt()}{asInt()}}
+{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ \\
+\mbox{\hyperlink{structIntegerType}{Integer\+Type}}$<$Fix\+Math\+Private\+::s\+Bits\+To\+Bytes(NI+1)$>$\+::signed\+\_\+type \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE $>$\+::as\+Int (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the integer part of the number, as a standard C type integer (int8\+\_\+t, int16\+\_\+t etc) depending on NI. \begin{DoxyNote}{Note}
+Because numbers are stored as two\textquotesingle{}s complement, this returns the closest integer {\itshape towards} negative values 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+The integer part, as a C integer type. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classSFix_a22d106646035967e9fccf4ef74b22224}\label{classSFix_a22d106646035967e9fccf4ef74b22224}} 
 \index{SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}!asRaw@{asRaw}}

@@ -55,6 +55,8 @@
 \item 
 float \mbox{\hyperlink{classUFix_a3f54ff6dbaa760abc1bee57b1a762f53}{as\+Float}} () const
 \item 
+\mbox{\hyperlink{structIntegerType}{Integer\+Type}}$<$ Fix\+Math\+Private\+::u\+Bits\+To\+Bytes(NI)$>$\+::unsigned\+\_\+type \mbox{\hyperlink{classUFix_a4ad19493943907de03f671a3d0adadcd}{as\+Int}} () const
+\item 
 internal\+\_\+type \mbox{\hyperlink{classUFix_adbc319d2451f6fbc58a16004bcf6479c}{as\+Raw}} () const
 \item 
 int8\+\_\+t \mbox{\hyperlink{classUFix_afb055a1c325c11e80c75b2339128310f}{get\+NI}} () const
@@ -183,6 +185,16 @@ float \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$\+::as\+Float (\beg
 
 Returns the value as floating point number. \begin{DoxyReturn}{Returns}
 The floating point value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classUFix_a4ad19493943907de03f671a3d0adadcd}\label{classUFix_a4ad19493943907de03f671a3d0adadcd}} 
+\index{UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}!asInt@{asInt}}
+\index{asInt@{asInt}!UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}}
+\doxysubsubsection{\texorpdfstring{asInt()}{asInt()}}
+{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE = Fix\+Math\+Private\+::u\+Full\+Range(\+NI+\+NF)$>$ \\
+\mbox{\hyperlink{structIntegerType}{Integer\+Type}}$<$Fix\+Math\+Private\+::u\+Bits\+To\+Bytes(NI)$>$\+::unsigned\+\_\+type \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$\+::as\+Int (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the integer part of the number, as a standard C type integer (uint8\+\_\+t, uint16\+\_\+t etc) depending on NI. \begin{DoxyReturn}{Returns}
+The integer part, as a C integer type. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classUFix_adbc319d2451f6fbc58a16004bcf6479c}\label{classUFix_adbc319d2451f6fbc58a16004bcf6479c}} 
 \index{UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}!asRaw@{asRaw}}

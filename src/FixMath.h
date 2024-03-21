@@ -503,6 +503,15 @@ public:
       @return The floating point value.
   */
   float asFloat() const { return (static_cast<float>(internal_value)) / (next_greater_type(1)<<NF); }
+
+    /** Return the integer part of the number, as a standard C type integer (uint8_t, uint16_t etc) depending on NI.
+      @return The integer part, as a C integer type.
+  */
+ typename IntegerType<FixMathPrivate::uBitsToBytes(NI)>::unsigned_type asInt() const
+  {
+    UFix<NI,0> integer_part(*this);
+    return integer_part.asRaw();
+  }
   
   /** Returns the internal integer value
       @return the internal value
@@ -512,12 +521,12 @@ public:
   /** The number of bits used to encode the integral part.
       @return The number of bits used to encode the integral part.
   */
-  int8_t getNI() const {return NI;}
+  static constexpr int8_t getNI() {return NI;}
 
   /** The number of bits used to encode the fractional part.
       @return The number of bits used to encode the fractional part.
   */
-  int8_t getNF() const {return NF;}
+  static constexpr int8_t getNF() {return NF;}
     
 private:
   internal_type internal_value;
@@ -996,6 +1005,16 @@ template<int8_t op>
       @return The floating point value.
   */
   float asFloat() const {return (static_cast<float>(internal_value)) / (next_greater_type(1)<<NF); }
+
+   /** Return the integer part of the number, as a standard C type integer (int8_t, int16_t etc) depending on NI.
+@note Because numbers are stored as two's complement, this returns the closest integer *towards* negative values
+      @return The integer part, as a C integer type.
+  */
+  typename IntegerType<FixMathPrivate::sBitsToBytes(NI+1)>::signed_type asInt() const // the +1 is to ensure that no overflow occurs at the lower end of the container (ie when getting the integer part of SFix<7,N>(-128.4), which is a valid SFix<7,N>) because the floor is done towards negative values.
+  {
+    SFix<NI+1,0> integer_part(*this);
+    return integer_part.asRaw();
+  }
   
   /** Returns the internal integer value
       @return the internal value
@@ -1005,12 +1024,12 @@ template<int8_t op>
   /** The number of bits used to encode the integral part.
       @return The number of bits used to encode the integral part.
   */
-  int8_t getNI() const {return NI;}
+  static constexpr int8_t getNI() {return NI;}
 
   /** The number of bits used to encode the fractional part.
       @return The number of bits used to encode the fractional part.
   */
-  int8_t getNF() const {return NF;}
+  static constexpr int8_t getNF() {return NF;}
   
 
 private:
