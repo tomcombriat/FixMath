@@ -136,6 +136,10 @@ namespace FixMathPrivate {
 template<int8_t NI, int8_t NF, uint64_t RANGE=FixMathPrivate::sFullRange(NI+NF)>
 class SFix;
 
+// Forward declaration
+template<int8_t NI, int8_t NF, uint64_t RANGE=FixMathPrivate::uFullRange(NI+NF)>
+class UFix;
+
 
 
 /** Instanciate an unsigned fixed point math number.
@@ -143,7 +147,7 @@ class SFix;
     @param NF The number of bits encoding the fractional part
     @param RANGE A purely internal parameter that keeps track of the range used by the type. Safer to *not* define it.
 */
-template<int8_t NI, int8_t NF, uint64_t RANGE=FixMathPrivate::uFullRange(NI+NF)> // NI and NF being the number of bits for the integral and the fractionnal parts respectively.
+template<int8_t NI, int8_t NF, uint64_t RANGE> // NI and NF being the number of bits for the integral and the fractionnal parts respectively.
 class UFix
 {
   static_assert(NI+NF<=64, "The total width of a UFix cannot exceed 64bits");
@@ -208,24 +212,20 @@ public:
 
 
   //////// ADDITION OVERLOADS
-  
+
   /** Addition with another UFix. Safe.
       @param op The UFix to be added.
       @return The result of the addition as a UFix.
   */
    template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   UFix<FixMathPrivate::neededNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const UFix<_NI,_NF,_RANGE>& op) const
+   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::NIadjusted_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const
   {
-    constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
-    typedef typename IntegerType<FixMathPrivate::uBitsToBytes(new_NI+new_NF)>::unsigned_type return_type;
-    UFix<new_NI,new_NF> left(*this);
-    UFix<new_NI,new_NF> right(op);
+    using namespace FixMathPrivate;
+    typedef UFix<FM_max(NI,_NI), FM_max(NI,_NI), rangeAdd(NF,_NF,RANGE,_RANGE)> temptype; // intermediate type with the correct RANGE, but not necessarily the required NI
+    typedef typename temptype::NIadjusted_t worktype;  // the proper return type, with NI adjusted according the range calculated, above
 
-    return_type tt = return_type(left.asRaw()) + right.asRaw();
-    return UFix<new_NI,new_NF,new_RANGE>(tt,true);
-    }
+    return worktype(worktype(*this).asRaw() + worktype(op).asRaw(), true);
+  }
 
     /** Addition with a SFix. Safe.
       @param op The UFix to be added.
@@ -508,7 +508,7 @@ public:
   /** Returns the internal integer value
       @return the internal value
   */
-  internal_type asRaw() const { return internal_value; }
+  constexpr internal_type asRaw() const { return internal_value; }
   
   /** The number of bits used to encode the integral part.
       @return The number of bits used to encode the integral part.
@@ -519,8 +519,12 @@ public:
       @return The number of bits used to encode the fractional part.
   */
   static constexpr int8_t getNF() {return NF;}
-    
+
 private:
+  template<int8_t, int8_t, uint64_t> friend class UFix;  // All sibling specializations shall be friends, too
+  static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return uint64_t(1)<<(NI+NF+delta_bits); }
+  typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> NIadjusted_t;
+
   internal_type internal_value;
   static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
 };
