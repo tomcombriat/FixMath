@@ -153,19 +153,19 @@ class UFix
 public:
   /** Constructor
    */
-  UFix() {;}
+  constexpr UFix() {}
 
   /** Constructor from a positive floating point value.
       @param fl Floating point value
       @return An unsigned fixed point number
   */
-  UFix(float fl)  {internal_value = /*static_cast<internal_type>*/(fl * (next_greater_type(1) << NF));}
+  constexpr UFix(float fl) : internal_value(/*static_cast<internal_type>*/(fl * (next_greater_type(1) << NF))) {}
 
   /** Constructor from a floating point value.
       @param fl Floating point value
       @return An unsigned fixed point number
   */
-  UFix(double fl)  {internal_value = static_cast<internal_type> (fl * (next_greater_type(1) << NF)); }
+  constexpr UFix(double fl) : internal_value(static_cast<internal_type> (fl * (next_greater_type(1) << NF))) {}
   
   /* Constructor from integer type (as_frac = false) or from fractionnal value (as_frac=true) can be used to emulate the behavior of for instance Q8n0_to_Q8n8 */
 
@@ -176,11 +176,7 @@ public:
       @return An unsigned fixed point number
   */
   template<typename T>
-  UFix(T value,bool as_raw=false)  {
-    
-    if (as_raw) internal_value = value;
-    else internal_value = (internal_type(value) << NF);      
-  }
+  constexpr UFix(T value,bool as_raw=false) : internal_value(as_raw ? value : (internal_type(value) << NF)) {}
 
 
   /** Set the internal value of the fixed point math number.
@@ -188,7 +184,7 @@ public:
       @return An UFixx
   */  
   template<typename T>
-  static UFix<NI,NF> fromRaw(T raw){return UFix<NI,NF>(raw,true);}
+  static constexpr UFix<NI,NF> fromRaw(T raw){return UFix<NI,NF>(raw,true);}
 
 
 
@@ -199,9 +195,7 @@ public:
       @return A unsigned fixed type number
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  UFix(const UFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
-  }
+  constexpr UFix(const UFix<_NI,_NF, _RANGE>& uf) : internal_value(FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF))) {}
 
 
 
@@ -210,9 +204,7 @@ public:
       @return A unsigned fixed type number
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  UFix(const SFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
-  }
+  constexpr UFix(const SFix<_NI,_NF, _RANGE>& uf) : internal_value(FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF))) {}
 
 
   //////// ADDITION OVERLOADS
@@ -680,19 +672,19 @@ class SFix
 public:
   /** Constructor
    */
-  SFix() {;}
+  constexpr SFix() {}
   
   /** Constructor from a floating point value.
       @param fl Floating point value
       @return An signed fixed point number
   */
-  SFix(float fl)  {internal_value = /*static_cast<internal_type>*/(fl * (next_greater_type(1) << NF));}
+  constexpr SFix(float fl) : internal_value(/*static_cast<internal_type>*/(fl * (next_greater_type(1) << NF))) {}
 
   /** Constructor from a floating point value.
       @param fl Floating point value
       @return An signed fixed point number
   */
-  SFix(double fl)  {internal_value = static_cast<internal_type> (fl * (next_greater_type(1) << NF)); }
+  constexpr SFix(double fl) : internal_value(static_cast<internal_type> (fl * (next_greater_type(1) << NF))) {}
 
 
   /** Constructor from an integer value which can be interpreted as both a resulting fixed point 
@@ -702,18 +694,14 @@ public:
       @return An signed fixed point number
   */
   template<typename T>
-  SFix(T value,bool as_raw=false)
-  {
-    if (as_raw) internal_value = value;
-    else internal_value = (internal_type(value) << NF);
-  }
+  constexpr SFix(T value,bool as_raw=false) : internal_value(as_raw ? value : (internal_type(value) << NF)) {};
 
   /** Set the internal value of the fixed point math number.
       @param raw The new internal value.
       @return A SFix.
   */  
   template<typename T>
-  static SFix<NI,NF> fromRaw(T raw){return SFix<NI,NF>(raw,true);}
+  static constexpr SFix<NI,NF> fromRaw(T raw){return SFix<NI,NF>(raw,true);}
 
 
   /** Constructor from another SFix. 
@@ -721,19 +709,14 @@ public:
       @return A signed fixed type number
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  SFix(const SFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::sBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::signed_type) uf.asRaw(),(_NF-NF));
-    
-  }
+  constexpr SFix(const SFix<_NI,_NF, _RANGE>& uf) : internal_value(FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::sBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::signed_type) uf.asRaw(),(_NF-NF))) {}
 
   /** Constructor from an UFix. 
       @param uf A unsigned fixed type number which value can be represented in this type.
       @return A signed fixed type number
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  SFix(const UFix<_NI,_NF, _RANGE>& uf) {
-    internal_value = FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF));
-  }
+  constexpr SFix(const UFix<_NI,_NF, _RANGE>& uf) : internal_value(FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::uBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::unsigned_type) uf.asRaw(),(_NF-NF))) {};
 
   //////// ADDITION OVERLOADS
 
