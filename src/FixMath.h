@@ -218,10 +218,10 @@ public:
       @return The result of the addition as a UFix.
   */
    template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::NIadjusted_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const
+   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::NIadjusted_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const
   {
     using namespace FixMathPrivate;
-    typedef UFix<FM_max(NI,_NI), FM_max(NI,_NI), rangeAdd(NF,_NF,RANGE,_RANGE)> temptype; // intermediate type with the correct RANGE, but not necessarily the required NI
+    typedef UFix<FM_max(NI,_NI), FM_max(NF,_NF), rangeAdd(NF,_NF,RANGE,_RANGE)> temptype; // intermediate type with the correct RANGE, but not necessarily the required NI
     typedef typename temptype::NIadjusted_t worktype;  // the proper return type, with NI adjusted according the range calculated, above
 
     return worktype(worktype(*this).asRaw() + worktype(op).asRaw(), true);
@@ -1309,7 +1309,7 @@ inline SFix<sizeof(T)*8-1,0> toSInt(T val) {
 
 
 
-
+#include "FixMath_Autotests.h"
 
 
 #endif
