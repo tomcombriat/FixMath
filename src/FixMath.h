@@ -218,11 +218,11 @@ public:
       @return The result of the addition as a UFix.
   */
    template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::NIadjusted_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const
+   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::UFixNIadj_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const
   {
     using namespace FixMathPrivate;
     typedef UFix<FM_max(NI,_NI), FM_max(NF,_NF), rangeAdd(NF,_NF,RANGE,_RANGE)> temptype; // intermediate type with the correct RANGE, but not necessarily the required NI
-    typedef typename temptype::NIadjusted_t worktype;  // the proper return type, with NI adjusted according the range calculated, above
+    typedef typename temptype::UFixNIadj_t worktype;  // the proper return type, with NI adjusted according the range calculated, above
 
     return worktype(worktype(*this).asRaw() + worktype(op).asRaw(), true);
   }
@@ -523,7 +523,7 @@ public:
 private:
   template<int8_t, int8_t, uint64_t> friend class UFix;  // All sibling specializations shall be friends, too
   static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return uint64_t(1)<<(NI+NF+delta_bits); }
-  typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> NIadjusted_t;
+  typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> UFixNIadj_t;
 
   internal_type internal_value;
   static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
