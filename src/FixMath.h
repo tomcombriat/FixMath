@@ -127,7 +127,6 @@ namespace FixMathPrivate {
   constexpr uint64_t sFullRange(int8_t N) { return uint64_t(1)<<N;} // FM_maximum absolute value that can be hold in a signed of size N
   constexpr uint64_t uFullRange(int8_t N) { return ((uint64_t(1)<<(N-1))-1) + (uint64_t(1)<<(N-1));}
   constexpr uint64_t rangeAdd(byte NF, byte _NF, uint64_t RANGE, uint64_t _RANGE) { return ((NF > _NF) ? (RANGE + (_RANGE<<(NF-_NF))) : (_RANGE + (RANGE<<(_NF-NF))));}  // returns the RANGE following an addition
-  constexpr int8_t neededNIExtra(int8_t NI, int8_t NF, uint64_t RANGE) { return (RANGE > (uFullRange(NI+NF)) ? (NI+1) : (RANGE > (uFullRange(NI+NF-1)) ? (NI) : (NI-1)));} // check if RANGE can be hold in the unsigned type defined by NI and NF
   constexpr int8_t neededSNIExtra(int8_t NI, int8_t NF, uint64_t RANGE) { return (RANGE > (sFullRange(NI+NF)) ? (NI+1) : (RANGE > (sFullRange(NI+NF-1)) ? (NI) : (NI-1)));}  // same for signed
   constexpr uint64_t rangeShift(int8_t N, int8_t SH, uint64_t RANGE) { return ((SH < N) ? (RANGE) : (shiftR(RANGE,(N-SH))));}  // make sure that NI or NF does not turn negative when safe shifts are used.
 }
@@ -218,7 +217,7 @@ public:
       @return The result of the addition as a UFix.
   */
    template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::UFixNIadj_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const
+   constexpr typename UFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::UFixNIadj_t operator+ (const UFix<_NI,_NF,_RANGE>& op) const // NOTE: C++-11 does not (yet) allow auto return value
   {
     using namespace FixMathPrivate;
     typedef UFix<FM_max(NI,_NI), FM_max(NF,_NF), rangeAdd(NF,_NF,RANGE,_RANGE)> temptype; // intermediate type with the correct RANGE, but not necessarily the required NI
@@ -231,19 +230,15 @@ public:
       @param op The UFix to be added.
       @return The result of the addition as a SFix.
   */
-   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-   SFix<FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)> operator+ (const SFix<_NI,_NF,_RANGE>& op) const
+  template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
+  constexpr typename SFix<FixMathPrivate::FM_max(NI,_NI), FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)>::SFixNIadj_t operator+ (const SFix<_NI,_NF,_RANGE>& op) const
   {
-    constexpr uint64_t new_RANGE = FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE);
-    constexpr int8_t new_NI = FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),new_RANGE);
-    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
-    typedef typename IntegerType<FixMathPrivate::uBitsToBytes(new_NI+new_NF)>::signed_type return_type;
-    SFix<new_NI,new_NF> left(*this);
-    SFix<new_NI,new_NF> right(op);
+    using namespace FixMathPrivate;
+    typedef SFix<FM_max(NI,_NI), FM_max(NF,_NF), rangeAdd(NF,_NF,RANGE,_RANGE)> temptype;
+    typedef typename temptype::SFixNIadj_t worktype;
 
-    return_type tt = return_type(left.asRaw()) + right.asRaw();
-    return SFix<new_NI,new_NF,new_RANGE>(tt,true);
-    }
+    return worktype(worktype(*this).asRaw() + worktype(op).asRaw(), true);
+  }
   
 #ifdef FIXMATH_UNSAFE
   /** Addition with another type.
@@ -265,16 +260,12 @@ public:
       @return The result of the subtraction as a SFix.
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE> // We do not have the +1 after FixMathPrivate::FM_max(NI, _NI) because the substraction between two UFix should fit in the biggest of the two.
-  SFix<FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::FM_max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::FM_max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::FM_max(NF,_NF)-_NF))> operator- (const UFix<_NI,_NF, _RANGE>& op) const
+  constexpr SFix<FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF), FixMathPrivate::FM_max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::FM_max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::FM_max(NF,_NF)-_NF))> operator- (const UFix<_NI,_NF, _RANGE>& op) const
   {
-    constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
-    constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);
-    typedef typename IntegerType<FixMathPrivate::sBitsToBytes(new_NI+new_NF)>::signed_type return_type;
-    SFix<new_NI,new_NF> left(*this);
-    SFix<new_NI,new_NF> right(op);
+    using namespace FixMathPrivate;
+    typedef SFix<FM_max(NI,_NI),FM_max(NF,_NF), FM_max(shiftR(RANGE,FM_max(NF,_NF)-NF), shiftR(_RANGE,FM_max(NF,_NF)-_NF))> worktype;
 
-    return_type tt = return_type(left.asRaw()) - right.asRaw();
-    return SFix<new_NI,new_NF,FixMathPrivate::FM_max(FixMathPrivate::shiftR(RANGE,FixMathPrivate::FM_max(NF,_NF)-NF), FixMathPrivate::shiftR(_RANGE,FixMathPrivate::FM_max(NF,_NF)-_NF))>(tt,true);
+    return worktype(worktype(*this).asRaw() - worktype(op).asRaw(), true);
   }
 
   #ifdef FIXMATH_UNSAFE
@@ -305,12 +296,10 @@ public:
       @return The result of the multiplication as a UFix.
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  UFix<FixMathPrivate::neededNIExtra(NI+_NI, NF+_NF, RANGE*_RANGE),NF+_NF, RANGE*_RANGE> operator* (const UFix<_NI,_NF,_RANGE>& op) const 
+  constexpr typename UFix<NI+_NI, NF+_NF, RANGE*_RANGE>::UFixNIadj_t operator* (const UFix<_NI,_NF,_RANGE>& op) const
   {
-    constexpr int8_t NEW_NI = FixMathPrivate::neededNIExtra(NI+_NI, NF+_NF, RANGE*_RANGE);
-    typedef typename IntegerType<FixMathPrivate::uBitsToBytes(NEW_NI+NF+_NF)>::unsigned_type return_type ;
-    return_type tt = return_type(internal_value)*op.asRaw();
-    return UFix<NEW_NI,(NF+_NF),RANGE*_RANGE>(tt,true);
+    typedef typename UFix<NI+_NI, NF+_NF, RANGE*_RANGE>::UFixNIadj_t worktype;
+    return worktype((typename worktype::internal_type) (internal_value)*op.asRaw(), true);
   }
 
     /** Multiplication with a SFix. Safe.
@@ -318,12 +307,10 @@ public:
       @return The result of the multiplication as a SFix.
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  SFix<FixMathPrivate::neededSNIExtra(NI+_NI, NF+_NF, RANGE*_RANGE),NF+_NF, RANGE*_RANGE> operator* (const SFix<_NI,_NF,_RANGE>& op) const 
+  constexpr typename SFix<NI+_NI, NF+_NF, RANGE*_RANGE>::SFixNIadj_t operator* (const SFix<_NI,_NF,_RANGE>& op) const
   {
-    constexpr int8_t NEW_NI = FixMathPrivate::neededSNIExtra(NI+_NI, NF+_NF, RANGE*_RANGE);
-    typedef typename IntegerType<FixMathPrivate::sBitsToBytes(NEW_NI+NF+_NF)>::signed_type return_type ;
-    return_type tt = return_type(internal_value)*op.asRaw();
-    return SFix<NEW_NI,(NF+_NF),RANGE*_RANGE>(tt,true);
+    typedef typename SFix<NI+_NI, NF+_NF, RANGE*_RANGE>::SFixNIadj_t worktype;
+    return worktype((typename worktype::internal_type) (internal_value)*op.asRaw(), true);
   }
 
 #ifdef FIXMATH_UNSAFE
@@ -513,7 +500,7 @@ public:
 
 private:
   template<int8_t, int8_t, uint64_t> friend class UFix;  // All sibling specializations shall be friends, too
-  static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return uint64_t(1)<<(NI+NF+delta_bits); }
+  static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return ((uint64_t(1)<<(NI+NF+delta_bits-1)) - 1 + (uint64_t(1)<<(NI+NF+delta_bits-1))); }  // == 1 << NI+NF+delta_bits, but not overflowing at NIF+NF+delta_bits==64
   typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> UFixNIadj_t;
 
   internal_type internal_value;
@@ -524,96 +511,96 @@ private:
 #ifdef FIXMATH_UNSAFE
 // Multiplication
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(uint8_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(uint8_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(uint16_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(uint16_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(uint32_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(uint32_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(uint64_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(uint64_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(int8_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(int8_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(int16_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(int16_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(int32_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(int32_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(int64_t op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(int64_t op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(float op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(float op, const UFix<NI, NF>& uf) {return uf*op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator*(double op, const UFix<NI, NF>& uf) {return uf*op;}
+constexpr UFix<NI, NF> operator*(double op, const UFix<NI, NF>& uf) {return uf*op;}
 
 // Addition
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(uint8_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(uint8_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(uint16_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(uint16_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(uint32_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(uint32_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(uint64_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(uint64_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(int8_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(int8_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(int16_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(int16_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(int32_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(int32_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(int64_t op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(int64_t op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(float op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(float op, const UFix<NI, NF>& uf) {return uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline UFix<NI, NF> operator+(double op, const UFix<NI, NF>& uf) {return uf+op;}
+constexpr UFix<NI, NF> operator+(double op, const UFix<NI, NF>& uf) {return uf+op;}
 
 // Substraction
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(uint8_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(uint8_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(uint16_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(uint16_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(uint32_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(uint32_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(uint64_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(uint64_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(int8_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(int8_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(int16_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(int16_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(int32_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(int32_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(int64_t op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(int64_t op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(float op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(float op, const UFix<NI, NF>& uf) {return -uf+op;}
 
 template <int8_t NI, int8_t NF>
-inline SFix<NI, NF> operator-(double op, const UFix<NI, NF>& uf) {return -uf+op;}
+constexpr SFix<NI, NF> operator-(double op, const UFix<NI, NF>& uf) {return -uf+op;}
 #endif
 ////// Helper functions to build SFix from a normal type automatically
 
@@ -630,7 +617,7 @@ inline SFix<NI, NF> operator-(double op, const UFix<NI, NF>& uf) {return -uf+op;
     @return A UFix<0,NF> with NF chosen according to the input type
 */
 template<typename T>
-inline UFix<0, sizeof(T)*8> toUFraction(T val) {
+constexpr inline UFix<0, sizeof(T)*8> toUFraction(T val) {
   return UFix<0, sizeof(T)*8>::fromRaw(val); 
 }
 
@@ -645,7 +632,7 @@ inline UFix<0, sizeof(T)*8> toUFraction(T val) {
     @return A UFix<NI,0> with NI chosen according to the input type
 */
 template<typename T>
-inline UFix<sizeof(T)*8,0> toUInt(T val) {
+constexpr inline UFix<sizeof(T)*8,0> toUInt(T val) {
   return UFix<sizeof(T)*8,0>::fromRaw(val); 
 }
 
@@ -704,7 +691,7 @@ public:
       @return A signed fixed type number
   */
   template<int8_t _NI, int8_t _NF, uint64_t _RANGE>
-  constexpr SFix(const SFix<_NI,_NF, _RANGE>& uf) : internal_value(FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::sBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::signed_type) uf.asRaw(),(_NF-NF))) {}
+  constexpr SFix(const SFix<_NI,_NF, _RANGE>& sf) : internal_value(FixMathPrivate::shiftR((typename IntegerType<FixMathPrivate::sBitsToBytes(FixMathPrivate::FM_max(NI+NF,_NI+_NF))>::signed_type) sf.asRaw(),(_NF-NF))) {}
 
   /** Constructor from an UFix. 
       @param uf A unsigned fixed type number which value can be represented in this type.
@@ -1003,6 +990,11 @@ public:
   
 
 private:
+  template<int8_t, int8_t, uint64_t> friend class UFix;  // for access to UFixNIadj_t
+  template<int8_t, int8_t, uint64_t> friend class SFix;
+  static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return (uint64_t(1)<<(NI+NF+delta_bits)); } // no -1 for signed, because negative number actually extend to -2^n, not just 2^n-1
+  typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> SFixNIadj_t;
+
   internal_type internal_value;
   static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
 };
@@ -1208,13 +1200,10 @@ inline bool operator< (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
     @return true if op1 is equal to op2, false otherwise
 */
 template<int8_t NI, int8_t NF, int8_t _NI, int8_t _NF>
-inline bool operator== (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
+constexpr inline bool operator== (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2)
 {
-  constexpr int8_t new_NI = FixMathPrivate::FM_max(NI, _NI);
-  constexpr int8_t new_NF = FixMathPrivate::FM_max(NF, _NF);    
-  SFix<new_NI,new_NF> left(op1);
-  SFix<new_NI,new_NF> right(op2);
-  return left.asRaw() == right.asRaw();
+  typedef SFix<FixMathPrivate::FM_max(NI, _NI), FixMathPrivate::FM_max(NF, _NF)> worktype;
+  return (worktype(op1).asRaw() == worktype(op2).asRaw());
 }
 
 

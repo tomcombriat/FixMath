@@ -18,9 +18,12 @@ namespace FixMathPrivate {
       constexpr auto a = UFix<8,1>(64, true);   // 32
       constexpr auto b = UFix<8,2>(130, true);  // 32.5
       constexpr auto c = UFix<8,0>(33);         // 33
+
+      // basics
       static_assert(a < b && b < c);
-      //static_assert(b - a == c - b);  // TODO: not yet a constexpr
       static_assert(a.getNF() == 1 && b.getNF() == 2);
+
+      // addition
       constexpr auto d = a + b;
       static_assert(d.getNI() == 9);
       static_assert(d.getNF() == 2);     // NF is always max in addition
@@ -38,7 +41,21 @@ namespace FixMathPrivate {
       static_assert(sizeof(decltype(large.asRaw())) == 4);
       static_assert((large+large).asRaw() == (1LL << 32));
       static_assert(sizeof(decltype((large+large).asRaw())) > 4);
+
+      // subtraction
+      static_assert(b - a == c - b);
+      static_assert(c - UFix<17,8>(1) == a);
+      //static_assert(c - SFix<13,9>(1) == a); TODO: not yet constexpr
+
+      // multiplication
+      static_assert(c * UFix<36, 5>(3ll << 31) == UFix<58,0>(33ll*(3ll << 31)));  // NOTE: The exact values are aribrary, but we want something that would overflow the initial type range
+      static_assert(a * UFix<0, 2>(3, true) == UFix<17, 8>(24));  // 32 * .75 == 24
+      // static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8));  // 32 * (1/4) == 8 // TODO: FAIL
+      static_assert(a * toUFraction((int8_t) 16) == UFix<3, 9>(2));  // 32 * (16/256) == 2
+
+      // type conversions
+      static_assert(a.getNI() == a.asSFix().getNI());
+      static_assert(a.getNF() == a.asSFix().getNF());
     }
   }
 }
- 
