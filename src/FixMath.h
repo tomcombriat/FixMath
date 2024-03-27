@@ -469,7 +469,8 @@ public:
   template<int8_t _NI, int8_t _NF>
   constexpr bool operator!= (const UFix<_NI,_NF>& op) const
   {
-    return !(*this==op);
+    typedef UFix<FixMathPrivate::FM_max(NI, _NI),FixMathPrivate::FM_max(NF, _NF)> comptype;  // type suitable for comparison
+    return (comptype(*this).asRaw()!=comptype(op).asRaw());
   }
   
   /** Returns the number as a SFix of same range and precision. This is more optimized than a cast.
@@ -957,7 +958,8 @@ public:
   template<int8_t _NI, int8_t _NF>
   constexpr bool operator!= (const SFix<_NI,_NF>& op) const
   {
-    return !(*this == op);
+    typedef SFix<FixMathPrivate::FM_max(NI, _NI), FixMathPrivate::FM_max(NF, _NF)> comptype; // common type suitable for comparison
+    return comptype(*this).asRaw()!=comptype(op).asRaw();
   }
 
 
@@ -1208,7 +1210,8 @@ constexpr bool operator!= (const SFix<NI,NF>& op1, const UFix<_NI,_NF>& op2 )
 template<int8_t NI, int8_t NF, int8_t _NI, int8_t _NF>
 constexpr bool operator!= (const UFix<NI,NF>& op1, const SFix<_NI,_NF>& op2 )
 {
-  return op2 != op1;
+  typedef SFix<FixMathPrivate::FM_max(NI, _NI), FixMathPrivate::FM_max(NF, _NF)> comptype;
+  return (comptype(op1).asRaw() != comptype(op2).asRaw());;
 }
 
 ////// Helper functions to build SFix from a normal type automatically
