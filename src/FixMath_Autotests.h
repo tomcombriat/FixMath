@@ -45,7 +45,12 @@ namespace FixMathPrivate {
       // subtraction
       static_assert(b - a == c - b);
       static_assert(c - UFix<17,8>(1) == a);
-      //static_assert(c - SFix<13,9>(1) == a); TODO: not yet constexpr
+      static_assert(c - SFix<13,9>(1) == a);
+      static_assert(b + a - b == a);
+      static_assert(b + a + (-b) == a);  // same with unary minus
+      static_assert(-(-a) == a);
+      //static_assert(UFix<43,9>(0) - b - a == -(a+b));  // TODO Fails (at least as a test), due to undefined shift of negative values
+      //static_assert(SFix<4, 3>(-1) == SFix<4, 5>(-1)); // TODO This is a simpler test case for the above problem
 
       // multiplication
       static_assert(c * UFix<36, 5>(3ll << 31) == UFix<58,0>(33ll*(3ll << 31)));  // NOTE: The exact values are aribrary, but we want something that would overflow the initial type range
