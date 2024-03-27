@@ -49,13 +49,20 @@ namespace FixMathPrivate {
       static_assert(b + a - b == a);
       static_assert(b + a + (-b) == a);  // same with unary minus
       static_assert(-(-a) == a);
-      //static_assert(UFix<43,9>(0) - b - a == -(a+b));  // TODO Fails (at least as a test), due to undefined shift of negative values
-      //static_assert(SFix<4, 3>(-1) == SFix<4, 5>(-1)); // TODO This is a simpler test case for the above problem
+#if __cplusplus >= 202002L
+      // These here involve shifts of negative numbers, which used to be "implementation defined" before C++-20.
+      // It doesn't cause a real-world problem, but the compiler won't accept it in a constexpr
+      static_assert(UFix<43,9>(0) - b - a == -(a+b));
+      static_assert(SFix<4, 3>(-1) == SFix<4, 5>(-1)); // NOTE This is a simpler test case for the above problem. Note the difference in NF, which prompts shifting
+#endif
+      // here's a variant that avoids the problem by using only positive numbers
+      static_assert(UFix<12,1>(999) - UFix<43,9>(0) - b - a == UFix<19,3>(999) + (-(a+b)));
+      static_assert(-SFix<4, 3>(-8, true) == -SFix<4, 5>(-32, true));
 
       // multiplication
       static_assert(c * UFix<36, 5>(3ll << 31) == UFix<58,0>(33ll*(3ll << 31)));  // NOTE: The exact values are aribrary, but we want something that would overflow the initial type range
       static_assert(a * UFix<0, 2>(3, true) == UFix<17, 8>(24));  // 32 * .75 == 24
-      // static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8));  // 32 * (1/4) == 8 // TODO: FAIL
+      // static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8));  // 32 * (1/4) == 8 // TODO: FAIL. Isn't this supposed to work?
       static_assert(a * toUFraction((int8_t) 16) == UFix<3, 9>(2));  // 32 * (16/256) == 2
 
       // type conversions

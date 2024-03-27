@@ -119,7 +119,7 @@ The division is not implemented. This is a deliberate choice made for two reason
 */
 
 namespace FixMathPrivate {
-  template<typename T> constexpr T shiftR(T x, int8_t bits) {return (bits > 0 ? (x >> (bits)) : bits < 0 ? (x << (-bits)) : x);} // shift right with positive values, left with negative
+  template<typename T> constexpr T shiftR(T x, int8_t bits) {return (bits > 0 ? (x >> (bits)) : bits < 0 ? (x << (-bits)) : x);} // shift right with positive values, left with negative; NOTE: extra condition for bits==0 allows more static tests to work
   constexpr int8_t sBitsToBytes(int8_t N) { return (((N)>>3)+1);}  // conversion between Bits and Bytes for signed
   constexpr int8_t uBitsToBytes(int8_t N) { return (((N-1)>>3)+1);}
   template<typename T>  constexpr T FM_max(T N1, T N2) { return (N1) > (N2) ? (N1) : (N2);}
@@ -127,7 +127,6 @@ namespace FixMathPrivate {
   constexpr uint64_t sFullRange(int8_t N) { return uint64_t(1)<<N;} // FM_maximum absolute value that can be hold in a signed of size N
   constexpr uint64_t uFullRange(int8_t N) { return ((uint64_t(1)<<(N-1))-1) + (uint64_t(1)<<(N-1));}
   constexpr uint64_t rangeAdd(byte NF, byte _NF, uint64_t RANGE, uint64_t _RANGE) { return ((NF > _NF) ? (RANGE + (_RANGE<<(NF-_NF))) : (_RANGE + (RANGE<<(_NF-NF))));}  // returns the RANGE following an addition
-  constexpr int8_t neededSNIExtra(int8_t NI, int8_t NF, uint64_t RANGE) { return (RANGE > (sFullRange(NI+NF)) ? (NI+1) : (RANGE > (sFullRange(NI+NF-1)) ? (NI) : (NI-1)));}  // same for signed
   constexpr uint64_t rangeShift(int8_t N, int8_t SH, uint64_t RANGE) { return ((SH < N) ? (RANGE) : (shiftR(RANGE,(N-SH))));}  // make sure that NI or NF does not turn negative when safe shifts are used.
 }
 
