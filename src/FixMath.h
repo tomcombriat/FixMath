@@ -346,7 +346,7 @@ public:
   */
   constexpr UFix<NF,NI> invFast() const
   {
-    static_assert(NI+NF<=63, "The fast inverse cannot be computed for when NI+NF>63. Reduce the number of bits.");
+    static_assert(NI+NF<=64, "The fast inverse cannot be computed for when NI+NF>63. Reduce the number of bits.");
     return UFix<NF,NI>((onesbitmask()/internal_value),true);
   }
 
@@ -368,19 +368,30 @@ public:
       This is still slower than a multiplication, hence the suggested workflow is to compute the inverse when time is not critical, for instance in updateControl(), and multiply it afterward, for instance in updateAudio(), if you need a division.
       @return The inverse of the number.
   */
-  constexpr UFix<NF,FixMathPrivate::FM_min(NI*2+NF,63-NF)> invFull() const // The FixMathPrivate::FM_min is just to remove compiler error when a big FixMath is instanciated but no accurate inverse is actually computed (this would be catch by the static_assert)
+  constexpr UFix<NF,FixMathPrivate::FM_min(NI*2+NF,64-NF)> invFull() const // The FixMathPrivate::FM_min is just to remove compiler error when a big FixMath is instanciated but no accurate inverse is actually computed (this would be catch by the static_assert)
   {
-    static_assert(2*NI+2*NF<=63, "The accurate inverse cannot be computed for when 2*NI+2*NF>63. Reduce the number of bits.");
+    static_assert(2*NI+2*NF<=64, "The accurate inverse cannot be computed for when 2*NI+2*NF>63. Reduce the number of bits.");
     return inv<NI*2+NF>();
   }
 
-  template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF,63-NF)>
+  /** Compute the inverse of a UFix<NI,NF>, as a UFix<NF,NI*2+NF-1> (default) 
+      or as a UFix<NF,_NF-1> with _NF the template parameter of invAccurate<_NF>.
+      So it can be called as a.invAccurate() (default) or a.invAccurate<16> for instance.
+   */
+  template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF-1,64-NF)>
   constexpr UFix<NF,_NF> invAccurate() const
   {
     static_assert(NF+_NF+1<=64, "The accurate inverse cannot be computed because the asked precision is too great. Reduce the number of bits.");
     return UFix<NF,_NF>(UFix<NF,_NF+1>::msbone()/internal_value,true);
-  }
+    }
 
+
+  /* template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF,64-NF)>
+  constexpr UFix<NF,_NF> invAccurate() const
+  {
+    static_assert(NF+_NF<=64, "The accurate inverse cannot be computed because the asked precision is too great. Reduce the number of bits.");
+    return UFix<NF,_NF>(UFix<NF,_NF-1>(UFix<NF,_NF>::msbone()/internal_value,true)); // the last cast is to have the same return type.
+    }*/
   
   
 
@@ -521,7 +532,8 @@ private:
   typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> UFixNIadj_t;
 
   internal_type internal_value;
-  static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
+  //static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
+  static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF-1)) + ((1ULL<< (NI+NF-1)) - 1)); }
   static constexpr internal_type msbone() { return (internal_type) (1ULL<< (NI+NF-1)); }
 };
 
@@ -850,7 +862,7 @@ public:
 
   constexpr SFix<NF,NI> invFast() const
   {
-    static_assert(NI+NF<=62, "The fast inverse cannot be computed for when NI+NF>63. Reduce the number of bits.");
+    static_assert(NI+NF<=63, "The fast inverse cannot be computed for when NI+NF>63. Reduce the number of bits.");
     return SFix<NF,NI>((onesbitmask()/internal_value),true);
   }
 
@@ -869,7 +881,7 @@ public:
       This is still slower than a multiplication, hence the suggested workflow is to compute the inverse when time is not critical, for instance in updateControl(), and multiply it afterward, for instance in updateAudio(), if you need a division.
       @return The inverse of the number.
   */
-  constexpr SFix<NF,FixMathPrivate::FM_min(NI*2+NF,62-NF)> invFull() const
+  constexpr SFix<NF,FixMathPrivate::FM_min(NI*2+NF,63-NF)> invFull() const
   {
     return inv<NI*2+NF>();
   }
@@ -1017,7 +1029,8 @@ private:
   typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> SFixNIadj_t;
 
   internal_type internal_value;
-  static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
+  //static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
+  static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF-1)) + ((1ULL<< (NI+NF-1)) - 1)); }
 };
 
 
