@@ -74,8 +74,8 @@ More specifically on the returned types of the operations between fixed point ma
  - Inverse:
    - `UFix<NI,NF>.invFast()` returns the inverse of the number as `UFix<NF,NI>`
    - `SFix<NI,NF>.invFast()` returns the inverse of the number as `SFix<NF,NI>`
-   - `UFix<NI,NF>.invAccurate()` returns the inverse of the number as `UFix<NF,2*NI+NF>`
-   - `SFix<NI,NF>.invAccurate()` returns the inverse of the number as `SFix<NF,2*NI+NF>`
+   - `UFix<NI,NF>.invFull()` returns the inverse of the number as `UFix<NF,2*NI+NF>`
+   - `SFix<NI,NF>.invFull()` returns the inverse of the number as `SFix<NF,2*NI+NF>`
    - `UFix<NI,NF>.inv<_NF>()` returns the inverse of the number as `UFix<NF,_NF>`
    - `SFix<NI,NF>.inv<_NF>()` returns the inverse of the number as `SFix<NF,_NF>`
  - Conversion (should be preferred over casting, when possible):
@@ -352,7 +352,7 @@ public:
 
 
   /** Compute the inverse of a UFix<NI,NF>, as a UFix<NF,_NF>.
-      _NF is the number of precision bits for the output. Can be any number but especially useful for case between invFast() (_NF=NI) and invAccurate() (_NF=2*NI+NF)
+      _NF is the number of precision bits for the output. Can be any number but especially useful for case between invFast() (_NF=NI) and invFull() (_NF=2*NI+NF)
       @return The inverse of the number.
   */
   template<int8_t _NF>
@@ -368,12 +368,18 @@ public:
       This is still slower than a multiplication, hence the suggested workflow is to compute the inverse when time is not critical, for instance in updateControl(), and multiply it afterward, for instance in updateAudio(), if you need a division.
       @return The inverse of the number.
   */
-  constexpr UFix<NF,FixMathPrivate::FM_min(NI*2+NF,63-NF)> invAccurate() const // The FixMathPrivate::FM_min is just to remove compiler error when a big FixMath is instanciated but no accurate inverse is actually computed (this would be catch by the static_assert)
+  constexpr UFix<NF,FixMathPrivate::FM_min(NI*2+NF,63-NF)> invFull() const // The FixMathPrivate::FM_min is just to remove compiler error when a big FixMath is instanciated but no accurate inverse is actually computed (this would be catch by the static_assert)
   {
     static_assert(2*NI+2*NF<=63, "The accurate inverse cannot be computed for when 2*NI+2*NF>63. Reduce the number of bits.");
     return inv<NI*2+NF>();
   }
 
+  template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF,63-NF)>
+  constexpr UFix<NF,_NF> invAccurate() const
+  {
+    static_assert(NF+_NF+1<=64, "The accurate inverse cannot be computed because the asked precision is too great. Reduce the number of bits.");
+    return UFix<NF,_NF>(UFix<NF,_NF+1>::msbone()/internal_value,true);
+  }
 
   
   
@@ -516,6 +522,7 @@ private:
 
   internal_type internal_value;
   static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
+  static constexpr internal_type msbone() { return (internal_type) (1ULL<< (NI+NF-1)); }
 };
 
 
@@ -848,7 +855,7 @@ public:
   }
 
   /** Compute the inverse of a SFix<NI,NF>, as a SFix<NF,_NF>.
-      _NF is the number of precision bits for the output. Can be any number but especially useful for case between invFast() (_NF=NI) and invAccurate() (_NF=2*NI+NF)
+      _NF is the number of precision bits for the output. Can be any number but especially useful for case between invFast() (_NF=NI) and invFull() (_NF=2*NI+NF)
       @return The inverse of the number.
   */
   template<int8_t _NF>
@@ -862,7 +869,7 @@ public:
       This is still slower than a multiplication, hence the suggested workflow is to compute the inverse when time is not critical, for instance in updateControl(), and multiply it afterward, for instance in updateAudio(), if you need a division.
       @return The inverse of the number.
   */
-  constexpr SFix<NF,FixMathPrivate::FM_min(NI*2+NF,62-NF)> invAccurate() const
+  constexpr SFix<NF,FixMathPrivate::FM_min(NI*2+NF,62-NF)> invFull() const
   {
     return inv<NI*2+NF>();
   }
