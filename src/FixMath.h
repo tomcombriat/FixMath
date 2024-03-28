@@ -511,6 +511,7 @@ public:
 
 private:
   template<int8_t, int8_t, uint64_t> friend class UFix;  // All sibling specializations shall be friends, too
+  template<int8_t, int8_t, uint64_t> friend class SFix
   static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return ((uint64_t(1)<<(NI+NF+delta_bits-1)) - 1 + (uint64_t(1)<<(NI+NF+delta_bits-1))); }  // == 1 << NI+NF+delta_bits, but not overflowing at NIF+NF+delta_bits==64
   typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> UFixNIadj_t;
 
