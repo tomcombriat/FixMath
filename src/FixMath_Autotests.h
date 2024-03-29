@@ -32,6 +32,7 @@ namespace FixMathPrivate {
       constexpr auto e = d + b + c;      // addition of one 9 (NI) bit and two 8 (NI) bit numbers needs promotion to 10 bits, not 11, only.
       static_assert(e.getNI() == 10);
       static_assert(e.getNF() == 2);
+      e.assertSize<12>();
       static_assert((d + d).getNI() == 10);
       static_assert((e + e).getNF() == 2);
       static_assert((d + e).getNI() == 11);

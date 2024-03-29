@@ -509,6 +509,18 @@ public:
   */
   static constexpr int8_t getNF() {return NF;}
 
+  /** Check wether this number exceeds the given total bitsize. Useful as a mechanism to guard
+   *  against unexpected bit size inflation. This is a compile-type check and will not incur
+   *  any flash use or performance penalty.
+   *
+   *  Example:
+   *  @code
+   *  auto a = toUInt((uint16_t) 42); // uint16_t is unecessarily large for this value, results in a UFix<16,0>
+   *  auto cubed = a*a*a;             // therefore, cubed is a UFix<48,0>
+   *  cubed.assertSize<32>();         // Oops, already at 48 bits! Should have used a smaller data type, above!
+   *  @endcode
+   */
+  template<int8_t BITS> static constexpr void assertSize() { static_assert(NI+NF <= BITS, "Data type is larger than expected!"); }
 private:
   template<int8_t, int8_t, uint64_t> friend class UFix;  // All sibling specializations shall be friends, too
   template<int8_t, int8_t, uint64_t> friend class SFix;
@@ -1004,6 +1016,9 @@ public:
   static constexpr int8_t getNF() {return NF;}
   
 
+  /** Check wether this number exceeds the given total bitsize. See UFix::asssertSize().
+   */
+  template<int8_t BITS> static constexpr void assertSize() { static_assert(NI+NF+1 <= BITS, "Data type is larger than expected!"); }
 private:
   template<int8_t, int8_t, uint64_t> friend class UFix;  // for access to UFixNIadj_t
   template<int8_t, int8_t, uint64_t> friend class SFix;
