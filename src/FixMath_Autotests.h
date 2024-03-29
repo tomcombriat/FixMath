@@ -11,7 +11,7 @@
 
 /** This file implements a few compile-time checks to verify the implementation is correct. */
  
-namespace FixMathPrivate {
+namespace FixMathPrivateTests {
   /* This function is never called, and has no effect, but simply encapsulates a bunch of static asserts */
   inline void static_autotests() {
     {
