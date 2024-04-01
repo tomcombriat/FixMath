@@ -62,7 +62,7 @@ namespace FixMathPrivate {
       // multiplication
       static_assert(c * UFix<36, 5>(3ll << 31) == UFix<58,0>(33ll*(3ll << 31)));  // NOTE: The exact values are aribrary, but we want something that would overflow the initial type range
       static_assert(a * UFix<0, 2>(3, true) == UFix<17, 8>(24));  // 32 * .75 == 24
-      // static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8));  // 32 * (1/4) == 8 // TODO: FAIL. Isn't this supposed to work?
+      static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8));  // 32 * (1/4) == 8
       static_assert(a * toUFraction((int8_t) 16) == UFix<3, 9>(2));  // 32 * (16/256) == 2
 
       // type conversions
