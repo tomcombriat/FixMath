@@ -72,12 +72,18 @@ More specifically on the returned types of the operations between fixed point ma
    - `UFix<NI,NF> << N` returns `UFix<NI,NF>` (only available with `FIXMATH_UNSAFE`)
    - same for `SFix`
  - Inverse:
-   - `UFix<NI,NF>.invFast()` returns the inverse of the number as `UFix<NF,NI>`
-   - `SFix<NI,NF>.invFast()` returns the inverse of the number as `SFix<NF,NI>`
-   - `UFix<NI,NF>.invFull()` returns the inverse of the number as `UFix<NF,2*NI+NF>`
-   - `SFix<NI,NF>.invFull()` returns the inverse of the number as `SFix<NF,2*NI+NF>`
-   - `UFix<NI,NF>.inv<_NF>()` returns the inverse of the number as `UFix<NF,_NF>`
-   - `SFix<NI,NF>.inv<_NF>()` returns the inverse of the number as `SFix<NF,_NF>`
+   - Approximates:
+     - `UFix<NI,NF>.invFast()` returns the approximate inverse of the number as `UFix<NF,NI>`
+     - `SFix<NI,NF>.invFast()` returns the approximate inverse of the number as `SFix<NF,NI>`
+     - `UFix<NI,NF>.invFull()` returns the approximate inverse of the number as `UFix<NF,2*NI+NF>`
+     - `SFix<NI,NF>.invFull()` returns the approximate inverse of the number as `SFix<NF,2*NI+NF>`
+     - `UFix<NI,NF>.inv<_NF>()` returns the approximate inverse of the number as `UFix<NF,_NF>`
+     - `SFix<NI,NF>.inv<_NF>()` returns the approximate inverse of the number as `SFix<NF,_NF>`
+   - Exact: (when the result can be exactly represented in the destination type)
+     - `UFix<NI,NF>.invAccurate()` returns the inverse as `UFix<NF,2*NI+NF>`
+     - `SFix<NI,NF>.invAccurate()` returns the inverse as `SFix<NF,2*NI+NF>`
+     - `UFix<NI,NF>.invAccurate<_NF>()` returns the inverse as `UFix<NF,_NF>`
+     - `SFix<NI,NF>.invAccurate()<_NF>` returns the inverse as `SFix<NF,_NF>`
  - Conversion (should be preferred over casting, when possible):
    - `UFix<NI,NF>.asSFix()` returns `SFix<NI,NF>`
    - `SFix<NI,NF>.asUFix()` returns `UFix<NI,NF>`
@@ -375,8 +381,12 @@ public:
   }
 
   /** Compute the inverse of a UFix<NI,NF>, as a UFix<NF,NI*2+NF-1> (default) 
-      or as a UFix<NF,_NF-1> with _NF the template parameter of invAccurate<_NF>.
-      So it can be called as a.invAccurate() (default) or a.invAccurate<16> for instance.
+      or as a UFix<NF,_NF> with _NF the template parameter of invAccurate<_NF>.
+      @note This uses a number of width NF+_NF+1 internally. If you are seeking for
+      performances, you should try to aim for this number to not require a too big a type
+      internally. For instance UFix<0,16> a; a.invAccurate<16>() will use a 64 bits internally
+      whereas a.invAccurate<15>() will only use a 32 bits.
+      It can be called as a.invAccurate() (default) or a.invAccurate<16> for instance.
    */
   template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF-1,64-NF)>
   constexpr UFix<NF,_NF> invAccurate() const
@@ -384,6 +394,13 @@ public:
     static_assert(NF+_NF+1<=64, "The accurate inverse cannot be computed because the asked precision is too great. Reduce the number of bits.");
     return UFix<NF,_NF>(UFix<NF,_NF+1>::msbone()/internal_value,true);
     }
+
+  /*  template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF,64-NF)>
+  constexpr UFix<NF,_NF-1> invAccurateb() const
+  {
+    static_assert(NF+_NF<=64, "The accurate inverse cannot be computed because the asked precision is too great. Reduce the number of bits.");
+    return UFix<NF,_NF-1>(UFix<NF,_NF>::msbone()/internal_value,true);
+    }*/
 
 
   /* template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF,64-NF)>
@@ -887,6 +904,22 @@ public:
   }
 
 
+    /** Compute the inverse of a SFix<NI,NF>, as a SFix<NF,NI*2+NF-1> (default) 
+      or as a SFix<NF,_NF> with _NF the template parameter of invAccurate<_NF>.
+      @note This uses a number of width NF+_NF+1 internally. If you are seeking for
+      performances, you should try to aim for this number to not require a too big a type
+      internally. For instance SFix<0,15> a; a.invAccurate<16>() will use a 64 bits internally
+      whereas a.invAccurate<15>() will only use a 32 bits.
+      It can be called as a.invAccurate() (default) or a.invAccurate<16> for instance.
+   */
+  template<int8_t _NF=FixMathPrivate::FM_min(NI*2+NF-1,63-NF)>
+  constexpr SFix<NF,_NF> invAccurate() const
+  {
+    static_assert(NF+_NF+1<=63, "The accurate inverse cannot be computed because the asked precision is too great. Reduce the number of bits.");
+    return SFix<NF,_NF>(SFix<NF,_NF+1>::msbone()/internal_value,true);
+    }
+
+
   //////// SHIFTS OVERLOADS
 
   /** Right shift. This won't overflow but will not leverage on the bits freed by the shift.
@@ -1031,6 +1064,7 @@ private:
   internal_type internal_value;
   //static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
   static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF-1)) + ((1ULL<< (NI+NF-1)) - 1)); }
+    static constexpr internal_type msbone() { return (internal_type) (1ULL<< (NI+NF-1)); }
 };
 
 
