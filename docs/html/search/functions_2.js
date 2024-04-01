@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['getnf_53',['getNF',['../classUFix.html#ad0f95f0bc5ef057ecfae6e605e732ac0',1,'UFix::getNF()'],['../classSFix.html#acadb4ce211b3ce65ad3c795f83514226',1,'SFix::getNF()']]],
-  ['getni_54',['getNI',['../classUFix.html#afb055a1c325c11e80c75b2339128310f',1,'UFix::getNI()'],['../classSFix.html#aa0c24fdeef2426c9bc56cbc3f904635e',1,'SFix::getNI()']]]
+  ['getnf_54',['getNF',['../classUFix.html#a900f594b8b95f377fff38c49f5149866',1,'UFix::getNF()'],['../classSFix.html#a319ae49f75636efec3999140a31fc85c',1,'SFix::getNF()']]],
+  ['getni_55',['getNI',['../classUFix.html#aa17a66aaaeed2e67163f2bc8bbf2ce08',1,'UFix::getNI()'],['../classSFix.html#a8e26f89e3aa2969906d9ff3deaa53328',1,'SFix::getNI()']]]
 ];

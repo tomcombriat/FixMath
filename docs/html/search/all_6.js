@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['tosfraction_31',['toSFraction',['../FixMath_8h.html#a46b90b067252e2ceeed03c96ccc55fd4',1,'FixMath.h']]],
-  ['tosint_32',['toSInt',['../FixMath_8h.html#a83bd22fe181cddcf4c3faacbe86140fa',1,'FixMath.h']]],
-  ['toufraction_33',['toUFraction',['../FixMath_8h.html#aaaaa1dc404829e0ec37bc565d58f394f',1,'FixMath.h']]],
-  ['touint_34',['toUInt',['../FixMath_8h.html#aa2666bae0f50341fb0db86af1af47ec9',1,'FixMath.h']]]
+  ['tosfraction_32',['toSFraction',['../FixMath_8h.html#aac7fece5e8162407f033d0fbf022ad15',1,'FixMath.h']]],
+  ['tosint_33',['toSInt',['../FixMath_8h.html#ac479196160eb99ddf534e0768e3f1990',1,'FixMath.h']]],
+  ['toufraction_34',['toUFraction',['../FixMath_8h.html#ab6c690d265da5284fa40b19574b286cb',1,'FixMath.h']]],
+  ['touint_35',['toUInt',['../FixMath_8h.html#a0dda76ba96e4ae059e3872b080b6c681',1,'FixMath.h']]]
 ];

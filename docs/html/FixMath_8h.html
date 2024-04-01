@@ -75,14 +75,16 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
 <code>#include &quot;IntegerType.h&quot;</code><br />
+<code>#include &quot;FixMath_Autotests.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for FixMath.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="FixMath_8h__incl.png" border="0" usemap="#aFixMath_8h" alt=""/></div>
 <map name="aFixMath_8h" id="aFixMath_8h">
-<area shape="rect" title=" " alt="" coords="5,5,91,32"/>
-<area shape="rect" title=" " alt="" coords="6,155,90,181"/>
-<area shape="rect" href="IntegerType_8h_source.html" title=" " alt="" coords="39,80,150,107"/>
+<area shape="rect" title=" " alt="" coords="51,5,137,32"/>
+<area shape="rect" title=" " alt="" coords="5,155,89,181"/>
+<area shape="rect" href="IntegerType_8h_source.html" title=" " alt="" coords="39,80,149,107"/>
+<area shape="rect" href="FixMath__Autotests_8h_source.html" title=" " alt="" coords="174,80,329,107"/>
 </map>
 </div>
 </div>
@@ -129,60 +131,45 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMath
 <tr class="memitem:a8caf353bbd3661d13479e08aaf63045d"><td class="memItemLeft" align="right" valign="top"><a id="a8caf353bbd3661d13479e08aaf63045d"></a>
 constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMathPrivate::rangeAdd</b> (byte NF, byte _NF, uint64_t RANGE, uint64_t _RANGE)</td></tr>
 <tr class="separator:a8caf353bbd3661d13479e08aaf63045d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3bccc9e679228029118d0032d384021"><td class="memItemLeft" align="right" valign="top"><a id="ae3bccc9e679228029118d0032d384021"></a>
-constexpr int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMathPrivate::neededNIExtra</b> (int8_t NI, int8_t NF, uint64_t RANGE)</td></tr>
-<tr class="separator:ae3bccc9e679228029118d0032d384021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52871f717344679304d6508465d710d8"><td class="memItemLeft" align="right" valign="top"><a id="a52871f717344679304d6508465d710d8"></a>
-constexpr int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMathPrivate::neededSNIExtra</b> (int8_t NI, int8_t NF, uint64_t RANGE)</td></tr>
-<tr class="separator:a52871f717344679304d6508465d710d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96afba7d43238189112a0d0a72c0675a"><td class="memItemLeft" align="right" valign="top"><a id="a96afba7d43238189112a0d0a72c0675a"></a>
 constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMathPrivate::rangeShift</b> (int8_t N, int8_t SH, uint64_t RANGE)</td></tr>
 <tr class="separator:a96afba7d43238189112a0d0a72c0675a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaaa1dc404829e0ec37bc565d58f394f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aaaaa1dc404829e0ec37bc565d58f394f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUFix.html">UFix</a>&lt; 0, sizeof(T) *8 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#aaaaa1dc404829e0ec37bc565d58f394f">toUFraction</a> (T val)</td></tr>
-<tr class="separator:aaaaa1dc404829e0ec37bc565d58f394f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2666bae0f50341fb0db86af1af47ec9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aa2666bae0f50341fb0db86af1af47ec9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUFix.html">UFix</a>&lt; sizeof(T) *8, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#aa2666bae0f50341fb0db86af1af47ec9">toUInt</a> (T val)</td></tr>
-<tr class="separator:aa2666bae0f50341fb0db86af1af47ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83bdc57433394da979b73216f504a531"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </td></tr>
-<tr class="memitem:a83bdc57433394da979b73216f504a531"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classSFix.html">SFix</a>&lt; FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI, _NI), FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF, _NF, RANGE, _RANGE)), FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF, _NF, RANGE, _RANGE)&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a83bdc57433394da979b73216f504a531">operator+</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF, RANGE &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;op2)</td></tr>
-<tr class="separator:a83bdc57433394da979b73216f504a531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf834c52ec71abc2e02d9c1467d25529"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </td></tr>
-<tr class="memitem:abf834c52ec71abc2e02d9c1467d25529"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classSFix.html">SFix</a>&lt; FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI, _NI), FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF, _NF, RANGE, _RANGE)), FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF, _NF, RANGE, _RANGE)&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#abf834c52ec71abc2e02d9c1467d25529">operator-</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF, RANGE &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;op2)</td></tr>
-<tr class="separator:abf834c52ec71abc2e02d9c1467d25529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54e88b3affa63efb9c71bfa6148d24fd"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </td></tr>
-<tr class="memitem:a54e88b3affa63efb9c71bfa6148d24fd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classSFix.html">SFix</a>&lt; FixMathPrivate::neededSNIExtra(NI+_NI, NF+_NF, RANGE *_RANGE), NF+_NF, RANGE *_RANGE &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a54e88b3affa63efb9c71bfa6148d24fd">operator*</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF, RANGE &gt; &amp;op2)</td></tr>
-<tr class="separator:a54e88b3affa63efb9c71bfa6148d24fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e1a7fea00b065a7f81917c8d4790bca"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:a3e1a7fea00b065a7f81917c8d4790bca"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a3e1a7fea00b065a7f81917c8d4790bca">operator&gt;</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:a3e1a7fea00b065a7f81917c8d4790bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0e9c2ac558982169a176d6d1875dd47"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:ac0e9c2ac558982169a176d6d1875dd47"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ac0e9c2ac558982169a176d6d1875dd47">operator&gt;</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:ac0e9c2ac558982169a176d6d1875dd47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdd993fb057d1f2e840032dc679f08bd"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:afdd993fb057d1f2e840032dc679f08bd"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#afdd993fb057d1f2e840032dc679f08bd">operator&lt;</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:afdd993fb057d1f2e840032dc679f08bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6d9653421c0efd34f3ddd7b9a1ddb27"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:ae6d9653421c0efd34f3ddd7b9a1ddb27"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ae6d9653421c0efd34f3ddd7b9a1ddb27">operator&lt;</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:ae6d9653421c0efd34f3ddd7b9a1ddb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af096adc7ba7861a48aadce8864ebaa35"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:af096adc7ba7861a48aadce8864ebaa35"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#af096adc7ba7861a48aadce8864ebaa35">operator==</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:af096adc7ba7861a48aadce8864ebaa35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c7150f7834503a78d21bb602c1c833a"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:a2c7150f7834503a78d21bb602c1c833a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a2c7150f7834503a78d21bb602c1c833a">operator==</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:a2c7150f7834503a78d21bb602c1c833a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43e515210adb4dc5623586834cd8da7b"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:a43e515210adb4dc5623586834cd8da7b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a43e515210adb4dc5623586834cd8da7b">operator!=</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:a43e515210adb4dc5623586834cd8da7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dc728f1c6ff810d648b4c9938abb419"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
-<tr class="memitem:a6dc728f1c6ff810d648b4c9938abb419"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a6dc728f1c6ff810d648b4c9938abb419">operator!=</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
-<tr class="separator:a6dc728f1c6ff810d648b4c9938abb419"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46b90b067252e2ceeed03c96ccc55fd4"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a46b90b067252e2ceeed03c96ccc55fd4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classSFix.html">SFix</a>&lt; 0, sizeof(T) *8-1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a46b90b067252e2ceeed03c96ccc55fd4">toSFraction</a> (T val)</td></tr>
-<tr class="separator:a46b90b067252e2ceeed03c96ccc55fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83bd22fe181cddcf4c3faacbe86140fa"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a83bd22fe181cddcf4c3faacbe86140fa"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classSFix.html">SFix</a>&lt; sizeof(T) *8-1, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a83bd22fe181cddcf4c3faacbe86140fa">toSInt</a> (T val)</td></tr>
-<tr class="separator:a83bd22fe181cddcf4c3faacbe86140fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c690d265da5284fa40b19574b286cb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab6c690d265da5284fa40b19574b286cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classUFix.html">UFix</a>&lt; 0, sizeof(T) *8 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ab6c690d265da5284fa40b19574b286cb">toUFraction</a> (T val)</td></tr>
+<tr class="separator:ab6c690d265da5284fa40b19574b286cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dda76ba96e4ae059e3872b080b6c681"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0dda76ba96e4ae059e3872b080b6c681"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classUFix.html">UFix</a>&lt; sizeof(T) *8, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a0dda76ba96e4ae059e3872b080b6c681">toUInt</a> (T val)</td></tr>
+<tr class="separator:a0dda76ba96e4ae059e3872b080b6c681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85ff3e79510e17f13056c58a2191be18"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:a85ff3e79510e17f13056c58a2191be18"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a85ff3e79510e17f13056c58a2191be18">operator&gt;</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:a85ff3e79510e17f13056c58a2191be18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a771e19acc8c3adaa3296148c1e6ebdde"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:a771e19acc8c3adaa3296148c1e6ebdde"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a771e19acc8c3adaa3296148c1e6ebdde">operator&gt;</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:a771e19acc8c3adaa3296148c1e6ebdde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad70883fc4f0dc62c55a831a506602d96"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:ad70883fc4f0dc62c55a831a506602d96"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ad70883fc4f0dc62c55a831a506602d96">operator&lt;</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:ad70883fc4f0dc62c55a831a506602d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab773f1f3dca60ecd08756268c4e1581d"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:ab773f1f3dca60ecd08756268c4e1581d"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ab773f1f3dca60ecd08756268c4e1581d">operator&lt;</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:ab773f1f3dca60ecd08756268c4e1581d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b8bf5f8934ac98afb345f29feefb712"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:a8b8bf5f8934ac98afb345f29feefb712"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a8b8bf5f8934ac98afb345f29feefb712">operator==</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:a8b8bf5f8934ac98afb345f29feefb712"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5352a505056ab3e61f3364a6f43f33bf"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:a5352a505056ab3e61f3364a6f43f33bf"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a5352a505056ab3e61f3364a6f43f33bf">operator==</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:a5352a505056ab3e61f3364a6f43f33bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa4c56f004c4bcf800359a3907a42ef"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:a0fa4c56f004c4bcf800359a3907a42ef"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a0fa4c56f004c4bcf800359a3907a42ef">operator!=</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:a0fa4c56f004c4bcf800359a3907a42ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4dc21682154845652c89a69a48ca18"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
+<tr class="memitem:aae4dc21682154845652c89a69a48ca18"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#aae4dc21682154845652c89a69a48ca18">operator!=</a> (const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
+<tr class="separator:aae4dc21682154845652c89a69a48ca18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac7fece5e8162407f033d0fbf022ad15"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aac7fece5e8162407f033d0fbf022ad15"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classSFix.html">SFix</a>&lt; 0, sizeof(T) *8-1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#aac7fece5e8162407f033d0fbf022ad15">toSFraction</a> (T val)</td></tr>
+<tr class="separator:aac7fece5e8162407f033d0fbf022ad15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac479196160eb99ddf534e0768e3f1990"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac479196160eb99ddf534e0768e3f1990"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classSFix.html">SFix</a>&lt; sizeof(T) *8-1, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ac479196160eb99ddf534e0768e3f1990">toSInt</a> (T val)</td></tr>
+<tr class="separator:ac479196160eb99ddf534e0768e3f1990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file implements two fixed point number classes. These numbers can have a fractional part but are actually standard integers under the hood which makes calculations with them efficient on platforms which do not have a FPU like most micro-controllers. These numbers can be signed (<a class="el" href="classSFix.html">SFix</a>) or unsigned (<a class="el" href="classUFix.html">UFix</a>).</p>
@@ -251,12 +238,22 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMath
 </ul>
 </li>
 <li>Inverse:<ul>
-<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invFast()</code> returns the inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,NI&gt;</code></li>
-<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invFast()</code> returns the inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,NI&gt;</code></li>
-<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invAccurate()</code> returns the inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,2*NI+NF&gt;</code></li>
-<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invAccurate()</code> returns the inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,2*NI+NF&gt;</code></li>
-<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.inv&lt;_NF&gt;()</code> returns the inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,_NF&gt;</code></li>
-<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.inv&lt;_NF&gt;()</code> returns the inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,_NF&gt;</code></li>
+<li>Approximates:<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invFast()</code> returns the approximate inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,NI&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invFast()</code> returns the approximate inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,NI&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invFull()</code> returns the approximate inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,2*NI+NF&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invFull()</code> returns the approximate inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,2*NI+NF&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.inv&lt;_NF&gt;()</code> returns the approximate inverse of the number as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,_NF&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.inv&lt;_NF&gt;()</code> returns the approximate inverse of the number as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,_NF&gt;</code></li>
+</ul>
+</li>
+<li>Exact: (when the result can be exactly represented in the destination type)<ul>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invAccurate()</code> returns the inverse as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,2*NI+NF-1&gt;</code></li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invAccurate()</code> returns the inverse as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,2*NI+NF-1&gt;</code></li>
+<li><code><a class="el" href="classUFix.html">UFix</a>&lt;NI,NF&gt;.invAccurate&lt;_NF&gt;()</code> returns the inverse as <code><a class="el" href="classUFix.html">UFix</a>&lt;NF,_NF&gt;</code> (uses NF+_NF+1 bits internally)</li>
+<li><code><a class="el" href="classSFix.html">SFix</a>&lt;NI,NF&gt;.invAccurate()&lt;_NF&gt;</code> returns the inverse as <code><a class="el" href="classSFix.html">SFix</a>&lt;NF,_NF&gt;</code></li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Conversion (should be preferred over casting, when possible):<ul>
@@ -279,8 +276,8 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMath
 <li>division are usually very slow operations on MCU, hence there usage is discouraged. The ideal way of doing it is to compute the inverse whenever needed and only when needed. In the context of Mozzi for instance, a good way to do it would be to compute needed inverses in <code>updateControl()</code>, and use them in <code>updateAudio()</code>. </li>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a43e515210adb4dc5623586834cd8da7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43e515210adb4dc5623586834cd8da7b">&#9670;&nbsp;</a></span>operator!=() <span class="overload">[1/2]</span></h2>
+<a id="a0fa4c56f004c4bcf800359a3907a42ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fa4c56f004c4bcf800359a3907a42ef">&#9670;&nbsp;</a></span>operator!=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,7 +288,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator!= </td>
+          <td class="memname">constexpr bool operator!= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -310,7 +307,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -325,8 +322,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="a6dc728f1c6ff810d648b4c9938abb419"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dc728f1c6ff810d648b4c9938abb419">&#9670;&nbsp;</a></span>operator!=() <span class="overload">[2/2]</span></h2>
+<a id="aae4dc21682154845652c89a69a48ca18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae4dc21682154845652c89a69a48ca18">&#9670;&nbsp;</a></span>operator!=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -337,7 +334,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator!= </td>
+          <td class="memname">constexpr bool operator!= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -356,7 +353,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -371,146 +368,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="a54e88b3affa63efb9c71bfa6148d24fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54e88b3affa63efb9c71bfa6148d24fd">&#9670;&nbsp;</a></span>operator*()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classSFix.html">SFix</a>&lt;FixMathPrivate::neededSNIExtra(NI+_NI, NF+_NF, RANGE*_RANGE),NF+_NF, RANGE*_RANGE&gt; operator* </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;&#160;</td>
-          <td class="paramname"><em>op1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF, RANGE &gt; &amp;&#160;</td>
-          <td class="paramname"><em>op2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Multiplication between a <a class="el" href="classSFix.html">SFix</a> and a <a class="el" href="classUFix.html">UFix</a>. Safe. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">op1</td><td>A <a class="el" href="classSFix.html">SFix</a> </td></tr>
-    <tr><td class="paramname">op2</td><td>A <a class="el" href="classUFix.html">UFix</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of the multiplication of op1 and op2. As a <a class="el" href="classSFix.html">SFix</a> </dd></dl>
-
-</div>
-</div>
-<a id="a83bdc57433394da979b73216f504a531"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83bdc57433394da979b73216f504a531">&#9670;&nbsp;</a></span>operator+()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classSFix.html">SFix</a>&lt;FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)&gt; operator+ </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF, RANGE &gt; &amp;&#160;</td>
-          <td class="paramname"><em>op1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;&#160;</td>
-          <td class="paramname"><em>op2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Addition between a <a class="el" href="classSFix.html">SFix</a> and a <a class="el" href="classUFix.html">UFix</a>. Safe. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">op1</td><td>A <a class="el" href="classSFix.html">SFix</a> </td></tr>
-    <tr><td class="paramname">op2</td><td>A <a class="el" href="classUFix.html">UFix</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of the addition of op1 and op2. As a <a class="el" href="classSFix.html">SFix</a> </dd></dl>
-
-</div>
-</div>
-<a id="abf834c52ec71abc2e02d9c1467d25529"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf834c52ec71abc2e02d9c1467d25529">&#9670;&nbsp;</a></span>operator-()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int8_t NI, int8_t NF, uint64_t RANGE, int8_t _NI, int8_t _NF, uint64_t _RANGE&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classSFix.html">SFix</a>&lt;FixMathPrivate::neededSNIExtra(FixMathPrivate::FM_max(NI,_NI),FixMathPrivate::FM_max(NF,_NF),FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)),FixMathPrivate::FM_max(NF, _NF), FixMathPrivate::rangeAdd(NF,_NF,RANGE,_RANGE)&gt; operator- </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF, RANGE &gt; &amp;&#160;</td>
-          <td class="paramname"><em>op1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; _NI, _NF, _RANGE &gt; &amp;&#160;</td>
-          <td class="paramname"><em>op2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Subtraction between a <a class="el" href="classUFix.html">UFix</a> and a <a class="el" href="classSFix.html">SFix</a>. Safe. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">op1</td><td>A <a class="el" href="classUFix.html">UFix</a> </td></tr>
-    <tr><td class="paramname">op2</td><td>A <a class="el" href="classSFix.html">SFix</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of the subtraction of op1 by op2. As a <a class="el" href="classSFix.html">SFix</a> </dd></dl>
-
-</div>
-</div>
-<a id="ae6d9653421c0efd34f3ddd7b9a1ddb27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6d9653421c0efd34f3ddd7b9a1ddb27">&#9670;&nbsp;</a></span>operator&lt;() <span class="overload">[1/2]</span></h2>
+<a id="ab773f1f3dca60ecd08756268c4e1581d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab773f1f3dca60ecd08756268c4e1581d">&#9670;&nbsp;</a></span>operator&lt;() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -521,7 +380,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator&lt; </td>
+          <td class="memname">constexpr bool operator&lt; </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -540,7 +399,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -555,8 +414,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="afdd993fb057d1f2e840032dc679f08bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdd993fb057d1f2e840032dc679f08bd">&#9670;&nbsp;</a></span>operator&lt;() <span class="overload">[2/2]</span></h2>
+<a id="ad70883fc4f0dc62c55a831a506602d96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad70883fc4f0dc62c55a831a506602d96">&#9670;&nbsp;</a></span>operator&lt;() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -567,7 +426,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator&lt; </td>
+          <td class="memname">constexpr bool operator&lt; </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -586,7 +445,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -601,8 +460,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="af096adc7ba7861a48aadce8864ebaa35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af096adc7ba7861a48aadce8864ebaa35">&#9670;&nbsp;</a></span>operator==() <span class="overload">[1/2]</span></h2>
+<a id="a8b8bf5f8934ac98afb345f29feefb712"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b8bf5f8934ac98afb345f29feefb712">&#9670;&nbsp;</a></span>operator==() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -613,7 +472,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator== </td>
+          <td class="memname">constexpr bool operator== </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -632,7 +491,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -647,8 +506,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="a2c7150f7834503a78d21bb602c1c833a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c7150f7834503a78d21bb602c1c833a">&#9670;&nbsp;</a></span>operator==() <span class="overload">[2/2]</span></h2>
+<a id="a5352a505056ab3e61f3364a6f43f33bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5352a505056ab3e61f3364a6f43f33bf">&#9670;&nbsp;</a></span>operator==() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -659,7 +518,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator== </td>
+          <td class="memname">constexpr bool operator== </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -678,7 +537,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -693,8 +552,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="a3e1a7fea00b065a7f81917c8d4790bca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e1a7fea00b065a7f81917c8d4790bca">&#9670;&nbsp;</a></span>operator&gt;() <span class="overload">[1/2]</span></h2>
+<a id="a85ff3e79510e17f13056c58a2191be18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85ff3e79510e17f13056c58a2191be18">&#9670;&nbsp;</a></span>operator&gt;() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -705,7 +564,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator&gt; </td>
+          <td class="memname">constexpr bool operator&gt; </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -724,7 +583,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -739,8 +598,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="ac0e9c2ac558982169a176d6d1875dd47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0e9c2ac558982169a176d6d1875dd47">&#9670;&nbsp;</a></span>operator&gt;() <span class="overload">[2/2]</span></h2>
+<a id="a771e19acc8c3adaa3296148c1e6ebdde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a771e19acc8c3adaa3296148c1e6ebdde">&#9670;&nbsp;</a></span>operator&gt;() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -751,7 +610,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool operator&gt; </td>
+          <td class="memname">constexpr bool operator&gt; </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF &gt; &amp;&#160;</td>
           <td class="paramname"><em>op1</em>, </td>
@@ -770,7 +629,7 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -785,8 +644,8 @@ template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </div>
 
 </div>
 </div>
-<a id="a46b90b067252e2ceeed03c96ccc55fd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46b90b067252e2ceeed03c96ccc55fd4">&#9670;&nbsp;</a></span>toSFraction()</h2>
+<a id="aac7fece5e8162407f033d0fbf022ad15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac7fece5e8162407f033d0fbf022ad15">&#9670;&nbsp;</a></span>toSFraction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -797,7 +656,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classSFix.html">SFix</a>&lt;0, sizeof(T)*8-1&gt; toSFraction </td>
+          <td class="memname">constexpr <a class="el" href="classSFix.html">SFix</a>&lt;0, sizeof(T)*8-1&gt; toSFraction </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
@@ -806,7 +665,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -820,8 +679,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a83bd22fe181cddcf4c3faacbe86140fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83bd22fe181cddcf4c3faacbe86140fa">&#9670;&nbsp;</a></span>toSInt()</h2>
+<a id="ac479196160eb99ddf534e0768e3f1990"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac479196160eb99ddf534e0768e3f1990">&#9670;&nbsp;</a></span>toSInt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -832,7 +691,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classSFix.html">SFix</a>&lt;sizeof(T)*8-1,0&gt; toSInt </td>
+          <td class="memname">constexpr <a class="el" href="classSFix.html">SFix</a>&lt;sizeof(T)*8-1,0&gt; toSInt </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
@@ -841,7 +700,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -855,8 +714,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aaaaa1dc404829e0ec37bc565d58f394f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaaaa1dc404829e0ec37bc565d58f394f">&#9670;&nbsp;</a></span>toUFraction()</h2>
+<a id="ab6c690d265da5284fa40b19574b286cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6c690d265da5284fa40b19574b286cb">&#9670;&nbsp;</a></span>toUFraction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -867,7 +726,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUFix.html">UFix</a>&lt;0, sizeof(T)*8&gt; toUFraction </td>
+          <td class="memname">constexpr <a class="el" href="classUFix.html">UFix</a>&lt;0, sizeof(T)*8&gt; toUFraction </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
@@ -876,7 +735,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -890,8 +749,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa2666bae0f50341fb0db86af1af47ec9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2666bae0f50341fb0db86af1af47ec9">&#9670;&nbsp;</a></span>toUInt()</h2>
+<a id="a0dda76ba96e4ae059e3872b080b6c681"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dda76ba96e4ae059e3872b080b6c681">&#9670;&nbsp;</a></span>toUInt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -902,7 +761,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUFix.html">UFix</a>&lt;sizeof(T)*8,0&gt; toUInt </td>
+          <td class="memname">constexpr <a class="el" href="classUFix.html">UFix</a>&lt;sizeof(T)*8,0&gt; toUInt </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>val</em></td><td>)</td>
@@ -911,7 +770,7 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
