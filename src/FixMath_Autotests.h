@@ -7,13 +7,13 @@
  * FixMath is licensed under a GNU Lesser General Public Licence
  *
  */
- 
- 
+
+
 /** This file implements a few compile-time checks to verify the implementation is correct. */
  
 namespace FixMathPrivate {
   /* This function is never called, and has no effect, but simply encapsulates a bunch of static asserts */
-  void static_autotests() {
+  inline void static_autotests() {
     {
       constexpr auto a = UFix<8,1>(64, true);   // 32
       constexpr auto b = UFix<8,2>(130, true);  // 32.5
@@ -71,3 +71,5 @@ namespace FixMathPrivate {
     }
   }
 }
+
+
