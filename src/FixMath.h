@@ -80,9 +80,9 @@ More specifically on the returned types of the operations between fixed point ma
      - `UFix<NI,NF>.inv<_NF>()` returns the approximate inverse of the number as `UFix<NF,_NF>`
      - `SFix<NI,NF>.inv<_NF>()` returns the approximate inverse of the number as `SFix<NF,_NF>`
    - Exact: (when the result can be exactly represented in the destination type)
-     - `UFix<NI,NF>.invAccurate()` returns the inverse as `UFix<NF,2*NI+NF>`
-     - `SFix<NI,NF>.invAccurate()` returns the inverse as `SFix<NF,2*NI+NF>`
-     - `UFix<NI,NF>.invAccurate<_NF>()` returns the inverse as `UFix<NF,_NF>`
+     - `UFix<NI,NF>.invAccurate()` returns the inverse as `UFix<NF,2*NI+NF-1>`
+     - `SFix<NI,NF>.invAccurate()` returns the inverse as `SFix<NF,2*NI+NF-1>`
+     - `UFix<NI,NF>.invAccurate<_NF>()` returns the inverse as `UFix<NF,_NF>` (uses NF+_NF+1 bits internally)
      - `SFix<NI,NF>.invAccurate()<_NF>` returns the inverse as `SFix<NF,_NF>`
  - Conversion (should be preferred over casting, when possible):
    - `UFix<NI,NF>.asSFix()` returns `SFix<NI,NF>`
