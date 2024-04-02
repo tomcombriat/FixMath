@@ -509,9 +509,14 @@ public:
   */
   static constexpr int8_t getNF() {return NF;}
 
-  /** Check wether this number exceeds the given total bitsize. Useful as a mechanism to guard
-   *  against unexpected bit size inflation. This is a compile-type check and will not incur
-   *  any flash use or performance penalty.
+  /** Check wether this number exceeds the given total size given in bits, and produce a
+   *  compile time error, otherwise.
+   *
+   *  @note In the "sibling" function SFix::assertSize(), the sign bit is counted as an extra bit,
+   *        i.e. SFix<8,0>::assertSize<8>() will fail!
+   *
+   *  Useful as a mechanism to guard against unexpected bit size inflation. This is a compile-type check and
+   *  will not incur any flash use or performance penalty.
    *
    *  Example:
    *  @code
@@ -1016,7 +1021,10 @@ public:
   static constexpr int8_t getNF() {return NF;}
   
 
-  /** Check wether this number exceeds the given total bitsize. See UFix::asssertSize().
+  /** Check wether this number exceeds the given total size in bits. See UFix::asssertSize().
+   *
+   *  @note This function counts the number of bits needed, internally, and including the sign bit.
+   *        E.g. SFix<8,0>::assertSize<8>() will fail, as it requires 9 bits, internally!
    */
   template<int8_t BITS> static constexpr void assertSize() { static_assert(NI+NF+1 <= BITS, "Data type is larger than expected!"); }
 private:
