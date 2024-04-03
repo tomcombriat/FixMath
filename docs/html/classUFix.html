@@ -64,6 +64,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classUFix-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">UFix&lt; NI, NF, RANGE &gt; Class Template Reference</div>  </div>
@@ -157,6 +158,16 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:aa17a66aaaeed2e67163f2bc8bbf2ce08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900f594b8b95f377fff38c49f5149866"><td class="memItemLeft" align="right" valign="top">static constexpr int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUFix.html#a900f594b8b95f377fff38c49f5149866">getNF</a> ()</td></tr>
 <tr class="separator:a900f594b8b95f377fff38c49f5149866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cce7ec1619e8b6d158e69ad437168c3"><td class="memTemplParams" colspan="2">template&lt;int8_t BITS&gt; </td></tr>
+<tr class="memitem:a4cce7ec1619e8b6d158e69ad437168c3"><td class="memTemplItemLeft" align="right" valign="top">static constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUFix.html#a4cce7ec1619e8b6d158e69ad437168c3">assertSize</a> ()</td></tr>
+<tr class="separator:a4cce7ec1619e8b6d158e69ad437168c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a88aee1f9a32079b217a8a393dcd992b7"><td class="memTemplParams" colspan="2"><a id="a88aee1f9a32079b217a8a393dcd992b7"></a>
+template&lt;int8_t , int8_t , uint64_t &gt; </td></tr>
+<tr class="memitem:a88aee1f9a32079b217a8a393dcd992b7"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><b>SFix</b></td></tr>
+<tr class="separator:a88aee1f9a32079b217a8a393dcd992b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt;<br />
@@ -474,6 +485,42 @@ template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt; </div>
 </div><div class="memdoc">
 <p>Returns the internal integer value </p><dl class="section return"><dt>Returns</dt><dd>the internal value </dd></dl>
 
+</div>
+</div>
+<a id="a4cce7ec1619e8b6d158e69ad437168c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cce7ec1619e8b6d158e69ad437168c3">&#9670;&nbsp;</a></span>assertSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt; </div>
+<div class="memtemplate">
+template&lt;int8_t BITS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr void <a class="el" href="classUFix.html">UFix</a>&lt; NI, NF, RANGE &gt;::assertSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check wether this number exceeds the given total size given in bits, and produce a compile time error, otherwise.</p>
+<dl class="section note"><dt>Note</dt><dd>In the "sibling" function <a class="el" href="classSFix.html#a59bd681b9d4bfaa3141d9d96e05728a2">SFix::assertSize()</a>, the sign bit is counted as an extra bit, i.e. SFix&lt;8,0&gt;::assertSize&lt;8&gt;() will fail!</dd></dl>
+<p>Useful as a mechanism to guard against unexpected bit size inflation. This is a compile-type check and will not incur any flash use or performance penalty.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> a = <a class="code" href="FixMath_8h.html#a0dda76ba96e4ae059e3872b080b6c681">toUInt</a>((uint16_t) 42); <span class="comment">// uint16_t is unecessarily large for this value, results in a UFix&lt;16,0&gt;</span></div>
+<div class="line"><span class="keyword">auto</span> cubed = a*a*a;             <span class="comment">// therefore, cubed is a UFix&lt;48,0&gt;</span></div>
+<div class="line">cubed.assertSize&lt;32&gt;();         <span class="comment">// Oops, already at 48 bits! Should have used a smaller data type, above!</span></div>
+<div class="ttc" id="aFixMath_8h_html_a0dda76ba96e4ae059e3872b080b6c681"><div class="ttname"><a href="FixMath_8h.html#a0dda76ba96e4ae059e3872b080b6c681">toUInt</a></div><div class="ttdeci">constexpr UFix&lt; sizeof(T) *8, 0 &gt; toUInt(T val)</div><div class="ttdef"><b>Definition:</b> FixMath.h:700</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="ad3d368e0eca82acd2e8088d4fe6114af"></a>

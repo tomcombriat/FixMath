@@ -71,6 +71,14 @@ constexpr internal\+\_\+type \mbox{\hyperlink{classUFix_a390542b7d93844ec88b66c6
 static constexpr int8\+\_\+t \mbox{\hyperlink{classUFix_aa17a66aaaeed2e67163f2bc8bbf2ce08}{get\+NI}} ()
 \item 
 static constexpr int8\+\_\+t \mbox{\hyperlink{classUFix_a900f594b8b95f377fff38c49f5149866}{get\+NF}} ()
+\item 
+{\footnotesize template$<$int8\+\_\+t BITS$>$ }\\static constexpr void \mbox{\hyperlink{classUFix_a4cce7ec1619e8b6d158e69ad437168c3}{assert\+Size}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classUFix_a88aee1f9a32079b217a8a393dcd992b7}\label{classUFix_a88aee1f9a32079b217a8a393dcd992b7}} 
+{\footnotesize template$<$int8\+\_\+t , int8\+\_\+t , uint64\+\_\+t $>$ }\\class {\bfseries SFix}
 \end{DoxyCompactItemize}
 
 
@@ -210,7 +218,29 @@ constexpr internal\+\_\+type \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE
 Returns the internal integer value \begin{DoxyReturn}{Returns}
 the internal value 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classUFix_ad3d368e0eca82acd2e8088d4fe6114af}\label{classUFix_ad3d368e0eca82acd2e8088d4fe6114af}} 
+\mbox{\Hypertarget{classUFix_a4cce7ec1619e8b6d158e69ad437168c3}\label{classUFix_a4cce7ec1619e8b6d158e69ad437168c3}} 
+\index{UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}!assertSize@{assertSize}}
+\index{assertSize@{assertSize}!UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}}
+\doxysubsubsection{\texorpdfstring{assertSize()}{assertSize()}}
+{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ \\
+template$<$int8\+\_\+t BITS$>$ \\
+static constexpr void \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$\+::assert\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+Check wether this number exceeds the given total size given in bits, and produce a compile time error, otherwise.
+
+\begin{DoxyNote}{Note}
+In the \char`\"{}sibling\char`\"{} function \mbox{\hyperlink{classSFix_a59bd681b9d4bfaa3141d9d96e05728a2}{SFix\+::assert\+Size()}}, the sign bit is counted as an extra bit, i.\+e. SFix$<$8,0$>$\+::assert\+Size$<$8$>$() will fail!
+\end{DoxyNote}
+Useful as a mechanism to guard against unexpected bit size inflation. This is a compile-\/type check and will not incur any flash use or performance penalty.
+
+Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto} a = \mbox{\hyperlink{FixMath_8h_a0dda76ba96e4ae059e3872b080b6c681}{toUInt}}((uint16\_t) 42); \textcolor{comment}{// uint16\_t is unecessarily large for this value, results in a UFix<16,0>}}
+\DoxyCodeLine{\textcolor{keyword}{auto} cubed = a*a*a;             \textcolor{comment}{// therefore, cubed is a UFix<48,0>}}
+\DoxyCodeLine{cubed.assertSize<32>();         \textcolor{comment}{// Oops, already at 48 bits! Should have used a smaller data type, above!}}
+
+\end{DoxyCode}
+ \mbox{\Hypertarget{classUFix_ad3d368e0eca82acd2e8088d4fe6114af}\label{classUFix_ad3d368e0eca82acd2e8088d4fe6114af}} 
 \index{UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}!asSFix@{asSFix}}
 \index{asSFix@{asSFix}!UFix$<$ NI, NF, RANGE $>$@{UFix$<$ NI, NF, RANGE $>$}}
 \doxysubsubsection{\texorpdfstring{asSFix()}{asSFix()}}

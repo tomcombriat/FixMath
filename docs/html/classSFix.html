@@ -158,6 +158,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a8e26f89e3aa2969906d9ff3deaa53328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a319ae49f75636efec3999140a31fc85c"><td class="memItemLeft" align="right" valign="top">static constexpr int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSFix.html#a319ae49f75636efec3999140a31fc85c">getNF</a> ()</td></tr>
 <tr class="separator:a319ae49f75636efec3999140a31fc85c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bd681b9d4bfaa3141d9d96e05728a2"><td class="memTemplParams" colspan="2">template&lt;int8_t BITS&gt; </td></tr>
+<tr class="memitem:a59bd681b9d4bfaa3141d9d96e05728a2"><td class="memTemplItemLeft" align="right" valign="top">static constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classSFix.html#a59bd681b9d4bfaa3141d9d96e05728a2">assertSize</a> ()</td></tr>
+<tr class="separator:a59bd681b9d4bfaa3141d9d96e05728a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -483,6 +486,37 @@ template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Returns the internal integer value </p><dl class="section return"><dt>Returns</dt><dd>the internal value </dd></dl>
+
+</div>
+</div>
+<a id="a59bd681b9d4bfaa3141d9d96e05728a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59bd681b9d4bfaa3141d9d96e05728a2">&#9670;&nbsp;</a></span>assertSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int8_t NI, int8_t NF, uint64_t RANGE&gt; </div>
+<div class="memtemplate">
+template&lt;int8_t BITS&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr void <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF, RANGE &gt;::assertSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check wether this number exceeds the given total size in bits. See UFix::asssertSize().</p>
+<dl class="section note"><dt>Note</dt><dd>This function counts the number of bits needed, internally, and including the sign bit. E.g. SFix&lt;8,0&gt;::assertSize&lt;8&gt;() will fail, as it requires 9 bits, internally! </dd></dl>
 
 </div>
 </div>

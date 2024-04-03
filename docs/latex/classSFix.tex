@@ -71,6 +71,8 @@ constexpr internal\+\_\+type \mbox{\hyperlink{classSFix_a30667c56d94bf030fbe51d4
 static constexpr int8\+\_\+t \mbox{\hyperlink{classSFix_a8e26f89e3aa2969906d9ff3deaa53328}{get\+NI}} ()
 \item 
 static constexpr int8\+\_\+t \mbox{\hyperlink{classSFix_a319ae49f75636efec3999140a31fc85c}{get\+NF}} ()
+\item 
+{\footnotesize template$<$int8\+\_\+t BITS$>$ }\\static constexpr void \mbox{\hyperlink{classSFix_a59bd681b9d4bfaa3141d9d96e05728a2}{assert\+Size}} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Friends}
 \begin{DoxyCompactItemize}
@@ -222,6 +224,19 @@ constexpr internal\+\_\+type \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE
 Returns the internal integer value \begin{DoxyReturn}{Returns}
 the internal value 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classSFix_a59bd681b9d4bfaa3141d9d96e05728a2}\label{classSFix_a59bd681b9d4bfaa3141d9d96e05728a2}} 
+\index{SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}!assertSize@{assertSize}}
+\index{assertSize@{assertSize}!SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}}
+\doxysubsubsection{\texorpdfstring{assertSize()}{assertSize()}}
+{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ \\
+template$<$int8\+\_\+t BITS$>$ \\
+static constexpr void \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE $>$\+::assert\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+Check wether this number exceeds the given total size in bits. See UFix\+::asssert\+Size().
+
+\begin{DoxyNote}{Note}
+This function counts the number of bits needed, internally, and including the sign bit. E.\+g. SFix$<$8,0$>$\+::assert\+Size$<$8$>$() will fail, as it requires 9 bits, internally! 
+\end{DoxyNote}
 \mbox{\Hypertarget{classSFix_a0ae56f253ada7f3b73756616eac13e91}\label{classSFix_a0ae56f253ada7f3b73756616eac13e91}} 
 \index{SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}!asUFix@{asUFix}}
 \index{asUFix@{asUFix}!SFix$<$ NI, NF, RANGE $>$@{SFix$<$ NI, NF, RANGE $>$}}

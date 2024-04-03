@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sfix_44',['SFix',['../classSFix.html',1,'']]]
+  ['sfix_45',['SFix',['../classSFix.html',1,'']]]
 ];
