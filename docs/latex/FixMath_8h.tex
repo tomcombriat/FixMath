@@ -2,11 +2,13 @@
 \label{FixMath_8h}\index{FixMath.h@{FixMath.h}}
 {\ttfamily \#include $<$Arduino.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}Integer\+Type.\+h\char`\"{}}\newline
-Include dependency graph for Fix\+Math.\+h\+:\nopagebreak
+{\ttfamily \#include \char`\"{}Fix\+Math\+\_\+\+Autotests.\+h\char`\"{}}\newline
+Include dependency graph for Fix\+Math.\+h\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=189pt]{FixMath_8h__incl}
+\includegraphics[width=323pt]{FixMath_8h__incl}
 \end{center}
 \end{figure}
 \doxysubsection*{Classes}
@@ -48,44 +50,32 @@ constexpr uint64\+\_\+t {\bfseries Fix\+Math\+Private\+::u\+Full\+Range} (int8\+
 \mbox{\Hypertarget{namespaceFixMathPrivate_a8caf353bbd3661d13479e08aaf63045d}\label{namespaceFixMathPrivate_a8caf353bbd3661d13479e08aaf63045d}} 
 constexpr uint64\+\_\+t {\bfseries Fix\+Math\+Private\+::range\+Add} (byte NF, byte \+\_\+\+NF, uint64\+\_\+t RANGE, uint64\+\_\+t \+\_\+\+RANGE)
 \item 
-\mbox{\Hypertarget{namespaceFixMathPrivate_ae3bccc9e679228029118d0032d384021}\label{namespaceFixMathPrivate_ae3bccc9e679228029118d0032d384021}} 
-constexpr int8\+\_\+t {\bfseries Fix\+Math\+Private\+::needed\+NIExtra} (int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE)
-\item 
-\mbox{\Hypertarget{namespaceFixMathPrivate_a52871f717344679304d6508465d710d8}\label{namespaceFixMathPrivate_a52871f717344679304d6508465d710d8}} 
-constexpr int8\+\_\+t {\bfseries Fix\+Math\+Private\+::needed\+SNIExtra} (int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE)
-\item 
 \mbox{\Hypertarget{namespaceFixMathPrivate_a96afba7d43238189112a0d0a72c0675a}\label{namespaceFixMathPrivate_a96afba7d43238189112a0d0a72c0675a}} 
 constexpr uint64\+\_\+t {\bfseries Fix\+Math\+Private\+::range\+Shift} (int8\+\_\+t N, int8\+\_\+t SH, uint64\+\_\+t RANGE)
 \item 
-{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classUFix}{UFix}}$<$ 0, sizeof(T) $\ast$8 $>$ \mbox{\hyperlink{FixMath_8h_aaaaa1dc404829e0ec37bc565d58f394f}{to\+UFraction}} (T val)
+{\footnotesize template$<$typename T $>$ }\\constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$ 0, sizeof(T) $\ast$8 $>$ \mbox{\hyperlink{FixMath_8h_ab6c690d265da5284fa40b19574b286cb}{to\+UFraction}} (T val)
 \item 
-{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classUFix}{UFix}}$<$ sizeof(T) $\ast$8, 0 $>$ \mbox{\hyperlink{FixMath_8h_aa2666bae0f50341fb0db86af1af47ec9}{to\+UInt}} (T val)
+{\footnotesize template$<$typename T $>$ }\\constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$ sizeof(T) $\ast$8, 0 $>$ \mbox{\hyperlink{FixMath_8h_a0dda76ba96e4ae059e3872b080b6c681}{to\+UInt}} (T val)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ }\\\mbox{\hyperlink{classSFix}{SFix}}$<$ Fix\+Math\+Private\+::needed\+SNIExtra(Fix\+Math\+Private\+::\+FM\+\_\+max(NI, \+\_\+\+NI), Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF, \+\_\+\+NF, RANGE, \+\_\+\+RANGE)), Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF, \+\_\+\+NF, RANGE, \+\_\+\+RANGE)$>$ \mbox{\hyperlink{FixMath_8h_a83bdc57433394da979b73216f504a531}{operator+}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_a85ff3e79510e17f13056c58a2191be18}{operator$>$}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ }\\\mbox{\hyperlink{classSFix}{SFix}}$<$ Fix\+Math\+Private\+::needed\+SNIExtra(Fix\+Math\+Private\+::\+FM\+\_\+max(NI, \+\_\+\+NI), Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF, \+\_\+\+NF, RANGE, \+\_\+\+RANGE)), Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF, \+\_\+\+NF, RANGE, \+\_\+\+RANGE)$>$ \mbox{\hyperlink{FixMath_8h_abf834c52ec71abc2e02d9c1467d25529}{operator-\/}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_a771e19acc8c3adaa3296148c1e6ebdde}{operator$>$}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ }\\\mbox{\hyperlink{classSFix}{SFix}}$<$ Fix\+Math\+Private\+::needed\+SNIExtra(NI+\+\_\+\+NI, NF+\+\_\+\+NF, RANGE $\ast$\+\_\+\+RANGE), NF+\+\_\+\+NF, RANGE $\ast$\+\_\+\+RANGE $>$ \mbox{\hyperlink{FixMath_8h_a54e88b3affa63efb9c71bfa6148d24fd}{operator$\ast$}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_ad70883fc4f0dc62c55a831a506602d96}{operator$<$}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_a3e1a7fea00b065a7f81917c8d4790bca}{operator$>$}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_ab773f1f3dca60ecd08756268c4e1581d}{operator$<$}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_ac0e9c2ac558982169a176d6d1875dd47}{operator$>$}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_a8b8bf5f8934ac98afb345f29feefb712}{operator==}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_afdd993fb057d1f2e840032dc679f08bd}{operator$<$}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_a5352a505056ab3e61f3364a6f43f33bf}{operator==}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_ae6d9653421c0efd34f3ddd7b9a1ddb27}{operator$<$}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_a0fa4c56f004c4bcf800359a3907a42ef}{operator!=}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_af096adc7ba7861a48aadce8864ebaa35}{operator==}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
+{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_aae4dc21682154845652c89a69a48ca18}{operator!=}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_a2c7150f7834503a78d21bb602c1c833a}{operator==}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
+{\footnotesize template$<$typename T $>$ }\\constexpr \mbox{\hyperlink{classSFix}{SFix}}$<$ 0, sizeof(T) $\ast$8-\/1 $>$ \mbox{\hyperlink{FixMath_8h_aac7fece5e8162407f033d0fbf022ad15}{to\+SFraction}} (T val)
 \item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_a43e515210adb4dc5623586834cd8da7b}{operator!=}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
-\item 
-{\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\bool \mbox{\hyperlink{FixMath_8h_a6dc728f1c6ff810d648b4c9938abb419}{operator!=}} (const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
-\item 
-{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classSFix}{SFix}}$<$ 0, sizeof(T) $\ast$8-\/1 $>$ \mbox{\hyperlink{FixMath_8h_a46b90b067252e2ceeed03c96ccc55fd4}{to\+SFraction}} (T val)
-\item 
-{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classSFix}{SFix}}$<$ sizeof(T) $\ast$8-\/1, 0 $>$ \mbox{\hyperlink{FixMath_8h_a83bd22fe181cddcf4c3faacbe86140fa}{to\+SInt}} (T val)
+{\footnotesize template$<$typename T $>$ }\\constexpr \mbox{\hyperlink{classSFix}{SFix}}$<$ sizeof(T) $\ast$8-\/1, 0 $>$ \mbox{\hyperlink{FixMath_8h_ac479196160eb99ddf534e0768e3f1990}{to\+SInt}} (T val)
 \end{DoxyCompactItemize}
 
 
@@ -165,12 +155,22 @@ More specifically on the returned types of the operations between fixed point ma
 \end{DoxyItemize}
 \item Inverse\+:
 \begin{DoxyItemize}
-\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Fast()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,NI$>$}
-\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Fast()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,NI$>$}
-\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Accurate()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,2$\ast$\+NI+\+NF$>$}
-\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Accurate()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,2$\ast$\+NI+\+NF$>$}
-\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv$<$\+\_\+\+NF$>$()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,\+\_\+\+NF$>$}
-\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv$<$\+\_\+\+NF$>$()} returns the inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,\+\_\+\+NF$>$}
+\item Approximates\+:
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Fast()} returns the approximate inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,NI$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Fast()} returns the approximate inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,NI$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Full()} returns the approximate inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,2$\ast$\+NI+\+NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Full()} returns the approximate inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,2$\ast$\+NI+\+NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv$<$\+\_\+\+NF$>$()} returns the approximate inverse of the number as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,\+\_\+\+NF$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv$<$\+\_\+\+NF$>$()} returns the approximate inverse of the number as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,\+\_\+\+NF$>$}
+\end{DoxyItemize}
+\item Exact\+: (when the result can be exactly represented in the destination type)
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Accurate()} returns the inverse as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,2$\ast$\+NI+\+NF-\/1$>$}
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Accurate()} returns the inverse as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,2$\ast$\+NI+\+NF-\/1$>$}
+\item {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NI,NF$>$.inv\+Accurate$<$\+\_\+\+NF$>$()} returns the inverse as {\ttfamily \mbox{\hyperlink{classUFix}{UFix}}$<$NF,\+\_\+\+NF$>$} (uses NF+\+\_\+\+NF+1 bits internally)
+\item {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NI,NF$>$.inv\+Accurate()$<$\+\_\+\+NF$>$} returns the inverse as {\ttfamily \mbox{\hyperlink{classSFix}{SFix}}$<$NF,\+\_\+\+NF$>$}
+\end{DoxyItemize}
 \end{DoxyItemize}
 \item Conversion (should be preferred over casting, when possible)\+:
 \begin{DoxyItemize}
@@ -195,12 +195,12 @@ Note on division\+: The division is not implemented. This is a deliberate choice
 \end{DoxyItemize}
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{FixMath_8h_a43e515210adb4dc5623586834cd8da7b}\label{FixMath_8h_a43e515210adb4dc5623586834cd8da7b}} 
+\mbox{\Hypertarget{FixMath_8h_a0fa4c56f004c4bcf800359a3907a42ef}\label{FixMath_8h_a0fa4c56f004c4bcf800359a3907a42ef}} 
 \index{FixMath.h@{FixMath.h}!operator"!=@{operator"!=}}
 \index{operator"!=@{operator"!=}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{classUFix}{UFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -212,12 +212,12 @@ Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is not equal to op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a6dc728f1c6ff810d648b4c9938abb419}\label{FixMath_8h_a6dc728f1c6ff810d648b4c9938abb419}} 
+\mbox{\Hypertarget{FixMath_8h_aae4dc21682154845652c89a69a48ca18}\label{FixMath_8h_aae4dc21682154845652c89a69a48ca18}} 
 \index{FixMath.h@{FixMath.h}!operator"!=@{operator"!=}}
 \index{operator"!=@{operator"!=}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{classSFix}{SFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -229,63 +229,12 @@ Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is not equal to op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a54e88b3affa63efb9c71bfa6148d24fd}\label{FixMath_8h_a54e88b3affa63efb9c71bfa6148d24fd}} 
-\index{FixMath.h@{FixMath.h}!operator$\ast$@{operator$\ast$}}
-\index{operator$\ast$@{operator$\ast$}!FixMath.h@{FixMath.h}}
-\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}}
-{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ \\
-\mbox{\hyperlink{classSFix}{SFix}}$<$Fix\+Math\+Private\+::needed\+SNIExtra(NI+\+\_\+\+NI, NF+\+\_\+\+NF, RANGE$\ast$\+\_\+\+RANGE),NF+\+\_\+\+NF, RANGE$\ast$\+\_\+\+RANGE$>$ operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-Multiplication between a \mbox{\hyperlink{classSFix}{SFix}} and a \mbox{\hyperlink{classUFix}{UFix}}. Safe. 
-\begin{DoxyParams}{Parameters}
-{\em op1} & A \mbox{\hyperlink{classSFix}{SFix}} \\
-\hline
-{\em op2} & A \mbox{\hyperlink{classUFix}{UFix}} \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The result of the multiplication of op1 and op2. As a \mbox{\hyperlink{classSFix}{SFix}} 
-\end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a83bdc57433394da979b73216f504a531}\label{FixMath_8h_a83bdc57433394da979b73216f504a531}} 
-\index{FixMath.h@{FixMath.h}!operator+@{operator+}}
-\index{operator+@{operator+}!FixMath.h@{FixMath.h}}
-\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
-{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ \\
-\mbox{\hyperlink{classSFix}{SFix}}$<$Fix\+Math\+Private\+::needed\+SNIExtra(Fix\+Math\+Private\+::\+FM\+\_\+max(NI,\+\_\+\+NI),Fix\+Math\+Private\+::\+FM\+\_\+max(NF,\+\_\+\+NF),Fix\+Math\+Private\+::range\+Add(NF,\+\_\+\+NF,RANGE,\+\_\+\+RANGE)),Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF,\+\_\+\+NF,RANGE,\+\_\+\+RANGE)$>$ operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF, RANGE $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-Addition between a \mbox{\hyperlink{classSFix}{SFix}} and a \mbox{\hyperlink{classUFix}{UFix}}. Safe. 
-\begin{DoxyParams}{Parameters}
-{\em op1} & A \mbox{\hyperlink{classSFix}{SFix}} \\
-\hline
-{\em op2} & A \mbox{\hyperlink{classUFix}{UFix}} \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The result of the addition of op1 and op2. As a \mbox{\hyperlink{classSFix}{SFix}} 
-\end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_abf834c52ec71abc2e02d9c1467d25529}\label{FixMath_8h_abf834c52ec71abc2e02d9c1467d25529}} 
-\index{FixMath.h@{FixMath.h}!operator-\/@{operator-\/}}
-\index{operator-\/@{operator-\/}!FixMath.h@{FixMath.h}}
-\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
-{\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, uint64\+\_\+t RANGE, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF, uint64\+\_\+t \+\_\+\+RANGE$>$ \\
-\mbox{\hyperlink{classSFix}{SFix}}$<$Fix\+Math\+Private\+::needed\+SNIExtra(Fix\+Math\+Private\+::\+FM\+\_\+max(NI,\+\_\+\+NI),Fix\+Math\+Private\+::\+FM\+\_\+max(NF,\+\_\+\+NF),Fix\+Math\+Private\+::range\+Add(NF,\+\_\+\+NF,RANGE,\+\_\+\+RANGE)),Fix\+Math\+Private\+::\+FM\+\_\+max(NF, \+\_\+\+NF), Fix\+Math\+Private\+::range\+Add(NF,\+\_\+\+NF,RANGE,\+\_\+\+RANGE)$>$ operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF, RANGE $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF, \+\_\+\+RANGE $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-Subtraction between a \mbox{\hyperlink{classUFix}{UFix}} and a \mbox{\hyperlink{classSFix}{SFix}}. Safe. 
-\begin{DoxyParams}{Parameters}
-{\em op1} & A \mbox{\hyperlink{classUFix}{UFix}} \\
-\hline
-{\em op2} & A \mbox{\hyperlink{classSFix}{SFix}} \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The result of the subtraction of op1 by op2. As a \mbox{\hyperlink{classSFix}{SFix}} 
-\end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_ae6d9653421c0efd34f3ddd7b9a1ddb27}\label{FixMath_8h_ae6d9653421c0efd34f3ddd7b9a1ddb27}} 
+\mbox{\Hypertarget{FixMath_8h_ab773f1f3dca60ecd08756268c4e1581d}\label{FixMath_8h_ab773f1f3dca60ecd08756268c4e1581d}} 
 \index{FixMath.h@{FixMath.h}!operator$<$@{operator$<$}}
 \index{operator$<$@{operator$<$}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{classUFix}{UFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -297,12 +246,12 @@ Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is smaller than op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_afdd993fb057d1f2e840032dc679f08bd}\label{FixMath_8h_afdd993fb057d1f2e840032dc679f08bd}} 
+\mbox{\Hypertarget{FixMath_8h_ad70883fc4f0dc62c55a831a506602d96}\label{FixMath_8h_ad70883fc4f0dc62c55a831a506602d96}} 
 \index{FixMath.h@{FixMath.h}!operator$<$@{operator$<$}}
 \index{operator$<$@{operator$<$}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{classSFix}{SFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -314,12 +263,12 @@ Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is smaller than op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_af096adc7ba7861a48aadce8864ebaa35}\label{FixMath_8h_af096adc7ba7861a48aadce8864ebaa35}} 
+\mbox{\Hypertarget{FixMath_8h_a8b8bf5f8934ac98afb345f29feefb712}\label{FixMath_8h_a8b8bf5f8934ac98afb345f29feefb712}} 
 \index{FixMath.h@{FixMath.h}!operator==@{operator==}}
 \index{operator==@{operator==}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{classUFix}{UFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -331,12 +280,12 @@ Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is equal to op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a2c7150f7834503a78d21bb602c1c833a}\label{FixMath_8h_a2c7150f7834503a78d21bb602c1c833a}} 
+\mbox{\Hypertarget{FixMath_8h_a5352a505056ab3e61f3364a6f43f33bf}\label{FixMath_8h_a5352a505056ab3e61f3364a6f43f33bf}} 
 \index{FixMath.h@{FixMath.h}!operator==@{operator==}}
 \index{operator==@{operator==}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{classSFix}{SFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -348,12 +297,12 @@ Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is equal to op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a3e1a7fea00b065a7f81917c8d4790bca}\label{FixMath_8h_a3e1a7fea00b065a7f81917c8d4790bca}} 
+\mbox{\Hypertarget{FixMath_8h_a85ff3e79510e17f13056c58a2191be18}\label{FixMath_8h_a85ff3e79510e17f13056c58a2191be18}} 
 \index{FixMath.h@{FixMath.h}!operator$>$@{operator$>$}}
 \index{operator$>$@{operator$>$}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator$>$()}{operator>()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator$>$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator$>$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{classUFix}{UFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -365,12 +314,12 @@ Comparison between a \mbox{\hyperlink{classSFix}{SFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is bigger than op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_ac0e9c2ac558982169a176d6d1875dd47}\label{FixMath_8h_ac0e9c2ac558982169a176d6d1875dd47}} 
+\mbox{\Hypertarget{FixMath_8h_a771e19acc8c3adaa3296148c1e6ebdde}\label{FixMath_8h_a771e19acc8c3adaa3296148c1e6ebdde}} 
 \index{FixMath.h@{FixMath.h}!operator$>$@{operator$>$}}
 \index{operator$>$@{operator$>$}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{operator$>$()}{operator>()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
 {\footnotesize\ttfamily template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ \\
-bool operator$>$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr bool operator$>$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUFix}{UFix}}$<$ NI, NF $>$ \&}]{op1,  }\item[{const \mbox{\hyperlink{classSFix}{SFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&}]{op2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{classSFix}{SFix}}. 
 \begin{DoxyParams}{Parameters}
@@ -382,12 +331,12 @@ Comparison between a \mbox{\hyperlink{classUFix}{UFix}} and an \mbox{\hyperlink{
 \begin{DoxyReturn}{Returns}
 true if op1 is bigger than op2, false otherwise 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a46b90b067252e2ceeed03c96ccc55fd4}\label{FixMath_8h_a46b90b067252e2ceeed03c96ccc55fd4}} 
+\mbox{\Hypertarget{FixMath_8h_aac7fece5e8162407f033d0fbf022ad15}\label{FixMath_8h_aac7fece5e8162407f033d0fbf022ad15}} 
 \index{FixMath.h@{FixMath.h}!toSFraction@{toSFraction}}
 \index{toSFraction@{toSFraction}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{toSFraction()}{toSFraction()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\mbox{\hyperlink{classSFix}{SFix}}$<$0, sizeof(T)$\ast$8-\/1$>$ to\+SFraction (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr \mbox{\hyperlink{classSFix}{SFix}}$<$0, sizeof(T)$\ast$8-\/1$>$ to\+SFraction (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Create a {\itshape pure} fractional signed fixed number (\mbox{\hyperlink{classSFix}{SFix}}) from a integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence to\+SFraction(127) and to\+SFraction(int8\+\_\+t(127)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NF=15 -\/ which is overkill and incorrect if you expect to\+SFraction(127) = 1 -\/ whereas the latter will lead to NF=7. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
 \begin{DoxyParams}{Parameters}
@@ -397,12 +346,12 @@ Create a {\itshape pure} fractional signed fixed number (\mbox{\hyperlink{classS
 \begin{DoxyReturn}{Returns}
 A SFix$<$0,\+NF$>$ with NF chosen according to the input type 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_a83bd22fe181cddcf4c3faacbe86140fa}\label{FixMath_8h_a83bd22fe181cddcf4c3faacbe86140fa}} 
+\mbox{\Hypertarget{FixMath_8h_ac479196160eb99ddf534e0768e3f1990}\label{FixMath_8h_ac479196160eb99ddf534e0768e3f1990}} 
 \index{FixMath.h@{FixMath.h}!toSInt@{toSInt}}
 \index{toSInt@{toSInt}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{toSInt()}{toSInt()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\mbox{\hyperlink{classSFix}{SFix}}$<$sizeof(T)$\ast$8-\/1,0$>$ to\+SInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr \mbox{\hyperlink{classSFix}{SFix}}$<$sizeof(T)$\ast$8-\/1,0$>$ to\+SInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
 Create a {\itshape pure} integer signed fixed number (\mbox{\hyperlink{classSFix}{SFix}}) from a integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+SInt(127) and to\+SInt(int8\+\_\+t(127)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=15 -\/ which is overkill -\/ whereas the latter will lead to NI=7. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
 \begin{DoxyParams}{Parameters}
@@ -412,12 +361,12 @@ Create a {\itshape pure} integer signed fixed number (\mbox{\hyperlink{classSFix
 \begin{DoxyReturn}{Returns}
 A SFix$<$\+NI,0$>$ with NI chosen according to the input type 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_aaaaa1dc404829e0ec37bc565d58f394f}\label{FixMath_8h_aaaaa1dc404829e0ec37bc565d58f394f}} 
+\mbox{\Hypertarget{FixMath_8h_ab6c690d265da5284fa40b19574b286cb}\label{FixMath_8h_ab6c690d265da5284fa40b19574b286cb}} 
 \index{FixMath.h@{FixMath.h}!toUFraction@{toUFraction}}
 \index{toUFraction@{toUFraction}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{toUFraction()}{toUFraction()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\mbox{\hyperlink{classUFix}{UFix}}$<$0, sizeof(T)$\ast$8$>$ to\+UFraction (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$0, sizeof(T)$\ast$8$>$ to\+UFraction (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
 
 Create a {\itshape pure} fractional unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence to\+UFraction(255) and to\+UFraction(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NF=16 -\/ which is overkill and incorrect if you expect to\+UFraction(255) = 1 -\/ whereas the latter will lead to NF=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
 \begin{DoxyParams}{Parameters}
@@ -427,12 +376,12 @@ Create a {\itshape pure} fractional unsigned fixed number (\mbox{\hyperlink{clas
 \begin{DoxyReturn}{Returns}
 A UFix$<$0,\+NF$>$ with NF chosen according to the input type 
 \end{DoxyReturn}
-\mbox{\Hypertarget{FixMath_8h_aa2666bae0f50341fb0db86af1af47ec9}\label{FixMath_8h_aa2666bae0f50341fb0db86af1af47ec9}} 
+\mbox{\Hypertarget{FixMath_8h_a0dda76ba96e4ae059e3872b080b6c681}\label{FixMath_8h_a0dda76ba96e4ae059e3872b080b6c681}} 
 \index{FixMath.h@{FixMath.h}!toUInt@{toUInt}}
 \index{toUInt@{toUInt}!FixMath.h@{FixMath.h}}
 \doxysubsubsection{\texorpdfstring{toUInt()}{toUInt()}}
 {\footnotesize\ttfamily template$<$typename T $>$ \\
-\mbox{\hyperlink{classUFix}{UFix}}$<$sizeof(T)$\ast$8,0$>$ to\+UInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$sizeof(T)$\ast$8,0$>$ to\+UInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
 
 Create a {\itshape pure} integer unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+UInt(255) and to\+UInt(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=16 -\/ which is overkill -\/ whereas the latter will lead to NI=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
 \begin{DoxyParams}{Parameters}

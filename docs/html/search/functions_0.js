@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['asfloat_47',['asFloat',['../classUFix.html#a3f54ff6dbaa760abc1bee57b1a762f53',1,'UFix::asFloat()'],['../classSFix.html#a47b542699b2d040eddacfaac501b762b',1,'SFix::asFloat()']]],
-  ['asint_48',['asInt',['../classUFix.html#a4ad19493943907de03f671a3d0adadcd',1,'UFix::asInt()'],['../classSFix.html#a4ac70d40c8860889273453f56fda97f1',1,'SFix::asInt()']]],
-  ['asraw_49',['asRaw',['../classUFix.html#adbc319d2451f6fbc58a16004bcf6479c',1,'UFix::asRaw()'],['../classSFix.html#a22d106646035967e9fccf4ef74b22224',1,'SFix::asRaw()']]],
-  ['assfix_50',['asSFix',['../classUFix.html#a221fe9e3a32788353b33c9fc90ea8e81',1,'UFix']]],
-  ['asufix_51',['asUFix',['../classSFix.html#ad457652cb9728830760ff12b83e86f05',1,'SFix']]]
+  ['asfloat_48',['asFloat',['../classUFix.html#aeaabe601fa4fa53d39ef5026f644d36f',1,'UFix::asFloat()'],['../classSFix.html#a3bd75c2f6a196e16854ca189e8769624',1,'SFix::asFloat()']]],
+  ['asint_49',['asInt',['../classUFix.html#a72bfc5596616a080c133a7075ba1815b',1,'UFix::asInt()'],['../classSFix.html#a7471ac4241e86f15f263db7c65478b20',1,'SFix::asInt()']]],
+  ['asraw_50',['asRaw',['../classUFix.html#a390542b7d93844ec88b66c6827775e81',1,'UFix::asRaw()'],['../classSFix.html#a30667c56d94bf030fbe51d4ed9950b08',1,'SFix::asRaw()']]],
+  ['assfix_51',['asSFix',['../classUFix.html#ad3d368e0eca82acd2e8088d4fe6114af',1,'UFix']]],
+  ['asufix_52',['asUFix',['../classSFix.html#a0ae56f253ada7f3b73756616eac13e91',1,'SFix']]]
 ];
