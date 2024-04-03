@@ -120,7 +120,6 @@ The division is not implemented. This is a deliberate choice made for two reason
  
 
 
-
 /**  constexpr functions used internally.
 */
 
@@ -134,6 +133,16 @@ namespace FixMathPrivate {
   constexpr uint64_t uFullRange(int8_t N) { return ((uint64_t(1)<<(N-1))-1) + (uint64_t(1)<<(N-1));}
   constexpr uint64_t rangeAdd(byte NF, byte _NF, uint64_t RANGE, uint64_t _RANGE) { return ((NF > _NF) ? (RANGE + (_RANGE<<(NF-_NF))) : (_RANGE + (RANGE<<(_NF-NF))));}  // returns the RANGE following an addition
   constexpr uint64_t rangeShift(int8_t N, int8_t SH, uint64_t RANGE) { return ((SH < N) ? (RANGE) : (shiftR(RANGE,(N-SH))));}  // make sure that NI or NF does not turn negative when safe shifts are used.
+
+  // Helper struct for NIcount(), below. Needed, because C++ does not allow partial specialization of functions
+  template<uint64_t value, int8_t bits> struct BitCounter {
+    static constexpr int8_t bitsNeeded() { return (value >= (uint64_t(1) << bits) ? bits+1 : (BitCounter<value, bits-1>::bitsNeeded())); }
+  };
+  template<uint64_t value> struct BitCounter<value, 0> {
+    static constexpr int8_t bitsNeeded() { return (value < 1 ? 0 : 1); }
+  };
+  // Count number of bits needed to represent the constant value (up to 64 bits). Value is specified as template parameter to constrict usage to compile-time evaluation.
+  template<uint64_t value> constexpr int8_t NIcount() { return BitCounter<value, 63>::bitsNeeded(); };
 }
 
 // Forward declaration
@@ -144,7 +153,12 @@ class SFix;
 template<int8_t NI, int8_t NF, uint64_t RANGE=FixMathPrivate::uFullRange(NI+NF)>
 class UFix;
 
-
+namespace FixMathPrivate {
+  // Alias declaration for a UFix type with the suitable NI count given RANGE and NF
+  template<int8_t NF, uint64_t RANGE> using UFixByRange_t=UFix<NIcount<RANGE>()-NF, NF, RANGE>;
+  // Alias declaration for an SFix type with the suitable NI count given RANGE and NF
+  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE>()-NF, NF, RANGE>;
+}
 
 /** Instanciate an unsigned fixed point math number.
     @param NI The number of bits encoding the integer part. The integral part can range into [0, 2^NI -1]
@@ -678,6 +692,10 @@ constexpr SFix<NI, NF> operator-(double op, const UFix<NI, NF>& uf) {return -uf+
     whereas the latter will lead to NF=8. Mozzi's objects (Oscil and the like)
     returns correct types, hence you can use this function to convert the return
     value of a Mozzi's function/class member into a pure fractional number.
+
+    @note If the value is known at compile time, it is much more efficient to
+          construct using constUFix(), and then shifting to the right.
+
     @param val The value to be converted into a pure fractional number.
     @return A UFix<0,NF> with NF chosen according to the input type
 */
@@ -693,12 +711,36 @@ constexpr inline UFix<0, sizeof(T)*8> toUFraction(T val) {
     whereas the latter will lead to NI=8. Mozzi's objects (Oscil and the like)
     returns correct types, hence you can use this function to convert the return
     value of a Mozzi's function/class member into a pure fractional number.
+
+    @note If the value is known at compile time, it is much more efficient to
+          construct using constUFix().
+
     @param val The value to be converted into a pure unsigned integer fixed math number.
     @return A UFix<NI,0> with NI chosen according to the input type
 */
 template<typename T>
 constexpr inline UFix<sizeof(T)*8,0> toUInt(T val) {
   return UFix<sizeof(T)*8,0>::fromRaw(val); 
+}
+
+/** Create a pure integer unsigned fix number (UFix) from a compile time constant.
+    The number of integer bits needed is determined, automatically, based on the actual
+    value. This allows to easily create constants requiring minimal storage, without
+    counting bits, manually.
+
+    Examples:
+    @code
+    auto three = constUFix<3>();                     // UFix<2, 0>
+    auto ten_point_five = constUFix<21>().sR<1>();   // UFix<5, 1>
+    @endcode
+*/
+// TODO: auto sixteen = constUFix<16>(); could be made to return UFix<1, -4>!
+// TODO: With C++-14, we can actually template consts, which would then allow to omit the brackets:
+//       auto three = constUFix<3>;
+//       We might want to provision for that in naming. Ideas?
+template<uint64_t value>
+constexpr FixMathPrivate::UFixByRange_t<0, value> constUFix() {
+  return FixMathPrivate::UFixByRange_t<0, value>::fromRaw(value);
 }
 
 
@@ -1295,7 +1337,7 @@ constexpr bool operator!= (const UFix<NI,NF>& op1, const SFix<_NI,_NF>& op2 )
 ////// Helper functions to build SFix from a normal type automatically
 
 
-/** Create a *pure* fractional signed fixed number (SFix) from a integer.
+/** Create a *pure* fractional signed fixed number (SFix) from an integer.
     The number of fractional bits (NF) is chosen automatically depending on the input 
     type. Hence toSFraction(127) and toSFraction(int8_t(127)) *do not* lead to the 
     same thing: on an AVR, the former will lead to NF=15 - which is overkill and 
@@ -1303,6 +1345,10 @@ constexpr bool operator!= (const UFix<NI,NF>& op1, const SFix<_NI,_NF>& op2 )
     whereas the latter will lead to NF=7. Mozzi's objects (Oscil and the like)
     returns correct types, hence you can use this function to convert the return
     value of a Mozzi's function/class member into a pure fractional number.
+
+    @note If the value is known at compile time, it is much more efficient to
+          construct using constSFix(), and then shifting to the right.
+
     @param val The value to be converted into a pure fractional number.
     @return A SFix<0,NF> with NF chosen according to the input type
 */
@@ -1311,13 +1357,17 @@ constexpr SFix<0, sizeof(T)*8-1> toSFraction(T val) {
   return SFix<0, sizeof(T)*8-1>::fromRaw(val); 
 }
 
-/** Create a *pure* integer signed fixed number (SFix) from a integer.
+/** Create a *pure* integer signed fixed number (SFix) from an integer.
     The number of fractional bits (NI) is chosen automatically depending on the input 
     type. Hence toSInt(127) and toSInt(int8_t(127)) *do not* lead to the 
     same thing: on an AVR, the former will lead to NI=15 - which is overkill -
     whereas the latter will lead to NI=7. Mozzi's objects (Oscil and the like)
     returns correct types, hence you can use this function to convert the return
     value of a Mozzi's function/class member into a pure fractional number.
+
+    @note If the value is known at compile time, it is much more efficient to
+          construct using constSFix().
+
     @param val The value to be converted into a pure integer fixed math number.
     @return A SFix<NI,0> with NI chosen according to the input type
 */
@@ -1326,7 +1376,22 @@ constexpr SFix<sizeof(T)*8-1,0> toSInt(T val) {
   return SFix<sizeof(T)*8-1,0>::fromRaw(val); 
 }
 
+/** Create a pure integer signed fix number (SFix) from a compile time constant.
+    The number of integer bits needed is determined, automatically, based on the actual
+    value. This allows to easily create constants requiring minimal storage, without
+    counting bits, manually.
 
+    Examples:
+    @code
+    auto neg_three = constSFix<-3>();                 // SFix<2, 0>
+    auto ten_point_five = constSFix<21>().sR<1>();    // SFix<5, 1>, but consider using
+                                                      // constUFix() for positive values!
+    @endcode
+*/
+template<int64_t value>
+constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value> constSFix() {
+  return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value>::fromRaw(value);
+}
 
 #include "FixMath_Autotests.h"
 
