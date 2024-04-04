@@ -57,7 +57,7 @@ namespace FixMathPrivate {
       static_assert(SFix<4, 3>(-1) == SFix<4, 5>(-1)); // NOTE This is a simpler test case for the above problem. Note the difference in NF, which prompts shifting
 #endif
       // here's a variant that avoids the problem by using only positive numbers
-      static_assert(UFix<12,1>(999) - UFix<43,9>(0) - b - a == UFix<19,3>(999) + (-(a+b)));
+      static_assert(UFix<12,1>(999) - UFix<43,9>(0) - b - a == UFix<19,2>(999) + (-(a+b)));
       static_assert(-SFix<4, 3>(-8, true) == -SFix<4, 5>(-32, true));
 
       // multiplication
