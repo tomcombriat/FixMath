@@ -1115,7 +1115,7 @@ public:
   static constexpr int8_t getNF() {return NF;}
   
 
-  /** Check wether this number exceeds the given total size in bits. See UFix::asssertSize().
+  /** Check wether this number exceeds the given total size in bits. See UFix::assertSize().
    *
    *  @note This function counts the number of bits needed, internally, and including the sign bit.
    *        E.g. SFix<8,0>::assertSize<8>() will fail, as it requires 9 bits, internally!
@@ -1125,7 +1125,7 @@ private:
   template<int8_t, int8_t, uint64_t> friend class UFix;  // for access to UFixNIadj_t
   template<int8_t, int8_t, uint64_t> friend class SFix;
   static constexpr uint64_t maxRANGE(int8_t delta_bits=0) { return (uint64_t(1)<<(NI+NF+delta_bits)); } // no -1 for signed, because negative number actually extend to -2^n, not just 2^n-1
-  typedef UFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> SFixNIadj_t;
+  typedef SFix<(RANGE > maxRANGE()) ? NI+1 : (RANGE > maxRANGE(-1)) ? NI : NI-1, NF, RANGE> SFixNIadj_t;
 
   internal_type internal_value;
   //static constexpr internal_type onesbitmask() { return (internal_type) ((1ULL<< (NI+NF)) - 1); }
