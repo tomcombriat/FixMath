@@ -70,17 +70,17 @@ namespace FixMathPrivate {
       static_assert(a.getNI() == a.asSFix().getNI());
       static_assert(a.getNF() == a.asSFix().getNF());
 
-      // constUFix() / constSFix()
+      // UFixAuto() / SFixAuto()
       static_assert(FixMathPrivate::NIcount<0>() == 0);
       static_assert(FixMathPrivate::NIcount<1>() == 1);
       static_assert(FixMathPrivate::NIcount<2>() == 2);
       static_assert(FixMathPrivate::NIcount<3>() == 2);
       static_assert(FixMathPrivate::NIcount<4>() == 3);
 
-      constUFix<3>().assertSize<2>();
-      constUFix<3>().sR<2>().assertSize<2>();
+      UFixAuto<3>().assertSize<2>();
+      UFixAuto<3>().sR<2>().assertSize<2>();
       // TODO: This one could be optimized, further!
-      constSFix<16>().assertSize<6>();
+      SFixAuto<16>().assertSize<6>();
     }
   }
 }

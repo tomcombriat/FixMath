@@ -689,7 +689,7 @@ constexpr SFix<NI, NF> operator-(double op, const UFix<NI, NF>& uf) {return -uf+
     value of a Mozzi's function/class member into a pure fractional number.
 
     @note If the value is known at compile time, it is much more efficient to
-          construct using constUFix(), and then shifting to the right.
+          construct using UFixAuto(), and then shifting to the right.
 
     @param val The value to be converted into a pure fractional number.
     @return A UFix<0,NF> with NF chosen according to the input type
@@ -708,7 +708,7 @@ constexpr inline UFix<0, sizeof(T)*8> toUFraction(T val) {
     value of a Mozzi's function/class member into a pure fractional number.
 
     @note If the value is known at compile time, it is much more efficient to
-          construct using constUFix().
+          construct using UFixAuto().
 
     @param val The value to be converted into a pure unsigned integer fixed math number.
     @return A UFix<NI,0> with NI chosen according to the input type
@@ -725,16 +725,14 @@ constexpr inline UFix<sizeof(T)*8,0> toUInt(T val) {
 
     Examples:
     @code
-    auto three = constUFix<3>();                     // UFix<2, 0>
-    auto ten_point_five = constUFix<21>().sR<1>();   // UFix<5, 1>
+    auto three = UFixAuto<3>();                     // UFix<2, 0>
+    auto ten_point_five = UFixAuto<21>().sR<1>();   // UFix<5, 1>
+    auto nearly_Pi = UFixAuto<201>().sR<6>();       // UFix<2, 6> = 3.140625
     @endcode
 */
-// TODO: auto sixteen = constUFix<16>(); could be made to return UFix<1, -4>!
-// TODO: With C++-14, we can actually template consts, which would then allow to omit the brackets:
-//       auto three = constUFix<3>;
-//       We might want to provision for that in naming. Ideas?
+// TODO: auto sixteen = UFixAuto<16>(); could be made to return UFix<1, -4>!
 template<uint64_t value>
-constexpr FixMathPrivate::UFixByRange_t<0, value> constUFix() {
+constexpr FixMathPrivate::UFixByRange_t<0, value> UFixAuto() {
   return FixMathPrivate::UFixByRange_t<0, value>::fromRaw(value);
 }
 
@@ -1339,7 +1337,7 @@ constexpr bool operator!= (const UFix<NI,NF>& op1, const SFix<_NI,_NF>& op2 )
     value of a Mozzi's function/class member into a pure fractional number.
 
     @note If the value is known at compile time, it is much more efficient to
-          construct using constSFix(), and then shifting to the right.
+          construct using SFixAuto(), and then shifting to the right.
 
     @param val The value to be converted into a pure fractional number.
     @return A SFix<0,NF> with NF chosen according to the input type
@@ -1358,7 +1356,7 @@ constexpr SFix<0, sizeof(T)*8-1> toSFraction(T val) {
     value of a Mozzi's function/class member into a pure fractional number.
 
     @note If the value is known at compile time, it is much more efficient to
-          construct using constSFix().
+          construct using SFixAuto().
 
     @param val The value to be converted into a pure integer fixed math number.
     @return A SFix<NI,0> with NI chosen according to the input type
@@ -1375,13 +1373,13 @@ constexpr SFix<sizeof(T)*8-1,0> toSInt(T val) {
 
     Examples:
     @code
-    auto neg_three = constSFix<-3>();                 // SFix<2, 0>
-    auto ten_point_five = constSFix<21>().sR<1>();    // SFix<5, 1>, but consider using
-                                                      // constUFix() for positive values!
+    auto neg_three = SFixAuto<-3>();                 // SFix<2, 0>
+    auto ten_point_five = SFixAuto<21>().sR<1>();    // SFix<5, 1>, but consider using
+                                                     // UFixAuto() for positive values!
     @endcode
 */
 template<int64_t value>
-constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value> constSFix() {
+constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value> SFixAuto() {
   return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value>::fromRaw(value);
 }
 
