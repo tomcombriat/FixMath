@@ -10,6 +10,10 @@ The number of bits needed under the hood for the types implemented in this libra
 
 This library was original made for [Mozzi](https://sensorium.github.io/Mozzi/).
 
+## Installation
+
+FixMath can be installed from the [Arduino Library Manager](https://www.arduino.cc/reference/en/libraries/fixmath/) or manually by downloading it (button "Code/Download Zip"), uncompressing it into your "libraries" folders and renamming it "FixMath".
+
 
 
 ## Documentation
@@ -31,8 +35,10 @@ Like standard C(++) types, the fixed point numbers defined here are following so
 - Fixed types can be constructed from and converted to standard C types:
   - `UFix<NI,NF>(T value)` will convert the `value` to a `UFix`. If T is an integer type the final number will have a fractional part equal to zero. This can be used as a standard type, for example: `UFix<8,8> a = 15;` or `UFix<8,8> b = 200.25;`
   - same for `SFix`
-  - `UFix<NI,NF>::fromRaw(T value)` will set the *internal* value of the `UFix`. For example `UFix<7,1>::fromRaw(16);` is actually 8
+  - `UFix<NI,NF>::fromRaw(T value)` will set the *internal* value of the `UFix`. For example `UFix<7,1>::fromRaw(16);` is actually 8. `T` has to be an integer type for getting the expected behavior.
   - same for `SFix`
+  - `UFixAuto<const T N>()` will return a `UFix<NI,0>` where `NI` is automatically computed to be the smallest needed to represent the **integer** `N`. For instance: `auto a = UFixAuto<3>();` returns a `UFix<2,0>`. This is determined at compile-time hence `N` has to be a constant
+  - `SFixAuto<const T N>()` same for `SFix`
   - `UFix<NI,NF>.toFloat()` returns the value as a `float`
   - same for `SFix`
   - `UFix<NI,NF>.asRaw()` returns the internal value
@@ -92,10 +98,10 @@ More specifically on the returned types of the operations between fixed point ma
    - `SFix<NI,NF>.asFloat()` returns the value as a `float`
    - `UFix<NI,NF>.asRaw()` returns the internal value
    - `SFix<NI,NF>.asRaw()` returns the internal value
-   - `T.toUFraction()` returns `UFix<0,NF>` with `NF` the number of bits of `T` (`uint8_t` leads to `NF=8`bits).
-   - `T.toSFraction()` returns `SFix<0,NF>` with `NF` the number of bits of `T` (`int8_t` leads to `NF=7`bits).
-   - `T.toUInt()` returns `UFix<NI,0>` with `NI` the number of bits of `T` (`uint8_t` leads to `NI=8`bits).
-   - `T.toSInt()` returns `SFix<NI,>` with `NI` the number of bits of `T` (`int8_t` leads to `NI=7`bits).   
+   - `toUFraction(T)` returns `UFix<0,NF>` with `NF` the number of bits of `T` (`uint8_t` leads to `NF=8`bits).
+   - `toSFraction(T)` returns `SFix<0,NF>` with `NF` the number of bits of `T` (`int8_t` leads to `NF=7`bits).
+   - `toUInt(T)` returns `UFix<NI,0>` with `NI` the number of bits of `T` (`uint8_t` leads to `NI=8`bits).
+   - `toSInt(T)` returns `SFix<NI,>` with `NI` the number of bits of `T` (`int8_t` leads to `NI=7`bits).   
 
 Note on division:
 The division is not implemented. This is a deliberate choice made for two reasons:

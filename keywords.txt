@@ -9,6 +9,7 @@ sL		KEYWORD2
 invFast		KEYWORD2
 invAccurate	KEYWORD2
 inv		KEYWORD2
+invFull		KEYWORD2
 
 asSFix		KEYWORD2
 asUFix		KEYWORD2
@@ -18,3 +19,5 @@ toSFraction	KEYWORD2
 toUFraction	KEYWORD2
 toUInt		KEYWORD2
 toSInt		KEYWORD2
+UFixAuto	KEYWORD2
+SFixAuto	KEYWORD2
