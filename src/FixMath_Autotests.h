@@ -37,6 +37,14 @@ namespace FixMathPrivate {
       static_assert((e + e).getNF() == 2);
       static_assert((d + e).getNI() == 11);
 
+      // Two's complement peculiar additions
+      static_assert(SFixAuto<-128>().getNI() == 7);
+      static_assert(SFixAuto<127>().getNI() == 7);
+      static_assert(SFixAuto<128>().getNI() == 8);
+
+      constexpr auto s = UFix<7,0>(-128);
+      static_assert((s+s).getNI() == 8);
+
       // the point of this block is to ascertain that addtion does not overflow, internally, where the internal_type of the operands is too small to hold the result
       constexpr auto large = UFix<32,0>(1LL << 31, true);
       static_assert(sizeof(decltype(large.asRaw())) == 4);
