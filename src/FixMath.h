@@ -157,7 +157,7 @@ namespace FixMathPrivate {
   // Alias declaration for a UFix type with the suitable NI count given RANGE and NF
   template<int8_t NF, uint64_t RANGE> using UFixByRange_t=UFix<NIcount<RANGE>()-NF, NF, RANGE>;
   // Alias declaration for an SFix type with the suitable NI count given RANGE and NF
-  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE>()-NF, NF, RANGE>;
+  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE-1>()-NF, NF, RANGE>;
 }
 
 /** Instanciate an unsigned fixed point math number.
