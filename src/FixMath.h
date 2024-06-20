@@ -1379,8 +1379,8 @@ constexpr SFix<sizeof(T)*8-1,0> toSInt(T val) {
     @endcode
 */
 template<int64_t value>
-constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value> SFixAuto() {
-  return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value>::fromRaw(value);
+constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value+1> SFixAuto() {
+  return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value+1>::fromRaw(value);
 }
 
 #include "FixMath_Autotests.h"
