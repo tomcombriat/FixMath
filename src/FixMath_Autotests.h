@@ -20,36 +20,36 @@ namespace FixMathPrivate {
       constexpr auto c = UFix<8,0>(33);         // 33
 
       // basics
-      static_assert(a < b && b < c);
-      static_assert(a.getNF() == 1 && b.getNF() == 2);
+      static_assert(a < b && b < c, "test fail");
+      static_assert(a.getNF() == 1 && b.getNF() == 2, "test fail");
 
       // addition
       constexpr auto d = a + b;
-      static_assert(d.getNI() == 9);
-      static_assert(d.getNF() == 2);     // NF is always max in addition
-      static_assert((a + c).getNF() == 1);
-      static_assert(d.asRaw() == 258);
+      static_assert(d.getNI() == 9, "test fail");
+      static_assert(d.getNF() == 2, "test fail");     // NF is always max in addition
+      static_assert((a + c).getNF() == 1, "test fail");
+      static_assert(d.asRaw() == 258, "test fail");
       constexpr auto e = d + b + c;      // addition of one 9 (NI) bit and two 8 (NI) bit numbers needs promotion to 10 bits, not 11, only.
-      static_assert(e.getNI() == 10);
-      static_assert(e.getNF() == 2);
+      static_assert(e.getNI() == 10, "test fail");
+      static_assert(e.getNF() == 2, "test fail");
       e.assertSize<12>();
-      static_assert((d + d).getNI() == 10);
-      static_assert((e + e).getNF() == 2);
-      static_assert((d + e).getNI() == 11);
+      static_assert((d + d).getNI() == 10, "test fail");
+      static_assert((e + e).getNF() == 2, "test fail");
+      static_assert((d + e).getNI() == 11, "test fail");
 
       // the point of this block is to ascertain that addtion does not overflow, internally, where the internal_type of the operands is too small to hold the result
       constexpr auto large = UFix<32,0>(1LL << 31, true);
-      static_assert(sizeof(decltype(large.asRaw())) == 4);
-      static_assert((large+large).asRaw() == (1LL << 32));
-      static_assert(sizeof(decltype((large+large).asRaw())) > 4);
+      static_assert(sizeof(decltype(large.asRaw())) == 4, "test fail");
+      static_assert((large+large).asRaw() == (1LL << 32), "test fail");
+      static_assert(sizeof(decltype((large+large).asRaw())) > 4, "test fail");
 
       // subtraction
       static_assert(b - a == c - b);
-      static_assert(c - UFix<17,8>(1) == a);
-      static_assert(c - SFix<13,9>(1) == a);
-      static_assert(b + a - b == a);
-      static_assert(b + a + (-b) == a);  // same with unary minus
-      static_assert(-(-a) == a);
+      static_assert(c - UFix<17,8>(1) == a, "test fail");
+      static_assert(c - SFix<13,9>(1) == a, "test fail");
+      static_assert(b + a - b == a, "test fail");
+      static_assert(b + a + (-b) == a, "test fail");  // same with unary minus
+      static_assert(-(-a) == a, "test fail");
 #if __cplusplus >= 202002L
       // These here involve shifts of negative numbers, which used to be "implementation defined" before C++-20.
       // It doesn't cause a real-world problem, but the compiler won't accept it in a constexpr
@@ -57,25 +57,25 @@ namespace FixMathPrivate {
       static_assert(SFix<4, 3>(-1) == SFix<4, 5>(-1)); // NOTE This is a simpler test case for the above problem. Note the difference in NF, which prompts shifting
 #endif
       // here's a variant that avoids the problem by using only positive numbers
-      static_assert(UFix<12,1>(999) - UFix<43,9>(0) - b - a == UFix<19,2>(999) + (-(a+b)));
-      static_assert(-SFix<4, 3>(-8, true) == -SFix<4, 5>(-32, true));
+      static_assert(UFix<12,1>(999) - UFix<43,9>(0) - b - a == UFix<19,2>(999) + (-(a+b)), "test fail");
+      static_assert(-SFix<4, 3>(-8, true) == -SFix<4, 5>(-32, true), "test fail");
 
       // multiplication
-      static_assert(c * UFix<36, 5>(3ll << 31) == UFix<58,0>(33ll*(3ll << 31)));  // NOTE: The exact values are aribrary, but we want something that would overflow the initial type range
-      static_assert(a * UFix<0, 2>(3, true) == UFix<17, 8>(24));  // 32 * .75 == 24
-      static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8));  // 32 * (1/4) == 8
-      static_assert(a * toUFraction((int8_t) 16) == UFix<3, 9>(2));  // 32 * (16/256) == 2
+      static_assert(c * UFix<36, 5>(3ll << 31) == UFix<58,0>(33ll*(3ll << 31)), "test fail");  // NOTE: The exact values are aribrary, but we want something that would overflow the initial type range
+      static_assert(a * UFix<0, 2>(3, true) == UFix<17, 8>(24), "test fail");  // 32 * .75 == 24
+      static_assert(a * UFix<5, 0>(4).invAccurate() == UFix<17, 8>(8), "test fail");  // 32 * (1/4) == 8
+      static_assert(a * toUFraction((int8_t) 16) == UFix<3, 9>(2), "test fail");  // 32 * (16/256) == 2
 
       // type conversions
-      static_assert(a.getNI() == a.asSFix().getNI());
-      static_assert(a.getNF() == a.asSFix().getNF());
+      static_assert(a.getNI() == a.asSFix().getNI(), "test fail");
+      static_assert(a.getNF() == a.asSFix().getNF(), "test fail");
 
       // UFixAuto() / SFixAuto()
-      static_assert(FixMathPrivate::NIcount<0>() == 0);
-      static_assert(FixMathPrivate::NIcount<1>() == 1);
-      static_assert(FixMathPrivate::NIcount<2>() == 2);
-      static_assert(FixMathPrivate::NIcount<3>() == 2);
-      static_assert(FixMathPrivate::NIcount<4>() == 3);
+      static_assert(FixMathPrivate::NIcount<0>() == 0, "test fail");
+      static_assert(FixMathPrivate::NIcount<1>() == 1, "test fail");
+      static_assert(FixMathPrivate::NIcount<2>() == 2, "test fail");
+      static_assert(FixMathPrivate::NIcount<3>() == 2, "test fail");
+      static_assert(FixMathPrivate::NIcount<4>() == 3, "test fail");
 
       UFixAuto<3>().assertSize<2>();
       UFixAuto<3>().sR<2>().assertSize<2>();
