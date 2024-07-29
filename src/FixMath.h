@@ -157,7 +157,7 @@ namespace FixMathPrivate {
   // Alias declaration for a UFix type with the suitable NI count given RANGE and NF
   template<int8_t NF, uint64_t RANGE> using UFixByRange_t=UFix<NIcount<RANGE>()-NF, NF, RANGE>;
   // Alias declaration for an SFix type with the suitable NI count given RANGE and NF
-  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE>()-NF, NF, RANGE>;
+  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE-1>()-NF, NF, RANGE>;
 }
 
 /** Instanciate an unsigned fixed point math number.
@@ -1394,8 +1394,8 @@ constexpr SFix<sizeof(T)*8-1,0> toSInt(T val) {
     @endcode
 */
 template<int64_t value>
-constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? abs(-value-1) : value> SFixAuto() {
-  return FixMathPrivate::SFixByRange_t<0, value < 0 ? abs(-value-1) : value>::fromRaw(value);
+constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value+1> SFixAuto() {
+  return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value+1>::fromRaw(value);
 }
 
 #include "FixMath_Autotests.h"
