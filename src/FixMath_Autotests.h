@@ -37,6 +37,28 @@ namespace FixMathPrivate {
       static_assert((e + e).getNF() == 2, "test fail");
       static_assert((d + e).getNI() == 11, "test fail");
 
+      // Two's complement peculiar additions and opposite
+      static_assert(SFixAuto<-128>().getNI() == 7, "test fail");
+      static_assert(SFixAuto<127>().getNI() == 7, "test fail");
+      static_assert(SFixAuto<128>().getNI() == 8, "test fail");
+
+#if (__cplusplus >= 202002L)
+      constexpr auto s = SFix<7,0>(-128);
+      static_assert((s+s).getNI() == 8, "test fail");
+      static_assert((-s).getNI() == 8, "test fail");
+      
+      constexpr auto zero = SFix<7,0>(0);
+      constexpr auto negone = SFix<1,0>(-1);
+      static_assert((zero - s).getNI() == 8, "test fail");
+      static_assert(-(zero - s) == s, "test fail");
+      static_assert((s*negone).getNI() == 8, "test fail");
+#endif
+      static_assert((-SFixAuto<-127>()).getNI() == 7, "test fail");
+      //static_assert((-SFixAuto<127>()).getNI() == 7, "test fail"); // if someone manages that I am very grateful
+      static_assert((-UFixAuto<127>()).getNI() == 7, "test fail");
+      
+
+
       // the point of this block is to ascertain that addtion does not overflow, internally, where the internal_type of the operands is too small to hold the result
       constexpr auto large = UFix<32,0>(1LL << 31, true);
       static_assert(sizeof(decltype(large.asRaw())) == 4, "test fail");
@@ -50,7 +72,7 @@ namespace FixMathPrivate {
       static_assert(b + a - b == a, "test fail");
       static_assert(b + a + (-b) == a, "test fail");  // same with unary minus
       static_assert(-(-a) == a, "test fail");
-#if __cplusplus >= 202002L
+#if (__cplusplus >= 202002L)
       // These here involve shifts of negative numbers, which used to be "implementation defined" before C++-20.
       // It doesn't cause a real-world problem, but the compiler won't accept it in a constexpr
       static_assert(UFix<43,9>(0) - b - a == -(a+b), "test fail");

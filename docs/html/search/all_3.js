@@ -1,14 +1,6 @@
 var searchData=
 [
-  ['integertype_11',['IntegerType',['../structIntegerType.html',1,'']]],
-  ['integertype_3c_201_20_3e_12',['IntegerType&lt; 1 &gt;',['../structIntegerType_3_011_01_4.html',1,'']]],
-  ['integertype_3c_202_20_3e_13',['IntegerType&lt; 2 &gt;',['../structIntegerType_3_012_01_4.html',1,'']]],
-  ['integertype_3c_204_20_3e_14',['IntegerType&lt; 4 &gt;',['../structIntegerType_3_014_01_4.html',1,'']]],
-  ['integertype_3c_208_20_3e_15',['IntegerType&lt; 8 &gt;',['../structIntegerType_3_018_01_4.html',1,'']]],
-  ['integertype_3c_20fixmathprivate_3a_3asbitstobytes_28ni_2bnf_29_3e_16',['IntegerType&lt; FixMathPrivate::sBitsToBytes(NI+NF)&gt;',['../structIntegerType.html',1,'']]],
-  ['integertype_3c_20fixmathprivate_3a_3aubitstobytes_28ni_2bnf_29_3e_17',['IntegerType&lt; FixMathPrivate::uBitsToBytes(NI+NF)&gt;',['../structIntegerType.html',1,'']]],
-  ['inv_18',['inv',['../classUFix.html#adfa277fb8de13ef075c2f01048b0b302',1,'UFix::inv()'],['../classSFix.html#a9a77192383382e2ba7496c614db81343',1,'SFix::inv()']]],
-  ['invaccurate_19',['invAccurate',['../classUFix.html#a85cbf1c2c1d3096dbe079b09feacebb0',1,'UFix::invAccurate()'],['../classSFix.html#a7937916cb7c7aae5fbb33165df113445',1,'SFix::invAccurate()']]],
-  ['invfast_20',['invFast',['../classUFix.html#aa958c40d69f0926ea9d0ee187ed16006',1,'UFix::invFast()'],['../classSFix.html#ac02cc3a7746ce0550428095d8cba9eba',1,'SFix::invFast()']]],
-  ['invfull_21',['invFull',['../classUFix.html#a89807c8de3c6f82ef6c2f65b2903bc95',1,'UFix::invFull()'],['../classSFix.html#a35ca66653e6de4958b0ccb22b644f66e',1,'SFix::invFull()']]]
+  ['getnf_11',['getNF',['../classUFix.html#a900f594b8b95f377fff38c49f5149866',1,'UFix::getNF()'],['../classSFix.html#a319ae49f75636efec3999140a31fc85c',1,'SFix::getNF()']]],
+  ['getni_12',['getNI',['../classUFix.html#aa17a66aaaeed2e67163f2bc8bbf2ce08',1,'UFix::getNI()'],['../classSFix.html#a8e26f89e3aa2969906d9ff3deaa53328',1,'SFix::getNI()']]],
+  ['getrange_13',['getRANGE',['../classUFix.html#a7ed462de594b84eb5c816cdbd7dca1d4',1,'UFix::getRANGE()'],['../classSFix.html#a89df92655a3e9760b2954582043aaea7',1,'SFix::getRANGE()']]]
 ];

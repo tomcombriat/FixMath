@@ -1,5 +1,21 @@
 \hypertarget{namespaceFixMathPrivate}{}\doxysection{Fix\+Math\+Private Namespace Reference}
 \label{namespaceFixMathPrivate}\index{FixMathPrivate@{FixMathPrivate}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structFixMathPrivate_1_1BitCounter}{Bit\+Counter}}
+\item 
+struct \mbox{\hyperlink{structFixMathPrivate_1_1BitCounter_3_01value_00_010_01_4}{Bit\+Counter$<$ value, 0 $>$}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceFixMathPrivate_aee77e7ee48eea928f764de45506efe67}\label{namespaceFixMathPrivate_aee77e7ee48eea928f764de45506efe67}} 
+{\footnotesize template$<$int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ }\\using {\bfseries UFix\+By\+Range\+\_\+t} = \mbox{\hyperlink{classUFix}{UFix}}$<$ NIcount$<$ RANGE $>$() -\/NF, NF, RANGE $>$
+\item 
+\mbox{\Hypertarget{namespaceFixMathPrivate_a4f17b62eb0b42c7169d4fbd4230dd756}\label{namespaceFixMathPrivate_a4f17b62eb0b42c7169d4fbd4230dd756}} 
+{\footnotesize template$<$int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ }\\using {\bfseries SFix\+By\+Range\+\_\+t} = \mbox{\hyperlink{classSFix}{SFix}}$<$ NIcount$<$ RANGE-\/1 $>$() -\/NF, NF, RANGE $>$
+\end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -29,6 +45,9 @@ constexpr uint64\+\_\+t {\bfseries range\+Add} (byte NF, byte \+\_\+\+NF, uint64
 \item 
 \mbox{\Hypertarget{namespaceFixMathPrivate_a96afba7d43238189112a0d0a72c0675a}\label{namespaceFixMathPrivate_a96afba7d43238189112a0d0a72c0675a}} 
 constexpr uint64\+\_\+t {\bfseries range\+Shift} (int8\+\_\+t N, int8\+\_\+t SH, uint64\+\_\+t RANGE)
+\item 
+\mbox{\Hypertarget{namespaceFixMathPrivate_a20d991a08b2698d42ecf1605918270b8}\label{namespaceFixMathPrivate_a20d991a08b2698d42ecf1605918270b8}} 
+{\footnotesize template$<$uint64\+\_\+t value$>$ }\\constexpr int8\+\_\+t {\bfseries NIcount} ()
 \item 
 \mbox{\Hypertarget{namespaceFixMathPrivate_ae7d25f42acf9c7c73508aca0f2cd7e54}\label{namespaceFixMathPrivate_ae7d25f42acf9c7c73508aca0f2cd7e54}} 
 void {\bfseries static\+\_\+autotests} ()

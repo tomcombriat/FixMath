@@ -157,7 +157,7 @@ namespace FixMathPrivate {
   // Alias declaration for a UFix type with the suitable NI count given RANGE and NF
   template<int8_t NF, uint64_t RANGE> using UFixByRange_t=UFix<NIcount<RANGE>()-NF, NF, RANGE>;
   // Alias declaration for an SFix type with the suitable NI count given RANGE and NF
-  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE>()-NF, NF, RANGE>;
+  template<int8_t NF, uint64_t RANGE> using SFixByRange_t=SFix<NIcount<RANGE-1>()-NF, NF, RANGE>;
 }
 
 /** Instanciate an unsigned fixed point math number.
@@ -554,6 +554,11 @@ public:
   */
   static constexpr int8_t getNF() {return NF;}
 
+  /** The (absolute) range of the integral part of the number, as far as it can be determined at compile time. The true range of the number will typically be lower than (at most the same as) this, so it is not recommended to use this in computations. Available with #define FIXMATH_DEBUG
+      @return The range of the number
+  */
+  static constexpr int8_t getRANGE() {return RANGE;}
+
   /** Check wether this number exceeds the given total size given in bits, and produce a
    *  compile time error, otherwise.
    *
@@ -877,9 +882,14 @@ public:
   /** Opposite of the number (unary minus operator).
       @return The opposite numberas a SFix.
   */
-  constexpr SFix<NI,NF,RANGE> operator-() const
+  /*  constexpr SFix<NI,NF,RANGE> operator-() const
   {
     return SFix<NI,NF,RANGE>(-internal_value,true);
+    }*/
+  constexpr FixMathPrivate::SFixByRange_t<NF,RANGE+1> operator-() const
+  {
+typedef FixMathPrivate::SFixByRange_t<NF, RANGE+1> returntype;
+ return returntype(-internal_value,true);
   }
   
   //////// MULTIPLICATION OVERLOADS
@@ -1105,6 +1115,11 @@ public:
       @return The number of bits used to encode the fractional part.
   */
   static constexpr int8_t getNF() {return NF;}
+
+  /** The (absolute) range of the integral part of the number, as far as it can be determined at compile time. The true range of the number will typically be lower than (at most the same as) this, so it is not recommended to use this in computations. Available with #define FIXMATH_DEBUG
+      @return The range of the number
+  */
+  static constexpr int8_t getRANGE() {return RANGE;}
   
 
   /** Check wether this number exceeds the given total size in bits. See UFix::assertSize().
@@ -1379,8 +1394,8 @@ constexpr SFix<sizeof(T)*8-1,0> toSInt(T val) {
     @endcode
 */
 template<int64_t value>
-constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value> SFixAuto() {
-  return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value>::fromRaw(value);
+constexpr const FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value+1> SFixAuto() {
+  return FixMathPrivate::SFixByRange_t<0, value < 0 ? -value : value+1>::fromRaw(value);
 }
 
 #include "FixMath_Autotests.h"

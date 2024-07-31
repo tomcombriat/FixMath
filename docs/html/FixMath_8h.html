@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">FixMath.h File Reference</div>  </div>
@@ -92,6 +93,10 @@ Include dependency graph for FixMath.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFixMathPrivate_1_1BitCounter.html">FixMathPrivate::BitCounter&lt; value, bits &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFixMathPrivate_1_1BitCounter_3_01value_00_010_01_4.html">FixMathPrivate::BitCounter&lt; value, 0 &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUFix.html">UFix&lt; NI, NF, RANGE &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSFix.html">SFix&lt; NI, NF, RANGE &gt;</a></td></tr>
@@ -101,6 +106,17 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceFixMathPrivate"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFixMathPrivate.html">FixMathPrivate</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aee77e7ee48eea928f764de45506efe67"><td class="memTemplParams" colspan="2"><a id="aee77e7ee48eea928f764de45506efe67"></a>
+template&lt;int8_t NF, uint64_t RANGE&gt; </td></tr>
+<tr class="memitem:aee77e7ee48eea928f764de45506efe67"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>FixMathPrivate::UFixByRange_t</b> = <a class="el" href="classUFix.html">UFix</a>&lt; NIcount&lt; RANGE &gt;() -NF, NF, RANGE &gt;</td></tr>
+<tr class="separator:aee77e7ee48eea928f764de45506efe67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f17b62eb0b42c7169d4fbd4230dd756"><td class="memTemplParams" colspan="2"><a id="a4f17b62eb0b42c7169d4fbd4230dd756"></a>
+template&lt;int8_t NF, uint64_t RANGE&gt; </td></tr>
+<tr class="memitem:a4f17b62eb0b42c7169d4fbd4230dd756"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>FixMathPrivate::SFixByRange_t</b> = <a class="el" href="classSFix.html">SFix</a>&lt; NIcount&lt; RANGE-1 &gt;() -NF, NF, RANGE &gt;</td></tr>
+<tr class="separator:a4f17b62eb0b42c7169d4fbd4230dd756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -134,12 +150,19 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMath
 <tr class="memitem:a96afba7d43238189112a0d0a72c0675a"><td class="memItemLeft" align="right" valign="top"><a id="a96afba7d43238189112a0d0a72c0675a"></a>
 constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>FixMathPrivate::rangeShift</b> (int8_t N, int8_t SH, uint64_t RANGE)</td></tr>
 <tr class="separator:a96afba7d43238189112a0d0a72c0675a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20d991a08b2698d42ecf1605918270b8"><td class="memTemplParams" colspan="2"><a id="a20d991a08b2698d42ecf1605918270b8"></a>
+template&lt;uint64_t value&gt; </td></tr>
+<tr class="memitem:a20d991a08b2698d42ecf1605918270b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr int8_t&#160;</td><td class="memTemplItemRight" valign="bottom"><b>FixMathPrivate::NIcount</b> ()</td></tr>
+<tr class="separator:a20d991a08b2698d42ecf1605918270b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6c690d265da5284fa40b19574b286cb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab6c690d265da5284fa40b19574b286cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classUFix.html">UFix</a>&lt; 0, sizeof(T) *8 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#ab6c690d265da5284fa40b19574b286cb">toUFraction</a> (T val)</td></tr>
 <tr class="separator:ab6c690d265da5284fa40b19574b286cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dda76ba96e4ae059e3872b080b6c681"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0dda76ba96e4ae059e3872b080b6c681"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classUFix.html">UFix</a>&lt; sizeof(T) *8, 0 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a0dda76ba96e4ae059e3872b080b6c681">toUInt</a> (T val)</td></tr>
 <tr class="separator:a0dda76ba96e4ae059e3872b080b6c681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0217a77f6a6d862840d6f610a92c9f65"><td class="memTemplParams" colspan="2">template&lt;uint64_t value&gt; </td></tr>
+<tr class="memitem:a0217a77f6a6d862840d6f610a92c9f65"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classUFix.html">FixMathPrivate::UFixByRange_t</a>&lt; 0, value &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a0217a77f6a6d862840d6f610a92c9f65">UFixAuto</a> ()</td></tr>
+<tr class="separator:a0217a77f6a6d862840d6f610a92c9f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85ff3e79510e17f13056c58a2191be18"><td class="memTemplParams" colspan="2">template&lt;int8_t NI, int8_t NF, int8_t _NI, int8_t _NF&gt; </td></tr>
 <tr class="memitem:a85ff3e79510e17f13056c58a2191be18"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="FixMath_8h.html#a85ff3e79510e17f13056c58a2191be18">operator&gt;</a> (const <a class="el" href="classSFix.html">SFix</a>&lt; NI, NF &gt; &amp;op1, const <a class="el" href="classUFix.html">UFix</a>&lt; _NI, _NF &gt; &amp;op2)</td></tr>
 <tr class="separator:a85ff3e79510e17f13056c58a2191be18"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -669,7 +692,9 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create a <em>pure</em> fractional signed fixed number (<a class="el" href="classSFix.html">SFix</a>) from a integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence toSFraction(127) and toSFraction(int8_t(127)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NF=15 - which is overkill and incorrect if you expect toSFraction(127) = 1 - whereas the latter will lead to NF=7. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Create a <em>pure</em> fractional signed fixed number (<a class="el" href="classSFix.html">SFix</a>) from an integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence toSFraction(127) and toSFraction(int8_t(127)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NF=15 - which is overkill and incorrect if you expect toSFraction(127) = 1 - whereas the latter will lead to NF=7. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number.</p>
+<dl class="section note"><dt>Note</dt><dd>If the value is known at compile time, it is much more efficient to construct using SFixAuto(), and then shifting to the right.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">val</td><td>The value to be converted into a pure fractional number. </td></tr>
   </table>
@@ -704,7 +729,9 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create a <em>pure</em> integer signed fixed number (<a class="el" href="classSFix.html">SFix</a>) from a integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence toSInt(127) and toSInt(int8_t(127)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NI=15 - which is overkill - whereas the latter will lead to NI=7. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Create a <em>pure</em> integer signed fixed number (<a class="el" href="classSFix.html">SFix</a>) from an integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence toSInt(127) and toSInt(int8_t(127)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NI=15 - which is overkill - whereas the latter will lead to NI=7. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number.</p>
+<dl class="section note"><dt>Note</dt><dd>If the value is known at compile time, it is much more efficient to construct using SFixAuto().</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">val</td><td>The value to be converted into a pure integer fixed math number. </td></tr>
   </table>
@@ -739,7 +766,9 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create a <em>pure</em> fractional unsigned fixed number (<a class="el" href="classUFix.html">UFix</a>) from an unsigned integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence toUFraction(255) and toUFraction(uint8_t(255)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NF=16 - which is overkill and incorrect if you expect toUFraction(255) = 1 - whereas the latter will lead to NF=8. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Create a <em>pure</em> fractional unsigned fixed number (<a class="el" href="classUFix.html">UFix</a>) from an unsigned integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence toUFraction(255) and toUFraction(uint8_t(255)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NF=16 - which is overkill and incorrect if you expect toUFraction(255) = 1 - whereas the latter will lead to NF=8. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number.</p>
+<dl class="section note"><dt>Note</dt><dd>If the value is known at compile time, it is much more efficient to construct using <a class="el" href="FixMath_8h.html#a0217a77f6a6d862840d6f610a92c9f65">UFixAuto()</a>, and then shifting to the right.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">val</td><td>The value to be converted into a pure fractional number. </td></tr>
   </table>
@@ -774,7 +803,9 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create a <em>pure</em> integer unsigned fixed number (<a class="el" href="classUFix.html">UFix</a>) from an unsigned integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence toUInt(255) and toUInt(uint8_t(255)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NI=16 - which is overkill - whereas the latter will lead to NI=8. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Create a <em>pure</em> integer unsigned fixed number (<a class="el" href="classUFix.html">UFix</a>) from an unsigned integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence toUInt(255) and toUInt(uint8_t(255)) <em>do not</em> lead to the same thing: on an AVR, the former will lead to NI=16 - which is overkill - whereas the latter will lead to NI=8. Mozzi's objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi's function/class member into a pure fractional number.</p>
+<dl class="section note"><dt>Note</dt><dd>If the value is known at compile time, it is much more efficient to construct using <a class="el" href="FixMath_8h.html#a0217a77f6a6d862840d6f610a92c9f65">UFixAuto()</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">val</td><td>The value to be converted into a pure unsigned integer fixed math number. </td></tr>
   </table>
@@ -782,6 +813,37 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A UFix&lt;NI,0&gt; with NI chosen according to the input type </dd></dl>
 
+</div>
+</div>
+<a id="a0217a77f6a6d862840d6f610a92c9f65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0217a77f6a6d862840d6f610a92c9f65">&#9670;&nbsp;</a></span>UFixAuto()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;uint64_t value&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="classUFix.html">FixMathPrivate::UFixByRange_t</a>&lt;0, value&gt; UFixAuto </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Create a pure integer unsigned fix number (<a class="el" href="classUFix.html">UFix</a>) from a compile time constant. The number of integer bits needed is determined, automatically, based on the actual value. This allows to easily create constants requiring minimal storage, without counting bits, manually.</p>
+<p>Examples: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> three = UFixAuto&lt;3&gt;();                     <span class="comment">// UFix&lt;2, 0&gt;</span></div>
+<div class="line"><span class="keyword">auto</span> ten_point_five = UFixAuto&lt;21&gt;().sR&lt;1&gt;();   <span class="comment">// UFix&lt;5, 1&gt;</span></div>
+<div class="line"><span class="keyword">auto</span> nearly_Pi = UFixAuto&lt;201&gt;().sR&lt;6&gt;();       <span class="comment">// UFix&lt;2, 6&gt; = 3.140625</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
