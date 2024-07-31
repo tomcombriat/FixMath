@@ -554,7 +554,7 @@ public:
   */
   static constexpr int8_t getNF() {return NF;}
 
-  /** The (absolute) range of the integral part of the number
+  /** The (absolute) range of the integral part of the number, as far as it can be determined at compile time. The true range of the number will typically be lower than (at most the same as) this, so it is not recommended to use this in computations. Available with #define FIXMATH_DEBUG
       @return The range of the number
   */
   static constexpr int8_t getRANGE() {return RANGE;}
@@ -1116,7 +1116,7 @@ typedef FixMathPrivate::SFixByRange_t<NF, RANGE+1> returntype;
   */
   static constexpr int8_t getNF() {return NF;}
 
-    /** The (absolute) range of the integral part of the number
+  /** The (absolute) range of the integral part of the number, as far as it can be determined at compile time. The true range of the number will typically be lower than (at most the same as) this, so it is not recommended to use this in computations. Available with #define FIXMATH_DEBUG
       @return The range of the number
   */
   static constexpr int8_t getRANGE() {return RANGE;}
