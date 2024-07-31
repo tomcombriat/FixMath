@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['getnf_9',['getNF',['../classUFix.html#a900f594b8b95f377fff38c49f5149866',1,'UFix::getNF()'],['../classSFix.html#a319ae49f75636efec3999140a31fc85c',1,'SFix::getNF()']]],
-  ['getni_10',['getNI',['../classUFix.html#aa17a66aaaeed2e67163f2bc8bbf2ce08',1,'UFix::getNI()'],['../classSFix.html#a8e26f89e3aa2969906d9ff3deaa53328',1,'SFix::getNI()']]]
+  ['fixmath_2eh_8',['FixMath.h',['../FixMath_8h.html',1,'']]],
+  ['fixmathprivate_9',['FixMathPrivate',['../namespaceFixMathPrivate.html',1,'']]],
+  ['fromraw_10',['fromRaw',['../classUFix.html#addb9e008fc41495e651b03c77aed89d0',1,'UFix::fromRaw()'],['../classSFix.html#a0108a2ff808131b2bbcecee4d0c9b618',1,'SFix::fromRaw()']]]
 ];

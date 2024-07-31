@@ -62,12 +62,32 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">FixMathPrivate Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFixMathPrivate_1_1BitCounter.html">BitCounter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFixMathPrivate_1_1BitCounter_3_01value_00_010_01_4.html">BitCounter&lt; value, 0 &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aee77e7ee48eea928f764de45506efe67"><td class="memTemplParams" colspan="2"><a id="aee77e7ee48eea928f764de45506efe67"></a>
+template&lt;int8_t NF, uint64_t RANGE&gt; </td></tr>
+<tr class="memitem:aee77e7ee48eea928f764de45506efe67"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>UFixByRange_t</b> = <a class="el" href="classUFix.html">UFix</a>&lt; NIcount&lt; RANGE &gt;() -NF, NF, RANGE &gt;</td></tr>
+<tr class="separator:aee77e7ee48eea928f764de45506efe67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f17b62eb0b42c7169d4fbd4230dd756"><td class="memTemplParams" colspan="2"><a id="a4f17b62eb0b42c7169d4fbd4230dd756"></a>
+template&lt;int8_t NF, uint64_t RANGE&gt; </td></tr>
+<tr class="memitem:a4f17b62eb0b42c7169d4fbd4230dd756"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>SFixByRange_t</b> = <a class="el" href="classSFix.html">SFix</a>&lt; NIcount&lt; RANGE-1 &gt;() -NF, NF, RANGE &gt;</td></tr>
+<tr class="separator:a4f17b62eb0b42c7169d4fbd4230dd756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a4c50c54147c6ea1244d6ea6ad704c89c"><td class="memTemplParams" colspan="2"><a id="a4c50c54147c6ea1244d6ea6ad704c89c"></a>
@@ -100,6 +120,10 @@ constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>rangeAd
 <tr class="memitem:a96afba7d43238189112a0d0a72c0675a"><td class="memItemLeft" align="right" valign="top"><a id="a96afba7d43238189112a0d0a72c0675a"></a>
 constexpr uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>rangeShift</b> (int8_t N, int8_t SH, uint64_t RANGE)</td></tr>
 <tr class="separator:a96afba7d43238189112a0d0a72c0675a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20d991a08b2698d42ecf1605918270b8"><td class="memTemplParams" colspan="2"><a id="a20d991a08b2698d42ecf1605918270b8"></a>
+template&lt;uint64_t value&gt; </td></tr>
+<tr class="memitem:a20d991a08b2698d42ecf1605918270b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr int8_t&#160;</td><td class="memTemplItemRight" valign="bottom"><b>NIcount</b> ()</td></tr>
+<tr class="separator:a20d991a08b2698d42ecf1605918270b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7d25f42acf9c7c73508aca0f2cd7e54"><td class="memItemLeft" align="right" valign="top"><a id="ae7d25f42acf9c7c73508aca0f2cd7e54"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>static_autotests</b> ()</td></tr>
 <tr class="separator:ae7d25f42acf9c7c73508aca0f2cd7e54"><td class="memSeparator" colspan="2">&#160;</td></tr>

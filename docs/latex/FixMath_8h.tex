@@ -13,6 +13,10 @@ Include dependency graph for Fix\+Math.\+h\+:\nopagebreak
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
+struct \mbox{\hyperlink{structFixMathPrivate_1_1BitCounter}{Fix\+Math\+Private\+::\+Bit\+Counter$<$ value, bits $>$}}
+\item 
+struct \mbox{\hyperlink{structFixMathPrivate_1_1BitCounter_3_01value_00_010_01_4}{Fix\+Math\+Private\+::\+Bit\+Counter$<$ value, 0 $>$}}
+\item 
 class \mbox{\hyperlink{classUFix}{UFix$<$ NI, NF, RANGE $>$}}
 \item 
 class \mbox{\hyperlink{classSFix}{SFix$<$ NI, NF, RANGE $>$}}
@@ -21,6 +25,15 @@ class \mbox{\hyperlink{classSFix}{SFix$<$ NI, NF, RANGE $>$}}
 \begin{DoxyCompactItemize}
 \item 
  \mbox{\hyperlink{namespaceFixMathPrivate}{Fix\+Math\+Private}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceFixMathPrivate_aee77e7ee48eea928f764de45506efe67}\label{namespaceFixMathPrivate_aee77e7ee48eea928f764de45506efe67}} 
+{\footnotesize template$<$int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ }\\using {\bfseries Fix\+Math\+Private\+::\+UFix\+By\+Range\+\_\+t} = \mbox{\hyperlink{classUFix}{UFix}}$<$ NIcount$<$ RANGE $>$() -\/NF, NF, RANGE $>$
+\item 
+\mbox{\Hypertarget{namespaceFixMathPrivate_a4f17b62eb0b42c7169d4fbd4230dd756}\label{namespaceFixMathPrivate_a4f17b62eb0b42c7169d4fbd4230dd756}} 
+{\footnotesize template$<$int8\+\_\+t NF, uint64\+\_\+t RANGE$>$ }\\using {\bfseries Fix\+Math\+Private\+::\+SFix\+By\+Range\+\_\+t} = \mbox{\hyperlink{classSFix}{SFix}}$<$ NIcount$<$ RANGE-\/1 $>$() -\/NF, NF, RANGE $>$
 \end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -52,9 +65,14 @@ constexpr uint64\+\_\+t {\bfseries Fix\+Math\+Private\+::range\+Add} (byte NF, b
 \mbox{\Hypertarget{namespaceFixMathPrivate_a96afba7d43238189112a0d0a72c0675a}\label{namespaceFixMathPrivate_a96afba7d43238189112a0d0a72c0675a}} 
 constexpr uint64\+\_\+t {\bfseries Fix\+Math\+Private\+::range\+Shift} (int8\+\_\+t N, int8\+\_\+t SH, uint64\+\_\+t RANGE)
 \item 
+\mbox{\Hypertarget{namespaceFixMathPrivate_a20d991a08b2698d42ecf1605918270b8}\label{namespaceFixMathPrivate_a20d991a08b2698d42ecf1605918270b8}} 
+{\footnotesize template$<$uint64\+\_\+t value$>$ }\\constexpr int8\+\_\+t {\bfseries Fix\+Math\+Private\+::\+NIcount} ()
+\item 
 {\footnotesize template$<$typename T $>$ }\\constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$ 0, sizeof(T) $\ast$8 $>$ \mbox{\hyperlink{FixMath_8h_ab6c690d265da5284fa40b19574b286cb}{to\+UFraction}} (T val)
 \item 
 {\footnotesize template$<$typename T $>$ }\\constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$ sizeof(T) $\ast$8, 0 $>$ \mbox{\hyperlink{FixMath_8h_a0dda76ba96e4ae059e3872b080b6c681}{to\+UInt}} (T val)
+\item 
+{\footnotesize template$<$uint64\+\_\+t value$>$ }\\constexpr \mbox{\hyperlink{classUFix}{Fix\+Math\+Private\+::\+UFix\+By\+Range\+\_\+t}}$<$ 0, value $>$ \mbox{\hyperlink{FixMath_8h_a0217a77f6a6d862840d6f610a92c9f65}{UFix\+Auto}} ()
 \item 
 {\footnotesize template$<$int8\+\_\+t NI, int8\+\_\+t NF, int8\+\_\+t \+\_\+\+NI, int8\+\_\+t \+\_\+\+NF$>$ }\\constexpr bool \mbox{\hyperlink{FixMath_8h_a85ff3e79510e17f13056c58a2191be18}{operator$>$}} (const \mbox{\hyperlink{classSFix}{SFix}}$<$ NI, NF $>$ \&op1, const \mbox{\hyperlink{classUFix}{UFix}}$<$ \+\_\+\+NI, \+\_\+\+NF $>$ \&op2)
 \item 
@@ -337,7 +355,12 @@ true if op1 is bigger than op2, false otherwise
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 constexpr \mbox{\hyperlink{classSFix}{SFix}}$<$0, sizeof(T)$\ast$8-\/1$>$ to\+SFraction (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
-Create a {\itshape pure} fractional signed fixed number (\mbox{\hyperlink{classSFix}{SFix}}) from a integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence to\+SFraction(127) and to\+SFraction(int8\+\_\+t(127)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NF=15 -\/ which is overkill and incorrect if you expect to\+SFraction(127) = 1 -\/ whereas the latter will lead to NF=7. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
+Create a {\itshape pure} fractional signed fixed number (\mbox{\hyperlink{classSFix}{SFix}}) from an integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence to\+SFraction(127) and to\+SFraction(int8\+\_\+t(127)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NF=15 -\/ which is overkill and incorrect if you expect to\+SFraction(127) = 1 -\/ whereas the latter will lead to NF=7. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number.
+
+\begin{DoxyNote}{Note}
+If the value is known at compile time, it is much more efficient to construct using SFix\+Auto(), and then shifting to the right.
+\end{DoxyNote}
+
 \begin{DoxyParams}{Parameters}
 {\em val} & The value to be converted into a pure fractional number. \\
 \hline
@@ -352,7 +375,12 @@ A SFix$<$0,\+NF$>$ with NF chosen according to the input type
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 constexpr \mbox{\hyperlink{classSFix}{SFix}}$<$sizeof(T)$\ast$8-\/1,0$>$ to\+SInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
 
-Create a {\itshape pure} integer signed fixed number (\mbox{\hyperlink{classSFix}{SFix}}) from a integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+SInt(127) and to\+SInt(int8\+\_\+t(127)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=15 -\/ which is overkill -\/ whereas the latter will lead to NI=7. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
+Create a {\itshape pure} integer signed fixed number (\mbox{\hyperlink{classSFix}{SFix}}) from an integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+SInt(127) and to\+SInt(int8\+\_\+t(127)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=15 -\/ which is overkill -\/ whereas the latter will lead to NI=7. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number.
+
+\begin{DoxyNote}{Note}
+If the value is known at compile time, it is much more efficient to construct using SFix\+Auto().
+\end{DoxyNote}
+
 \begin{DoxyParams}{Parameters}
 {\em val} & The value to be converted into a pure integer fixed math number. \\
 \hline
@@ -367,7 +395,12 @@ A SFix$<$\+NI,0$>$ with NI chosen according to the input type
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$0, sizeof(T)$\ast$8$>$ to\+UFraction (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
 
-Create a {\itshape pure} fractional unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence to\+UFraction(255) and to\+UFraction(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NF=16 -\/ which is overkill and incorrect if you expect to\+UFraction(255) = 1 -\/ whereas the latter will lead to NF=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
+Create a {\itshape pure} fractional unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NF) is chosen automatically depending on the input type. Hence to\+UFraction(255) and to\+UFraction(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NF=16 -\/ which is overkill and incorrect if you expect to\+UFraction(255) = 1 -\/ whereas the latter will lead to NF=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number.
+
+\begin{DoxyNote}{Note}
+If the value is known at compile time, it is much more efficient to construct using \mbox{\hyperlink{FixMath_8h_a0217a77f6a6d862840d6f610a92c9f65}{UFix\+Auto()}}, and then shifting to the right.
+\end{DoxyNote}
+
 \begin{DoxyParams}{Parameters}
 {\em val} & The value to be converted into a pure fractional number. \\
 \hline
@@ -382,7 +415,12 @@ A UFix$<$0,\+NF$>$ with NF chosen according to the input type
 {\footnotesize\ttfamily template$<$typename T $>$ \\
 constexpr \mbox{\hyperlink{classUFix}{UFix}}$<$sizeof(T)$\ast$8,0$>$ to\+UInt (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
 
-Create a {\itshape pure} integer unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+UInt(255) and to\+UInt(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=16 -\/ which is overkill -\/ whereas the latter will lead to NI=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number. 
+Create a {\itshape pure} integer unsigned fixed number (\mbox{\hyperlink{classUFix}{UFix}}) from an unsigned integer. The number of fractional bits (NI) is chosen automatically depending on the input type. Hence to\+UInt(255) and to\+UInt(uint8\+\_\+t(255)) {\itshape do not} lead to the same thing\+: on an AVR, the former will lead to NI=16 -\/ which is overkill -\/ whereas the latter will lead to NI=8. Mozzi\textquotesingle{}s objects (Oscil and the like) returns correct types, hence you can use this function to convert the return value of a Mozzi\textquotesingle{}s function/class member into a pure fractional number.
+
+\begin{DoxyNote}{Note}
+If the value is known at compile time, it is much more efficient to construct using \mbox{\hyperlink{FixMath_8h_a0217a77f6a6d862840d6f610a92c9f65}{UFix\+Auto()}}.
+\end{DoxyNote}
+
 \begin{DoxyParams}{Parameters}
 {\em val} & The value to be converted into a pure unsigned integer fixed math number. \\
 \hline
@@ -390,3 +428,20 @@ Create a {\itshape pure} integer unsigned fixed number (\mbox{\hyperlink{classUF
 \begin{DoxyReturn}{Returns}
 A UFix$<$\+NI,0$>$ with NI chosen according to the input type 
 \end{DoxyReturn}
+\mbox{\Hypertarget{FixMath_8h_a0217a77f6a6d862840d6f610a92c9f65}\label{FixMath_8h_a0217a77f6a6d862840d6f610a92c9f65}} 
+\index{FixMath.h@{FixMath.h}!UFixAuto@{UFixAuto}}
+\index{UFixAuto@{UFixAuto}!FixMath.h@{FixMath.h}}
+\doxysubsubsection{\texorpdfstring{UFixAuto()}{UFixAuto()}}
+{\footnotesize\ttfamily template$<$uint64\+\_\+t value$>$ \\
+constexpr \mbox{\hyperlink{classUFix}{Fix\+Math\+Private\+::\+UFix\+By\+Range\+\_\+t}}$<$0, value$>$ UFix\+Auto (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+Create a pure integer unsigned fix number (\mbox{\hyperlink{classUFix}{UFix}}) from a compile time constant. The number of integer bits needed is determined, automatically, based on the actual value. This allows to easily create constants requiring minimal storage, without counting bits, manually.
+
+Examples\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto} three = UFixAuto<3>();                     \textcolor{comment}{// UFix<2, 0>}}
+\DoxyCodeLine{\textcolor{keyword}{auto} ten\_point\_five = UFixAuto<21>().sR<1>();   \textcolor{comment}{// UFix<5, 1>}}
+\DoxyCodeLine{\textcolor{keyword}{auto} nearly\_Pi = UFixAuto<201>().sR<6>();       \textcolor{comment}{// UFix<2, 6> = 3.140625}}
+
+\end{DoxyCode}
+ 

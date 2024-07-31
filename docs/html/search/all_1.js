@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['fixmath_2eh_6',['FixMath.h',['../FixMath_8h.html',1,'']]],
-  ['fixmathprivate_7',['FixMathPrivate',['../namespaceFixMathPrivate.html',1,'']]],
-  ['fromraw_8',['fromRaw',['../classUFix.html#addb9e008fc41495e651b03c77aed89d0',1,'UFix::fromRaw()'],['../classSFix.html#a0108a2ff808131b2bbcecee4d0c9b618',1,'SFix::fromRaw()']]]
+  ['bitcounter_6',['BitCounter',['../structFixMathPrivate_1_1BitCounter.html',1,'FixMathPrivate']]],
+  ['bitcounter_3c_20value_2c_200_20_3e_7',['BitCounter&lt; value, 0 &gt;',['../structFixMathPrivate_1_1BitCounter_3_01value_00_010_01_4.html',1,'FixMathPrivate']]]
 ];
