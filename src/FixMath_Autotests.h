@@ -9,9 +9,10 @@
  */
 
 #if (defined(__GNUC__) && (__GNUC__ < 12)) || (__cplusplus >= 202002L)
-// several of our tests require compilers to bit-shift of negative numbers is defined behavior (arithmetic shift), and can thus be used in
-// constexpr statements. This is not defined in the standard until C++ 2020. But older versions of GCC are less pedantic about checking, and
-// allow it at least for the cast of shift by 0 bits (-1 << 0). We leverage this fact to allow affected tests to run *somewhere* in our automated workflows (on the Uno at the time of this writing).
+// Bit-shifting negative number has not been formally defined behavior befor C++ 2020, but rather technically "implementation defined". It thus
+// could not be used in constexpr statements (although working quite fine, at runtime).
+// At the time of this writing (07/2024), we do not have a c++ 2020 compiler running in our automated test workflow. However, older versions of GCC
+// are less pedantic, and will regard at least the case of shift by 0 bits (-1 << 0) as defined. We leverage this fact to compile as many checks as possible.
 #define SHIFT_NEAGTIVE_BY_ZERO_DEFINED 1
 #else
 #define SHIFT_NEAGTIVE_BY_ZERO_DEFINED 0
