@@ -8,9 +8,17 @@
  *
  */
 
+#if (defined(__GNUC__) && (__GNUC__ < 12)) || (__cplusplus >= 202002L)
+// Bit-shifting negative number has not been formally defined behavior before C++ 2020, but rather technically "implementation defined". It thus
+// could not be used in constexpr statements (although working quite fine, at runtime).
+// At the time of this writing (07/2024), we do not have a c++ 2020 compiler running in our automated test workflow. However, older versions of GCC
+// are less pedantic, and will regard at least the case of shift by 0 bits (-1 << 0) as defined. We leverage this fact to compile as many checks as possible.
+#define SHIFT_NEGATIVE_BY_ZERO_DEFINED 1
+#else
+#define SHIFT_NEGATIVE_BY_ZERO_DEFINED 0
+#endif
 
 /** This file implements a few compile-time checks to verify the implementation is correct. */
- 
 namespace FixMathPrivate {
   /* This function is never called, and has no effect, but simply encapsulates a bunch of static asserts */
   inline void static_autotests() {
@@ -42,11 +50,11 @@ namespace FixMathPrivate {
       static_assert(SFixAuto<127>().getNI() == 7, "test fail");
       static_assert(SFixAuto<128>().getNI() == 8, "test fail");
 
-#if (__cplusplus >= 202002L)
+#if SHIFT_NEGATIVE_BY_ZERO_DEFINED
       constexpr auto s = SFix<7,0>(-128);
       static_assert((s+s).getNI() == 8, "test fail");
       static_assert((-s).getNI() == 8, "test fail");
-      
+
       constexpr auto zero = SFix<7,0>(0);
       constexpr auto negone = SFix<1,0>(-1);
       static_assert((zero - s).getNI() == 8, "test fail");
