@@ -8,7 +8,7 @@
  *
  */
 
-#if (defined(__GNUC__) && (__GNUC__ < 12)) || (__cplusplus >= 202002L)
+#if (defined(__GNUC__) && (__GNUC__ < 10)) || (__cplusplus >= 202002L)
 // Bit-shifting negative number has not been formally defined behavior before C++ 2020, but rather technically "implementation defined". It thus
 // could not be used in constexpr statements (although working quite fine, at runtime).
 // At the time of this writing (07/2024), we do not have a c++ 2020 compiler running in our automated test workflow. However, older versions of GCC
