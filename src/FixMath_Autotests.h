@@ -8,11 +8,11 @@
  *
  */
 
-#if (defined(__GNUC__) && (__GNUC__ < 10)) || (__cplusplus >= 202002L)
+#if (defined(__GNUC__) && (__GNUC__ < 12) && !defined(ESP8266)) && !defined(ARDUINO_ARCH_SAMD) || (__cplusplus >= 202002L)
 // Bit-shifting negative number has not been formally defined behavior before C++ 2020, but rather technically "implementation defined". It thus
 // could not be used in constexpr statements (although working quite fine, at runtime).
 // At the time of this writing (07/2024), we do not have a c++ 2020 compiler running in our automated test workflow. However, older versions of GCC
-// are less pedantic, and will regard at least the case of shift by 0 bits (-1 << 0) as defined. We leverage this fact to compile as many checks as possible.
+// are less pedantic, at least on some platforms (not ESP8266 and SAMD apparently), and will regard at least the case of shift by 0 bits (-1 << 0) as defined. We leverage this fact to compile as many checks as possible.
 #define SHIFT_NEGATIVE_BY_ZERO_DEFINED 1
 #else
 #define SHIFT_NEGATIVE_BY_ZERO_DEFINED 0

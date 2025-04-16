@@ -63,6 +63,36 @@ jobs:
               - name: STMicroelectronics:stm32
                 source-url: https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
             internalid: stm32_official
+          - fqbn: esp8266:esp8266:huzzah
+            type: 8266
+            platforms: |
+              - name: esp8266:esp8266
+                source-url: https://arduino.esp8266.com/stable/package_esp8266com_index.json
+            internalid: esp8266
+          - fqbn: arduino:mbed_giga:giga
+            platforms: |
+              - name: arduino:mbed_giga
+            internalid: arduino_giga
+          - fqbn: rp2040:rp2040:rpipico
+            type: rp2040
+            platforms: |
+              - name: rp2040:rp2040
+                source-url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+            internalid: rp2040
+          - fqbn: arduino:renesas_uno:minima
+            platforms: |
+              - name: arduino:renesas_uno
+            internalid: arduino_unor4
+          - fqbn: teensy:avr:teensy36
+            platforms: |
+              - name: teensy:avr
+                source-url: https://www.pjrc.com/teensy/package_teensy_index.json
+            internalid: teensy36
+          - fqbn: teensy:avr:teensy41
+            platforms: |
+              - name: teensy:avr
+                source-url: https://www.pjrc.com/teensy/package_teensy_index.json
+            internalid: teensy41
 
     steps:
       - name: Checkout repository
